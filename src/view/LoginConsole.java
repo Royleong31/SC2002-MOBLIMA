@@ -3,21 +3,34 @@ import controller.LoginManager;
 import model.Account.Account;
 
 /**
- * Account for a staff member.
- * Contains the staff id
  *
  @author Roy Leong
  @version 1.0
  @since 2022-10-30
 */
-public class LoginConsole extends Console {
-  private LoginManager loginManagementSystem = new LoginManager();
+public class LoginConsole extends ParentConsole {
+  /**
+   * Handles the login related logic and state
+   * Instantiated in main so the state can be shared with other console classes
+   */
+  private final LoginManager loginManager;
 
-  public Account login() {
-    return null;
+  public LoginConsole(LoginManager loginManager) {
+    super();
+    this.loginManager = loginManager;
   }
 
-  public Account register() {
-    return null;
+  /**
+   * Asks the user for login details and logs them in
+   * @return
+   */
+  public void login() {
+  }
+
+  /**
+   * Asks the user for registration details and registers them
+   * @return
+   */
+  public void register() {
   }
 }

@@ -13,6 +13,7 @@ public abstract class Account {
    * The username of the account.
    */
   private String username;
+  
   /**
    * The password for this account
    * There is no getter for this as the password should never be able to be accessed out of this class

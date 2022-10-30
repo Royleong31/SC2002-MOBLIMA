@@ -1,5 +1,4 @@
-package controller;
-
+package utils;
 import java.util.ArrayList;
 
 import model.Booking;
@@ -8,7 +7,7 @@ import model.Booking;
  * Sort the bookings
  * This class should only contain static methods
  */
-public class SalesManager {
+public class SalesUtils {
 
   public static float getTotalSales(ArrayList<Booking> bookingsArr) {
     return 0;

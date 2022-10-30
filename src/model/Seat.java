@@ -11,7 +11,7 @@ package model;
 public class Seat {
   private int seatNumber;
   private boolean seatTaken;
-  private Ticket affiliatedTicket;
+  private Ticket affiliatedTicket; // ?: Is this necessary?
 
   public Seat(int seatNumber, boolean seatTaken, Ticket affiliatedTicket) {
     this.seatNumber = seatNumber;

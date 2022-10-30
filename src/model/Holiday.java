@@ -9,19 +9,26 @@ package model;
  @since 2022-10-30
 */
 public class Holiday {
-  private Date date;
-  private float multiplier;
+  private DateTime date;
 
-  public Holiday(Date date, float multiplier) {
+  /**
+   * Price multiplier for this date
+   */
+  private float priceMultiplier;
+
+  public Holiday(DateTime date, float priceMultiplier) {
     this.date = date;
-    this.multiplier = multiplier;
+    this.priceMultiplier = priceMultiplier;
   }
 
-  public Date getDate() {
-    return date;
+  public String getDate() {
+    return date.getDate();
   }
 
-  public void updateDate() {
-    
+  /**
+   * Update the date of this holiday
+   */
+  public void updateDate(int day, int month, int year) {
+    date.updateDate(day, month, year, 0, 0);
   }
 }

@@ -19,20 +19,25 @@ enum SortCriteria {
 public class MovieManager {
   private ArrayList<Movie> moviesArr;
 
-  public boolean addMovie(Movie movie) {
+  public void addMovie(Movie movie) {
     return false;
   }
 
-  public boolean removeMovie(Movie movie){
+  public void deleteMovie(Movie movie){
     return false;
   }
 
-  public boolean updateMovie(Movie movie){
+  public void updateMovie(Movie movie){
     return false;
   }
 
-  public ArrayList<Movie> sortMovies(SortCriteria sortCriteria){
+  public void updateMovieShowingStatus(ShowStatus showStatus) {
+    
+  }
+
+  public ArrayList<Movie> getMovies(SortCriteria sortCriteria){
     return moviesArr;
   }
-  
+
+  // TODO: Create more overloaded functions for getMovies to allow optional params
 }

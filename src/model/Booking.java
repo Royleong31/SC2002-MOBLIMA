@@ -13,19 +13,63 @@ import model.Account.MovieGoerAccount;
  @since 2022-10-30
 */
 public class Booking {
-  private String transactionId;
-  private MovieGoerAccount movieGoer;
-  private float amountPaid;
-  private ArrayList<Ticket> ticketsArr;
+  /**
+   * Booking ID following this format : <cinemaCode>YYYYMMDDhhmm
+   */
+  private final String id;
 
-  public Booking(String transactionId, MovieGoerAccount movieGoer, float amountPaid, ArrayList<Ticket> ticketsArr) {
-    this.transactionId = transactionId;
+  /**
+   * movieGoer who made the booking
+   */
+  private final MovieGoerAccount movieGoer;
+
+  /**
+   * Ammount paid for all the tickets in this booking
+   */
+  private final float amountPaid;
+
+  /**
+   * All tickets booked in this booking
+   */
+  private final ArrayList<Ticket> ticketsArr;
+
+  public Booking(String id, MovieGoerAccount movieGoer, float amountPaid, ArrayList<Ticket> ticketsArr) {
+    this.id = id;
     this.movieGoer = movieGoer;
     this.amountPaid = amountPaid;
     this.ticketsArr = ticketsArr;
   }
 
+  /**
+   * 
+   * @return booking id
+   */
+  public String getId() {
+    return id;
+  }
+  
+  /**
+   * 
+   * @return movie goer who made the booking
+   */
+  public MovieGoerAccount getMovieGoer() {
+    return movieGoer;
+  }
+
+  /**
+   * 
+   * @return all the tickets booked in this booking
+   */
   public ArrayList<Ticket> getTicketsArr() {
     return ticketsArr;
   }
+
+  /**
+   * 
+   * @return the amount that the movie goer paid for this booking
+   */
+  public float getAmountPaid() {
+    return amountPaid;
+  }
+
 }

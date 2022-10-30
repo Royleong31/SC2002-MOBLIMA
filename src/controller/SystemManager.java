@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 
+import model.DateTime;
 import model.Holiday;
 
 enum SpecialDay {
@@ -29,28 +30,19 @@ public class SystemManager {
     return holidaysArr;
   }
 
-
-  public SpecialDay isSpecialDay(Date date) {
-    
-  }
-  
   public void setBasePrice(float basePrice) {
     this.basePrice = basePrice;
   }
 
-  public boolean deleteHoliday(Date date) {
+  public boolean deleteHoliday(DateTime date) {
     return false;
   }
 
-  public boolean addHoliday(Date date) {
+  public boolean addHoliday(DateTime date) {
     return false;
   }
 
   public float getBasePrice() {
     return basePrice;
   }
-
-
-
-
 }

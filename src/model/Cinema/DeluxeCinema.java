@@ -1,5 +1,6 @@
 package model.Cinema;
 
+import model.Cineplex;
 import model.SeatingPlan;
 
 /**
@@ -10,8 +11,8 @@ import model.SeatingPlan;
  * @since 2022-10-30
  */
 public class DeluxeCinema extends Cinema {
-  public DeluxeCinema(SeatingPlan seatingPlan) {
-    super(seatingPlan);
+  public DeluxeCinema(SeatingPlan seatingPlan, Cineplex cineplex) {
+    super(seatingPlan, cineplex);
   }
 
   /**

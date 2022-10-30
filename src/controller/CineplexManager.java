@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 
+import enums.CinemaType;
 import model.Cineplex;
 import model.Cinema.Cinema;
 

@@ -15,24 +15,21 @@ import model.Cinema.Cinema;
 public class Screening {
   private Movie movie;
   private Cinema cinema;
-  private Date date;
+  private DateTime dateTime;
+ 
+
   private boolean isPH; // TODO: Do we need this? i think we can check the system config if it's a special date
   private ArrayList<Seat> seats = new ArrayList<Seat>();
 
-  public Screening(Movie movie, Cinema cinema, Date date, boolean isPH, float price) {
+  public Screening(Movie movie, Cinema cinema, DateTime dateTime, boolean isPH, float price) {
     this.movie = movie;
     this.cinema = cinema;
-    this.date = date;
+    this.dateTime = dateTime;
     this.isPH = isPH;
-    this.price = price;
   }
 
   public void addSeat(Seat seat) {
     seats.add(seat);
-  }
-
-  public float getPrice() {
-    return 0;
   }
 
   public boolean checkIfSeatIsAvailable() {
@@ -40,4 +37,12 @@ public class Screening {
   }
 
   public void updateSeat(ArrayList<Seat> seats) {}
+
+   public DateTime getDateTime() {
+    return dateTime;
+  }
+
+  public void setDateTime(DateTime dateTime) {
+    this.dateTime = dateTime;
+  }
 }
