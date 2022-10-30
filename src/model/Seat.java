@@ -9,5 +9,13 @@ package model;
  @since 2022-10-30
 */
 public class Seat {
-  
+  private int seatNumber;
+  private boolean seatTaken;
+  private Ticket affiliatedTicket;
+
+  public Seat(int seatNumber, boolean seatTaken, Ticket affiliatedTicket) {
+    this.seatNumber = seatNumber;
+    this.seatTaken = seatTaken;
+    this.affiliatedTicket = affiliatedTicket;
+  }
 }

@@ -1,5 +1,6 @@
 package model.Cinema;
 
+import model.Cineplex;
 import model.SeatingPlan;
 
 /**
@@ -11,13 +12,13 @@ import model.SeatingPlan;
  */
 public class Cinema {
   private SeatingPlan seatingPlan;
+  private int numberOfSeats;
+  private Cineplex cineplex;
 
-  /**
-   * Constructor for the Cinema class
-   * @param seatingPlan
-   */
-  public Cinema(SeatingPlan seatingPlan) {
+  public Cinema(SeatingPlan seatingPlan, int numberOfSeats, Cineplex cineplex) {
     this.seatingPlan = seatingPlan;
+    this.numberOfSeats = numberOfSeats;
+    this.cineplex = cineplex;
   }
 
   /**

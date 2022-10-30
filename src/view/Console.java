@@ -1,4 +1,9 @@
 package view;
+import controller.ScreeningManager;
+import model.Movie;
+import model.Screening;
+import controller.MovieManager;
+import controller.BookingManager;
 import java.util.Scanner;
 
 /**
@@ -10,5 +15,20 @@ import java.util.Scanner;
  @since 2022-10-30
 */
 public class Console {
+  public MovieManager movieManager = new MovieManager();
+  public ScreeningManager screeningManager = new ScreeningManager();
+  public BookingManager bookingManager = new BookingManager();
+
+  public void displayMovies() {
+
+  }
+
+  public Movie getMovie() {
+    return null;
+  }
+
   
+  public Screening getScreening() {
+    return null;
+  }
 }
