@@ -20,7 +20,7 @@ enum SpecialDay {
 */
 public class SystemManager {
   private ArrayList<Holiday> holidaysArr;
-  private float basePrice;
+  private float basePrice; // We can store a mapping of cinema type to price in a hashmap
 
   public SystemManager(float basePrice) {
     this.basePrice = basePrice;

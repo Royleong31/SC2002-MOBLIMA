@@ -14,6 +14,7 @@ public class DateTime {
   }
 
   // TODO: Create an overloaded constructor and updateDate method that takes in a Java DateTime object and parses it into day, month, year
+  // TODO: Add check for weekend (can be done with java default date time object i think, with that, it's easier to calculate price)
 
   public int getDay() {
     return day;
