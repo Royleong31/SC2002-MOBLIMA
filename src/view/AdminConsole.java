@@ -25,10 +25,6 @@ public class AdminConsole extends ParentConsole {
    */
   private SalesManager salesManager = new SalesManager();
 
-  public AdminConsole() {
-    super();
-  }
-
   /**
    * Displays the current system configuration
    * Asks the user to select a configuration to change

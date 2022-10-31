@@ -2,18 +2,11 @@ package controller;
 
 import java.util.ArrayList;
 
+import enums.AccountType;
+import enums.LoginStatus;
 import model.Account.Account;
 
-enum LogInStatus {
-  LOGIN,
-  MOVIE_GOER,
-  ADMIN
-}
 
-enum AccountType {
-  MOVIE_GOER,
-  ADMIN
-}
 
 /**
  * Account for a staff member.
@@ -29,12 +22,12 @@ public class LoginManager {
 
 
   /**
+   * Set currentAccount to the logged in account
    * @param username
    * @param password
-   * @param accountType
    * @return the logged in account
    */
-  public Account login(String username, String password, AccountType accountType) {
+  public Account login(String username, String password) {
     // currentAccount = account;
     return null;
   }
@@ -67,10 +60,12 @@ public class LoginManager {
   }
 
   /**
+   * Should return LoginStatus.ADMIN if the type of currentAccount is an AdminAccount object
+   * Should return LoginStatus.MOVIE_GOER if the type of currentAccount is  MovieGoerAccount object
    * Return the type of the currently logged in user
    * @return
    */
-  public LogInStatus getLoginStatus() {
-    return LogInStatus.LOGIN;
+  public LoginStatus getLoginStatus() {
+    return LoginStatus.LOGIN;
   }
 }

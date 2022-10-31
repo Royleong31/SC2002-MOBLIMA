@@ -8,7 +8,7 @@ package model.Account;
  @version 1.0
  @since 2022-10-30
 */
-public class StaffAccount extends Account {
+public class AdminAccount extends Account {
   private String staffId;
 
   /**
@@ -18,7 +18,7 @@ public class StaffAccount extends Account {
    * @param password
    * @param staffId
    */
-  public StaffAccount(String username, String password, String staffId) {
+  public AdminAccount(String username, String password, String staffId) {
     super(username, password);
     this.staffId = staffId;
   }

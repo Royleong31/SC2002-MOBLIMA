@@ -1,3 +1,4 @@
+import enums.LoginStatus;
 import controller.LoginManager;
 import view.AdminConsole;
 import view.LoginConsole;
@@ -19,22 +20,21 @@ public class App {
     /**
      * Contains the possible consoles that can be selected
      */
-    private final ParentConsole[] consolesArr = {new LoginConsole(loginManager), new MovieGoerConsole(), new AdminConsole()};
-
-    /**
-     * Varies based on the user's current log in status
-     * Initially set to the 0(login console)
-     * If the user logs into a movie goer account, it will be set to 1(movie goer console)
-     * If the user logs into an admin account, it will be set to 2(admin console)
-     */
-    static private int currentConsoleIndex = 0; // varies based on the user's log in status
-
+    private final static ParentConsole[] consolesArr = {new LoginConsole(loginManager), new MovieGoerConsole(), new AdminConsole()};
 
     /**
      * Contains the main method that runs the program
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        System.out.println("Welcome to the MOBLIMA app!");
+
+        while (true) {
+            LoginStatus loginStatus = loginManager.getLoginStatus();
+            // matches the index of this.consolesArr
+            int consolesArrIndex = loginStatus == LoginStatus.LOGIN ? 0 : loginStatus == LoginStatus.MOVIE_GOER ? 1 : 2;
+
+            consolesArr[consolesArrIndex].display();
+        }
     }
 }

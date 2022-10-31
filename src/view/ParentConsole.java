@@ -5,6 +5,8 @@ import model.Movie;
 import model.Screening;
 import controller.MovieManager;
 import controller.BookingManager;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import constants.Constants;
@@ -16,7 +18,7 @@ import constants.Constants;
  @version 1.0
  @since 2022-10-30
 */
-public class ParentConsole {
+public abstract class ParentConsole {
   /**
    * Handles state and methods related to movies
    */
@@ -64,6 +66,40 @@ public class ParentConsole {
   protected Screening getScreening(Movie movie) {
   }
 
+  /**
+   * This is to get the user's choice, for e.g. when the user is selecting whether to login or register
+   * validInputs should contain only lowercase values
+   * Case checking is done inside here
+   * @param message
+   * @param validInputs valid inputs that the user can enter(all lowercase), no repeated values
+   * @return
+   */
+  protected String getUserChoice(String message, ArrayList<String> validInputs) {
+    Scanner scannerObj = new Scanner(System.in);
+    System.out.println(message);
+    String userInput = scannerObj.nextLine().toLowerCase();
 
+    while (!validInputs.contains(userInput)) {
+      System.out.println("Invalid input. Please try again");
+      userInput = scannerObj.nextLine().toLowerCase();
+    }
 
+    scannerObj.close();
+
+    return userInput;
+  }
+
+  /**
+   * This is the function that is called whenever the program exits, for e.g. when the user chooses to quit the program
+   */
+  protected void exitProgram() {
+    // save all state into storage
+    System.exit(0);
+  }
+
+  /**
+   * Displays the content for each console.
+   * This is basically the 'main' method for each console
+   */
+  public abstract void display();
 }
