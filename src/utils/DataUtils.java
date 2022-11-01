@@ -17,13 +17,14 @@ public class DataUtils {
      */
     public int saveData(Object o, String name){
         if(checkFile(name)){
-            System.out.println("File already exists");
-            return 2;
+            // System.out.println("File already exists");
+            // return 2;
+            System.out.println("File exists, overwriting file.");
         }
 
 
         try{
-            FileOutputStream fileOut = new FileOutputStream("Data/" + name);
+            FileOutputStream fileOut = new FileOutputStream("Data/" + name, false);
             ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
             objOut.writeObject(o);
             objOut.close();
