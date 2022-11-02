@@ -55,8 +55,8 @@ public class BookingManager {
 	}
 		
 	bookingsArr.add(new Booking((screening.getCinema()).getId()
-								+ new SimpleDateFormat("yyyyMMddhhmm").format(new java.util.Date()), 
-								movieGoer, amountPaid, ticketsArr));
+			+ new SimpleDateFormat("yyyyMMddhhmm").format(new java.util.Date()), 
+			movieGoer, amountPaid, ticketsArr));
 	//TODO: Screening Class needs a getCinema() method.
   }
 
