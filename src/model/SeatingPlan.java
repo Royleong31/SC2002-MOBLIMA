@@ -20,9 +20,10 @@ public class SeatingPlan {
     this.aisle = aisle;
   }
 
-  public int remainingSeats(ArrayList<Seat> takenSeatsArr) {
+  public int remainingSeats(ArrayList<Seat> takenSeatsArr) throws Exception {
     int totalSeats = rows * cols;
     int takenSeats = takenSeatsArr.size();
+    if(takenSeats > totalSeats) throw new Exception("Error: more takenSeats than totalSeats!");
     return totalSeats - takenSeats;
   }
 
