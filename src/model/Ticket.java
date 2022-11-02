@@ -1,6 +1,5 @@
 package model;
-import model.Seat;
-import model.Screening;
+
 import enums.TicketType;
 
 /**
