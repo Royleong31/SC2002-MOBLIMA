@@ -6,13 +6,10 @@ import java.util.Date;
 import java.lang.Math;
 
 import model.Booking;
-import model.Movie;
 import model.Screening;
 import model.Seat;
 import model.Ticket;
 import model.Account.MovieGoerAccount;
-import model.Cinema.*;
-import model.SeatingPlan;
 import utils.PriceUtils;
 import enums.TicketType;
 
@@ -29,7 +26,6 @@ public class BookingManager {
   private ArrayList<Ticket> ticketsArr;
   private String id;
   private int amountPaid;
-  private SeatingPlan findPlan;
   private ArrayList<Seat> availableSeats;
   private ArrayList<Booking> checkArr;
   private Seat chosenSeat;
@@ -50,7 +46,6 @@ public class BookingManager {
 		
 		if(seatsArr.size()>1){
 			if(Math.abs(chosenSeat.getSeatNumber()-(seatsArr.get(i+1)).getSeatNumber())>1){
-				//TODO: Seat class needs a getSeatNumber() method.
 				throw new Exception("Error: seats must be together!");
 			}
 		}
@@ -68,7 +63,6 @@ public class BookingManager {
 	bookingsArr.add(new Booking((screening.getCinema()).getId()
 			+ new SimpleDateFormat("yyyyMMddhhmm").format(new java.util.Date()), 
 			movieGoer, amountPaid, ticketsArr));
-	//TODO: Screening Class needs a getCinema() method.
   }
 
   /**
@@ -78,12 +72,9 @@ public class BookingManager {
    * @return
    */
   public ArrayList<Seat> getAvailableSeats(Screening screening) {
-	findPlan = (screening.getCinema()).getSeatingPlan();
 	availableSeats = new ArrayList<Seat>();
-	availableSeats = findPlan.getSeats();
-	//TODO: SeatingPlan class needs a getSeats() method.
+	availableSeats = screening.getSeats();
 	availableSeats.removeAll(screening.getTakenSeats());
-	//TODO: Screening Class needs a getTakenSeats() method.
 
 	//TODO: do i need to do something if no available seats?
 	//		Cuz doesn't make sense to end execution via throws just cuz no more seats
@@ -98,7 +89,6 @@ public class BookingManager {
    */
   public boolean isSeatAvailable(Screening screening, Seat seat) {
     return screening.checkIfSeatIsAvailable(seat);
-    //TODO: checkIfSeatIsAvailable should have a seat parameter to check specific seats
   }
 
 
