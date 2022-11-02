@@ -24,7 +24,7 @@ public class CineplexManager {
     return true;
   }
 
-  public void addCinema(Cineplex cineplex, Cinema cinema, CinemaType cinemaType) {
+  public void addCinema(Cineplex cineplex, Cinema cinema, CinemaType cinemaType) throws Exception {
     cineplex.addCinema(cinema);
   }
 

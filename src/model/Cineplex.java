@@ -13,10 +13,6 @@ import model.Cinema.Cinema;
  @since 2022-10-30
 */
 public class Cineplex {
-  /**
-   * id of this cineplex
-  */
-  private final String id;
 
   /**
    * All the cinemas in this cineplex
@@ -77,7 +73,11 @@ public class Cineplex {
    * Add a new cinema to the cineplex
    * @param cinema
    */
-  public void addCinema(Cinema cinema) {
+  public void addCinema(Cinema cinema) throws Exception {
+    // throw exception if cinema already exist
+    if (cinemasArr.contains(cinema)) {
+      throw new Exception("Cinema do not exist in cineplex.");
+    }
     cinemasArr.add(cinema);
   }
 
@@ -88,15 +88,11 @@ public class Cineplex {
    */
 
   public void deleteCinema(Cinema cinema) throws Exception {
-    /* Check if cinema object exists */
-    for (int i = 0; i < cinemasArr.size(); i++) {
-      if (cinema.equals(cinemasArr.get(i))) {
-        // cinema object found
-        cinemasArr.remove(i);
-      }
-    }
     // throw exception if cinema do not exist
-    throw new Exception("Cinema do not exist in cineplex.");
+    if (!cinemasArr.contains(cinema)) {
+      throw new Exception("Cinema do not exist in cineplex.");
+    }
+    cinemasArr.removeIf(value -> cinema.equals(value));
   }
 
   /**
@@ -104,15 +100,11 @@ public class Cineplex {
    * @param movie
    */
   public void deleteMovie(Movie movie) throws Exception {
-    /* Check if cinema object exists */
-    for (int i = 0; i < movieCollection.size(); i++) {
-      if (movie.equals(movieCollection.get(i))) {
-        // movie object found
-        movieCollection.remove(i);
-      }
-    }
     // throw exception if movie do not exist
-    throw new Exception("Movie do not exist in cineplex's movie collection.");
+     if (!movieCollection.contains(movie)) {
+      throw new Exception("Movie do not exist in cineplex's movie collection.");
+    }
+    movieCollection.removeIf(value -> movie.equals(value));
   }
   
   /**
