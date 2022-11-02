@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import controller.ReviewManager;
 import model.Booking;
 import model.Seat;
+import model.Account.Account;
 import model.Account.MovieGoerAccount;
+import utils.Utils;
 
 /**
  * Account for a staff member.
@@ -19,7 +21,7 @@ public class MovieGoerConsole extends ParentConsole {
   /**
    * Handles state and methods related to reviews
    */
-  private ReviewManager reviewManager = new ReviewManager();
+  private final ReviewManager reviewManager = new ReviewManager();
 
   /**
    * Displays all reviews that have been made by this user
@@ -53,5 +55,36 @@ public class MovieGoerConsole extends ParentConsole {
    */
   public void viewBookingHistory(MovieGoerAccount movieGoerAccount) {
 
+  }
+
+  @Override
+  public void display(Account account) {
+    String userSelection = this.getUserChoice("Enter '1' to submit review, \n'2' to make booking, \n'3' to view booking history, \n'4' to quit", Utils.asArrayList("1", "2", "3", "4"));
+    if (account instanceof MovieGoerAccount) {
+      throw new Exception("Account is not a MovieGoerAccount");
+    }
+    MovieGoerAccount movieGoerAccount = (MovieGoerAccount) account;
+
+    switch (userSelection) {
+      case "1":
+        this.submitReview(movieGoerAccount);
+        break;
+    
+      case "2":
+        this.makeBooking(movieGoerAccount);
+        break;
+    
+      case "3":
+        this.viewBookingHistory(movieGoerAccount);
+        break;
+    
+      case "4":
+        this.exitProgram();
+        break;
+    
+      default:
+        // Should never reach here as error checking is done in this.getUserChoice()
+        throw new Error("An unexpected error occured");
+    }
   }
 }

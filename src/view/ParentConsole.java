@@ -3,6 +3,7 @@ import controller.ScreeningManager;
 import controller.SystemManager;
 import model.Movie;
 import model.Screening;
+import model.Account.Account;
 import controller.MovieManager;
 import controller.BookingManager;
 
@@ -101,5 +102,5 @@ public abstract class ParentConsole {
    * Displays the content for each console.
    * This is basically the 'main' method for each console
    */
-  public abstract void display();
+  public abstract void display(Account account);
 }

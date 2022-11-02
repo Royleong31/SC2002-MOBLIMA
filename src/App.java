@@ -34,7 +34,9 @@ public class App {
             // matches the index of this.consolesArr
             int consolesArrIndex = loginStatus == LoginStatus.LOGIN ? 0 : loginStatus == LoginStatus.MOVIE_GOER ? 1 : 2;
 
-            consolesArr[consolesArrIndex].display();
+            
+            consolesArr[consolesArrIndex].display(loginManager.getCurrentAccount());
+
         }
     }
 }

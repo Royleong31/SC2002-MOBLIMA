@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 import controller.LoginManager;
 import enums.AccountType;
+import model.Account.Account;
 import utils.Utils;
 
 /**
@@ -18,7 +19,8 @@ public class LoginConsole extends ParentConsole {
     this.loginManager = loginManager;
   }
   
-  public void display() {
+  @Override
+  public void display(Account account) { // account is unused as it's null
     String userSelection = this.getUserChoice("Enter '1' to log in, '2' to register, '3' to exit", Utils.asArrayList("1", "2", "3"));
 
     if (userSelection == "1") {

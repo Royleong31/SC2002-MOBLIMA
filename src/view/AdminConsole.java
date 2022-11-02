@@ -2,6 +2,7 @@ package view;
 import controller.SalesManager;
 import controller.CineplexManager;
 import model.Movie;
+import model.Account.Account;
 
 
 
@@ -115,6 +116,10 @@ public class AdminConsole extends ParentConsole {
    */
   public void deleteShowtime() {
 
+  }
+
+  public void display(Account account) {
+    
   }
 
 }
