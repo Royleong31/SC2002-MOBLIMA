@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.lang.Math;
 
 import model.Booking;
 import model.Movie;
@@ -31,6 +32,7 @@ public class BookingManager {
   private SeatingPlan findPlan;
   private ArrayList<Seat> availableSeats;
   private ArrayList<Booking> checkArr;
+  private Seat chosenSeat;
   
   /**
    * Creates a booking from the user's choice of screening and seats.
@@ -40,10 +42,19 @@ public class BookingManager {
    * @param seatsArr
    * @param ticketType
    */
-  public void makeBooking(MovieGoerAccount movieGoer, Screening screening, ArrayList<Seat> seatsArr, enums.TicketType ticketType) {
+  public void makeBooking(MovieGoerAccount movieGoer, Screening screening, ArrayList<Seat> seatsArr, enums.TicketType ticketType) throws Exception {
 		
 	ticketsArr = new ArrayList<Ticket>();
-	for(Seat chosenSeat: seatsArr){
+	for(int i=0;i<seatsArr.size();i++){
+		chosenSeat = seatsArr.get(i);
+		
+		if(seatsArr.size()>1){
+			if(Math.abs(chosenSeat.getSeatNumber()-(seatsArr.get(i+1)).getSeatNumber())>1){
+				//TODO: Seat class needs a getSeatNumber() method.
+				throw new Exception("Error: seats must be together!");
+			}
+		}
+		
 		ticketsArr.add(new Ticket(chosenSeat, screening, ticketType));
 	}
 		
