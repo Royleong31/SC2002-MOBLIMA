@@ -87,6 +87,7 @@ public class BookingManager {
    */
   public boolean isSeatAvailable(Screening screening, Seat seat) {
     return screening.checkIfSeatIsAvailable(seat);
+    //TODO: checkIfSeatIsAvailable should have a seat parameter to check specific seats
   }
 
 
