@@ -4,7 +4,7 @@ import enums.CinemaType;
 import model.Cineplex;
 import model.SeatingPlan;
 import utils.IdUtils;
-import utils.CinemaPremium;
+import utils.CinemaPremiumUtils;
 
 /**
  * Contains the seating plan and which cineplex this cinema belongs to.
@@ -19,7 +19,7 @@ public class Cinema {
   private SeatingPlan seatingPlan;
   private Cineplex cineplex;
   private CinemaType cinemaType;
-  private CinemaPremium premiumGenerator = new CinemaPremium();
+  private CinemaPremiumUtils premiumGenerator = new CinemaPremiumUtils();
 
   public Cinema(SeatingPlan seatingPlan, Cineplex cineplex) {
     this.id = idGenerator.generateCinemaID();
