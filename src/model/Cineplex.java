@@ -14,6 +14,11 @@ import model.Cinema.Cinema;
 */
 public class Cineplex {
   /**
+   * id of this cineplex
+  */
+  private final String id;
+
+  /**
    * All the cinemas in this cineplex
    */
   private ArrayList<Cinema> cinemasArr;
@@ -37,7 +42,7 @@ public class Cineplex {
     cinemasArr = new ArrayList<Cinema>();
     movieCollection = new ArrayList<Movie>();
   }
-
+  
   /*
    * returns all the cinemas in this cineplex
    */
@@ -55,6 +60,7 @@ public class Cineplex {
   /**
    * @param movie
    */
+
   public void addMovie(Movie movie) throws Exception {
     // add in a movie to the moviesArr
     // check that a movie of the same name doesn't alr exist
@@ -80,6 +86,7 @@ public class Cineplex {
    * @param cineplex
    * @param cinema
    */
+
   public void deleteCinema(Cinema cinema) throws Exception {
     /* Check if cinema object exists */
     for (int i = 0; i < cinemasArr.size(); i++) {
@@ -107,7 +114,7 @@ public class Cineplex {
     // throw exception if movie do not exist
     throw new Exception("Movie do not exist in cineplex's movie collection.");
   }
-
+  
   /**
    * Get the location of this cineplex
    * @return

@@ -23,10 +23,11 @@ public class Cinema {
     this.cineplex = cineplex;
   }
 
+
   public String getId() {
     return id;
   }
-
+  
   /**
    * @return priceModifier, defaults to 1
    */
