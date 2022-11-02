@@ -30,5 +30,21 @@ public class Review {
   public void setComments(String comments) {
     this.comments = comments;
   }
+
+  public Movie getMovie() {
+    return this.movie;
+  }
+
+  public String getComments() {
+    return this.comments;
+  }
+
+  public float getRating() {
+    return this.rating;
+  }
+
+  public MovieGoerAccount getMovieGoer() {
+    return this.movieGoer;
+  }
   
 }
