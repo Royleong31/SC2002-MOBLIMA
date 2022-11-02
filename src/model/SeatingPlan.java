@@ -3,11 +3,10 @@ package model;
 import java.util.ArrayList;
 
 /**
- * Account for a staff member.
- * Contains the staff id
+ * Seating Plan
  *
- @author Roy Leong
- @version 1.0
+ @author Roy Leong, Ryan Ng
+ @version 1.1
  @since 2022-10-30
 */
 public class SeatingPlan {
@@ -28,7 +27,9 @@ public class SeatingPlan {
   }
 
   public boolean isSeatAvailable(ArrayList<Seat> takenSeatsArr, Seat seat) {
-    // use the arr of taken seats to check if the 
-    return false;
+    for(Seat checkSeat: takenSeatsArr){
+		if(checkSeat == seat) return false;
+	}
+    return true;
   }
 }
