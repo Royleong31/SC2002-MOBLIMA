@@ -1,8 +1,6 @@
-package model.Cinema;
+package model;
 
 import enums.CinemaType;
-import model.Cineplex;
-import model.SeatingPlan;
 import utils.IdUtils;
 import utils.CinemaPremiumUtils;
 

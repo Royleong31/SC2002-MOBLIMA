@@ -3,8 +3,8 @@ package controller;
 import java.util.ArrayList;
 
 import enums.CinemaType;
+import model.Cinema;
 import model.Cineplex;
-import model.Cinema.Cinema;
 
 /**
  * Cineplex Manager

@@ -2,8 +2,6 @@ package model;
 
 import java.util.ArrayList;
 
-import model.Cinema.Cinema;
-
 /**
  * Cineplex class
  * Contains its constituent cinemas and movies
