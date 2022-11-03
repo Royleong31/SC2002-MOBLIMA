@@ -32,14 +32,34 @@ public class Screening {
     seats.add(seat);
   }
 
-  public boolean checkIfSeatIsAvailable() {
-    return false;
+  public boolean checkIfSeatIsAvailable(Seat targetSeat) {
+    for (Seat seat : this.seats) {
+      if (seat.equals(targetSeat)) {
+        return false;
+      }
+    }
+    return true;
   }
 
-  public void updateSeat(ArrayList<Seat> seats) {}
+  public void updateSeat(Seat seat) {
+    seat.setTaken();
+    addSeat(seat);
+  }
 
-   public DateTime getDateTime() {
-    return dateTime;
+  public String getMovieTitle() {
+    return this.movie.getTitle();
+  }
+
+  public String getCinemaId() {
+    return this.cinema.getId();
+  }
+
+  public String getDateTime() {
+    return this.dateTime.getDate();
+  }
+
+  public Cinema getCinema() {
+    return this.cinema;
   }
 
   public void setDateTime(DateTime dateTime) {
