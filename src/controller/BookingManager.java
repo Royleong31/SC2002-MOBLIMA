@@ -8,7 +8,7 @@ import model.Screening;
 import model.Seat;
 import model.Ticket;
 import model.Account.MovieGoerAccount;
-import model.DateTime;
+import utils.DateTimeUtils;
 import utils.PriceUtils;
 import enums.TicketType;
 
