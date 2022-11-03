@@ -26,4 +26,5 @@ public class Seat {
   public boolean isSeatTaken() {
     return seatTaken;
   }
+
 }
