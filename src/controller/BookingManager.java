@@ -47,7 +47,7 @@ public class BookingManager {
       //TODO: is this the way to get the prices of the tickets to calculate amount paid?
       //		    Since screening's getPrice() does not take into account the ticket type
     }
-    bookingsArr.add(new Booking(screening.getCinemaId() + DateTime.getDateTime(), movieGoer, amountPaid, ticketsArr));
+    bookingsArr.add(new Booking(screening.getCinemaId() + DateTimeUtils.getDateTime(), movieGoer, amountPaid, ticketsArr));
   }
 
   /**
