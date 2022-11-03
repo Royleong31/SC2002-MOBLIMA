@@ -2,6 +2,8 @@ package model;
 import enums.*;
 import java.util.ArrayList;
 
+import controller.SalesManager;
+
 /**
  * Account for a staff member.
  * Contains the staff id
@@ -21,18 +23,6 @@ public class Movie {
   private Genre genre;
 
   public Movie(String title, ShowStatus showingStatus, String synopsis, String director, ArrayList<String> cast, Advisory advisoryRating, Genre genre) {
-    setMovieDetails(title, showingStatus, synopsis, director, cast, advisoryRating, genre);
-  }
-
-  public void addReview(Review review) {
-    // TODO: Check if the user has alr reviewed this movie, if so, throw an error
-    // allow the user to add a review if the user hasn't alr done so
-    reviews.add(review);
-  }
-
-  // TODO: Update only parts of the movie attributes (allow the user to change only 1 thing without having to retype in everything)
-  // Need to have optional params for each field, and for empty fields, the current one will be used
-  public void setMovieDetails(String title, ShowStatus showingStatus, String synopsis, String director, ArrayList<String> cast, Advisory advisoryRating, Genre genre) {
     this.title = title;
     this.showingStatus = showingStatus;
     this.synopsis = synopsis;
@@ -42,19 +32,102 @@ public class Movie {
     this.genre = genre;
   }
 
+  public void addReview(Review review) {
+    reviews.add(review);
+  }
+
+  // TODO: Update only parts of the movie attributes (allow the user to change only 1 thing without having to retype in everything)
+  // Need to have optional params for each field, and for empty fields, the current one will be used
+
+  // I feel that this can be handled by the console e.g. have default option when user does not key in an option
+  // Individual updates can be done via the movie manager with the user passing in the param they want to change in the form of an option e.g. 1 for title, 2 for synopsis
+  // i.e have individual setter functions instead of a batch setter function
+
+  /*public void setMovieDetails(String title, ShowStatus showingStatus, String synopsis, String director, ArrayList<String> cast, Advisory advisoryRating, Genre genre) {
+    this.title = title;
+    this.showingStatus = showingStatus;
+    this.synopsis = synopsis;
+    this.director = director;
+    this.cast = cast;
+    this.advisoryRating = advisoryRating;
+    this.genre = genre;
+  }*/
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
   /**
    * Allows the admins to change the status of the movie
    * @param showStatus
    */
-  public void updateShowingStatus(ShowStatus showStatus) {
+  public void setShowingStatus(ShowStatus showStatus) {
     this.showingStatus = showStatus;
   }
+
+  public void setSynopsis(String synopsis) {
+    this.synopsis = synopsis;
+  }
+
+  public void setDirector(String director) {
+    this.director = director;
+  }
   
+  public void setCast(ArrayList<String> cast) {
+    this.cast = cast;
+  }
+
+  public void setAdvisoryRating(Advisory advisoryRating) {
+    this.advisoryRating = advisoryRating;
+  }
+
+  public void setGenre(Genre genre) {
+    this.genre = genre;
+  }
+
+  public String getTitle() {
+    return this.title;
+  }
+
+  public ShowStatus getShowingStatus() {
+    return this.showingStatus;
+  }
+
+  public String getSynopsis() {
+    return this.synopsis;
+  }
+
+  public String getDirector() {
+    return this.director;
+  }
+  
+  public ArrayList<String> getCast() {
+    return this.cast;
+  }
+
+  public Advisory getAdvisoryRating() {
+    return this.advisoryRating;
+  }
+
+  public Genre getGenre() {
+    return this.genre;
+  }
+
+  public ArrayList<Review> getReviews() {
+    return this.reviews;
+  }
+
   /*
    * Gets the overall rating from all the reviews of this movie
    */
   public float getOverallRating() {
     // loop through the list of reviews and get the average rating
-    return 0.0f;
+    float total = 0;
+    for (Review review : reviews) {
+      total += review.getRating();
+    }
+    total /= reviews.size();
+    return total;
   }
+
 }
