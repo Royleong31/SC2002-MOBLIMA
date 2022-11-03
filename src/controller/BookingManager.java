@@ -1,8 +1,6 @@
 package controller;
 
 import java.util.ArrayList;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.lang.Math;
 
 import model.Booking;
@@ -10,6 +8,7 @@ import model.Screening;
 import model.Seat;
 import model.Ticket;
 import model.Account.MovieGoerAccount;
+import model.DateTime;
 import utils.PriceUtils;
 import enums.TicketType;
 
@@ -23,13 +22,6 @@ import enums.TicketType;
 public class BookingManager {
   private ArrayList<Booking> bookingsArr = new ArrayList<Booking>();
   
-  private ArrayList<Ticket> ticketsArr;
-  private String id;
-  private int amountPaid;
-  private ArrayList<Seat> availableSeats;
-  private ArrayList<Booking> checkArr;
-  private Seat chosenSeat;
-  
   /**
    * Creates a booking from the user's choice of screening and seats.
    * Multiple tickets of the same type and screening can be created in a single booking.
@@ -40,29 +32,24 @@ public class BookingManager {
    */
   public void makeBooking(MovieGoerAccount movieGoer, Screening screening, ArrayList<Seat> seatsArr, enums.TicketType ticketType) throws Exception {
 		
-	ticketsArr = new ArrayList<Ticket>();
-	for(int i=0;i<seatsArr.size();i++){
-		chosenSeat = seatsArr.get(i);
-		
-		if(seatsArr.size()>1){
-			if(Math.abs(chosenSeat.getSeatNumber()-(seatsArr.get(i+1)).getSeatNumber())>1){
-				throw new Exception("Error: seats must be together!");
-			}
+    ArrayList<Ticket> ticketsArr = new ArrayList<Ticket>();
+    for(int i=0;i<seatsArr.size();i++){
+			
+      if(seatsArr.size()>1 && i<=seatsArr.size()-2){
+        if(Math.abs((seatsArr.get(i)).getSeatNumber()-(seatsArr.get(i+1)).getSeatNumber())>1){
+          throw new Exception("Error: seats must be together!");
 		}
-		
-		ticketsArr.add(new Ticket(chosenSeat, screening, ticketType));
+	  }
+      ticketsArr.add(new Ticket(seatsArr.get(i), screening, ticketType));
 	}
-		
-	amountPaid = 0;
-	for(Ticket chosenTicket: ticketsArr){
-		amountPaid += utils.PriceUtils.getPrice(chosenTicket);
-		//TODO: is this the way to get the prices of the tickets to calculate amount paid?
-		//		Since screening's getPrice() does not take into account the ticket type
+
+    int amountPaid = 0;
+    for(Ticket chosenTicket: ticketsArr){
+      amountPaid += utils.PriceUtils.getPrice(chosenTicket);
+      //TODO: is this the way to get the prices of the tickets to calculate amount paid?
+      //		Since screening's getPrice() does not take into account the ticket type
 	}
-		
-	bookingsArr.add(new Booking((screening.getCinema()).getId()
-			+ new SimpleDateFormat("yyyyMMddhhmm").format(new java.util.Date()), 
-			movieGoer, amountPaid, ticketsArr));
+    bookingsArr.add(new Booking((screening.getCinema()).getId() + DateTime.getDateTime(), movieGoer, amountPaid, ticketsArr));
   }
 
   /**
@@ -72,13 +59,7 @@ public class BookingManager {
    * @return
    */
   public ArrayList<Seat> getAvailableSeats(Screening screening) {
-	availableSeats = new ArrayList<Seat>();
-	availableSeats = screening.getSeats();
-	availableSeats.removeAll(screening.getTakenSeats());
-
-	//TODO: do i need to do something if no available seats?
-	//		Cuz doesn't make sense to end execution via throws just cuz no more seats
-	return availableSeats;
+    return (screening.getSeats()).removeAll(screening.getTakenSeats());
   }
 
   /**
@@ -105,16 +86,13 @@ public class BookingManager {
    * @param movieGoer
    * @return
    */
-  public ArrayList<Booking> getBookingsByUser(MovieGoerAccount movieGoer) throws Exception{
-
-	checkArr = new ArrayList<Booking>();
-	for(Booking findBooking: bookingsArr){
-		if(findBooking.getMovieGoer() == movieGoer)
-			checkArr.add(findBooking);
-	}
-	if(checkArr.isEmpty())
-		throw new Exception("Error: no bookings found!");
+  public ArrayList<Booking> getBookingsByUser(MovieGoerAccount movieGoer){
+    ArrayList<Booking> checkArr = new ArrayList<Booking>();
 	
+    for(Booking findBooking: bookingsArr){
+      if(findBooking.getMovieGoer() == movieGoer)
+        checkArr.add(findBooking);
+    }
     return checkArr;
   }
 
@@ -123,11 +101,10 @@ public class BookingManager {
    * @param bookingId
    * @return the booking that matches this booking id
    */
-  public Booking getBookingById(String bookingId) throws Exception {
+  public Booking getBookingById(String bookingId){
     for(Booking findBooking: bookingsArr){
-		if(findBooking.getId() == bookingId)
-			return findBooking;
+      if(findBooking.getId() == bookingId)
+      return findBooking;
 	}
-	throw new Exception("Error: no such booking found!");
   }
 }
