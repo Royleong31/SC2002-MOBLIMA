@@ -39,6 +39,7 @@ public class Ticket {
     this.seat = seat;
     this.screening = screening;
     this.ticketType = ticketType;
+	screening.updateSeat(seat);
   }
 
   /**
