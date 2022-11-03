@@ -3,7 +3,7 @@ package utils;
 import enums.CinemaType;
 
 public class CinemaPremiumUtils {
-    public Number getPremium(CinemaType ct) {
+    public static Number getPremium(CinemaType ct) {
         if (ct == CinemaType.GOLD_CLASS) {
             return 2.0;
         }

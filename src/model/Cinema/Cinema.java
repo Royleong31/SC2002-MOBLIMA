@@ -15,28 +15,37 @@ import utils.CinemaPremiumUtils;
  */
 public class Cinema {
   private final String id;
-  private static IdUtils idGenerator = new IdUtils(0);
+  private static int cinemaCounter;
   private SeatingPlan seatingPlan;
   private Cineplex cineplex;
   private CinemaType cinemaType;
-  private CinemaPremiumUtils premiumGenerator = new CinemaPremiumUtils();
 
-  public Cinema(SeatingPlan seatingPlan, Cineplex cineplex) {
-    this.id = idGenerator.generateCinemaID();
+  public Cinema(SeatingPlan seatingPlan, Cineplex cineplex, CinemaType cinemaType) {
+    this.id = IdUtils.generateCinemaID(cinemaCounter);
     this.seatingPlan = seatingPlan;
     this.cineplex = cineplex;
+    this.cinemaType = cinemaType;
+    this.cinemaCounter++; /* increment cinemaCounter by 1 to denote an increase in cinemas */
   }
 
 
   public String getId() {
     return id;
   }
+
+  public CinemaType getCinemaType() {
+    return cinemaType;
+  }
+
+  public Cineplex getCineplex() {
+    return cineplex;
+  }
   
   /**
    * @return priceModifier, defaults to 1
    */
   public Number getPriceModifier() {
-    return premiumGenerator.getPremium(cinemaType);
+    return CinemaPremiumUtils.getPremium(cinemaType);
   }
 
   /**

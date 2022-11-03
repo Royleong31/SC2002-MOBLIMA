@@ -76,7 +76,7 @@ public class Cineplex {
   public void addCinema(Cinema cinema) throws Exception {
     // throw exception if cinema already exist
     if (cinemasArr.contains(cinema)) {
-      throw new Exception("Cinema do not exist in cineplex.");
+      throw new Exception("Cinema already exist in cineplex.");
     }
     cinemasArr.add(cinema);
   }
