@@ -20,17 +20,11 @@ public class SeatingPlan {
     this.aisle = aisle;
   }
 
-  public int remainingSeats(ArrayList<Seat> takenSeatsArr) throws Exception {
-    int totalSeats = rows * cols;
-    int takenSeats = takenSeatsArr.size();
-    if(takenSeats > totalSeats) throw new Exception("Error: more takenSeats than totalSeats!");
-    return totalSeats - takenSeats;
+  public int remainingSeats(ArrayList<Seat> takenSeatsArr){
+    return Math.max((rows*cols - takenSeatsArr.size()),0);
   }
 
   public boolean isSeatAvailable(ArrayList<Seat> takenSeatsArr, Seat seat) {
-    for(Seat checkSeat: takenSeatsArr){
-		if(checkSeat == seat) return false;
-	}
-    return true;
+    return takenSeatsArr.contains(seat);
   }
 }
