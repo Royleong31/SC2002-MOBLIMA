@@ -31,25 +31,23 @@ public class BookingManager {
    * @param ticketType
    */
   public void makeBooking(MovieGoerAccount movieGoer, Screening screening, ArrayList<Seat> seatsArr, enums.TicketType ticketType) throws Exception {
-		
     ArrayList<Ticket> ticketsArr = new ArrayList<Ticket>();
     for(int i=0;i<seatsArr.size();i++){
 			
       if(seatsArr.size()>1 && i<=seatsArr.size()-2){
         if(Math.abs((seatsArr.get(i)).getSeatNumber()-(seatsArr.get(i+1)).getSeatNumber())>1){
           throw new Exception("Error: seats must be together!");
-		}
-	  }
+        }
+      }
       ticketsArr.add(new Ticket(seatsArr.get(i), screening, ticketType));
-	}
-
+    }
     int amountPaid = 0;
     for(Ticket chosenTicket: ticketsArr){
       amountPaid += utils.PriceUtils.getPrice(chosenTicket);
       //TODO: is this the way to get the prices of the tickets to calculate amount paid?
-      //		Since screening's getPrice() does not take into account the ticket type
-	}
-    bookingsArr.add(new Booking((screening.getCinema()).getId() + DateTime.getDateTime(), movieGoer, amountPaid, ticketsArr));
+      //		    Since screening's getPrice() does not take into account the ticket type
+    }
+    bookingsArr.add(new Booking(screening.getCinemaId() + DateTime.getDateTime(), movieGoer, amountPaid, ticketsArr));
   }
 
   /**
@@ -105,14 +103,14 @@ public class BookingManager {
     for(Booking findBooking: bookingsArr){
       if(findBooking.getId() == bookingId)
       return findBooking;
-	}
+    }
   }
   
   public void deleteTicketsFromBookings(Screening screening){
     for(Booking findBooking: bookingsArr){
       for(Ticket findTicket: findBooking.getTicketsArr()){
         if(findTicket.getScreening() == screening)
-	  findTicket = null;
+          findTicket = null;
       }
     }
   }
