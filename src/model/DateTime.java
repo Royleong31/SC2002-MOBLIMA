@@ -1,61 +1,19 @@
 package model;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
 public class DateTime {
-  private int day;
-  private int month;
-  private int year;
-  private int hour;
-  private int minute;
-
-  // Can be used for public holidays as well
-  // just set hour and minute to 0
-  public DateTime(int day, int month, int year, int hour, int minute) {
-    updateDate(day, month, year, hour, minute);
-  }
-
-  // TODO: Create an overloaded constructor and updateDate method that takes in a Java DateTime object and parses it into day, month, year
-  // TODO: Add check for weekend (can be done with java default date time object i think, with that, it's easier to calculate price)
-
-  public int getDay() {
-    return day;
-  }
-
-  public int getMonth() {
-    return month;
-  }
-
-  public int getYear() {
-    return year;
-  }
-
-  public int getHour() {
-    return hour;
-  }
-
-  public int getMinute() {
-    return minute;
-  }
 
   /**
-   * Checks if it's a valid date
-   * @param day
-   * @param month
-   * @param year
+   * formats the date and time(in 24H) to a string
+   * @return formatted date and time
    */
-  public void updateDate(int day, int month, int year, int hour, int minute) {
-    this.day = day;
-    this.month = month;
-    this.year = year;
-    this.hour = hour;
-    this.minute = minute;
-  }
-
-  /**
-   * formats the date to a string
-   * @return formatted date
-   */
-  public String getDate() {
-    return "";
+  public static String getDateTime() {
+    SimpleDateFormat dateForm = new SimpleDateFormat("yyyyMMddHHmm");
+    dateForm.setTimeZone(TimeZone.getTimeZone("GMT+8:00"));
+    return dateForm.format(new java.util.Date());
   }
   
 }
