@@ -4,8 +4,8 @@ package model;
  * Account for a staff member.
  * Contains the staff id
  *
- @author Roy Leong
- @version 1.0
+ @author Roy Leong, Augustine Lee
+ @version 1.1
  @since 2022-10-30
 */
 public class Seat {
@@ -17,5 +17,13 @@ public class Seat {
     this.seatNumber = seatNumber;
     this.seatTaken = seatTaken;
     //this.affiliatedTicket = affiliatedTicket;
+  }
+
+  public int getSeatNumber() {
+    return seatNumber;
+  }
+
+  public boolean isSeatTaken() {
+    return seatTaken;
   }
 }
