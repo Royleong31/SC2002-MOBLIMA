@@ -107,4 +107,13 @@ public class BookingManager {
       return findBooking;
 	}
   }
+  
+  public void deleteTicketsFromBookings(Screening screening){
+    for(Booking findBooking: bookingsArr){
+      for(Ticket findTicket: findBooking.getTicketsArr()){
+        if(findTicket.getScreening() == screening)
+	  findTicket = null;
+      }
+    }
+  }
 }
