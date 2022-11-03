@@ -18,4 +18,8 @@ public class Seat {
     this.seatTaken = seatTaken;
     this.affiliatedTicket = affiliatedTicket;
   }
+
+  public void setTaken() {
+    this.seatTaken = true;
+  }
 }
