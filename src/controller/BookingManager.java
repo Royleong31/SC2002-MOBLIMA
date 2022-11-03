@@ -7,6 +7,7 @@ import model.Movie;
 import model.Screening;
 import model.Seat;
 import enums.ShowStatus;
+import enums.TicketType;
 import model.Ticket;
 import model.Account.MovieGoerAccount;
 
@@ -28,7 +29,7 @@ public class BookingManager {
    * @param seat
    * @param ticketType
    */
-  public void makeBooking(MovieGoerAccount movieGoer, Screening screening, Seat seat, Ticket ticketType) {
+  public void makeBooking(MovieGoerAccount movieGoer, Screening screening, ArrayList<Seat> seats, TicketType ticketType) {
   }
 
   /**

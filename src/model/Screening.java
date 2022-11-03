@@ -45,4 +45,14 @@ public class Screening {
   public void setDateTime(DateTime dateTime) {
     this.dateTime = dateTime;
   }
+
+  public Cinema getCinema() {
+    return this.cinema;
+  }
+
+  public ArrayList<Seat> getSeats() {
+    return this.seats;
+  }
+
+  // TODO: Get seat from seat ID
 }

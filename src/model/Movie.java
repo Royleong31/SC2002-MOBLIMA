@@ -57,4 +57,8 @@ public class Movie {
     // loop through the list of reviews and get the average rating
     return 0.0f;
   }
+
+  public String getTitle() {
+    return this.title;
+  }
 }

@@ -37,5 +37,8 @@ public class Cinema {
     return seatingPlan;
   }
 
+  public String getId() {
+    return this.id;
+  }
 
 }

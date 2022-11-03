@@ -1,9 +1,16 @@
 package view;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import controller.ReviewManager;
+import enums.ShowStatus;
+import enums.SortCriteria;
+import enums.TicketType;
 import model.Booking;
+import model.Movie;
+import model.Review;
+import model.Screening;
 import model.Seat;
 import model.Account.Account;
 import model.Account.MovieGoerAccount;
@@ -19,17 +26,28 @@ import utils.Utils;
 */
 public class MovieGoerConsole extends ParentConsole {
   /**
-   * Handles state and methods related to reviews
-   */
-  private final ReviewManager reviewManager = new ReviewManager();
-
-  /**
    * Displays all reviews that have been made by this user
    * @param movieGoerAccount
    */
   public void submitReview(MovieGoerAccount movieGoerAccount) {
     // get the movie from super.getMovie()
     // get the user's review and rating and creates a review
+    try {
+      Movie movie = super.getMovie(Utils.asArrayList(SortCriteria.TITLE), Utils.asArrayList(ShowStatus.NOW_SHOWING));
+
+      Scanner scannerObj = new Scanner(System.in);
+      System.out.println("Please enter your comments: ");
+      String comments = scannerObj.nextLine();
+      System.out.println("Please enter your rating (1-5): ");
+      float rating = scannerObj.nextFloat();
+      scannerObj.close();
+
+      Review review = new Review(movie, comments, rating, movieGoerAccount);
+      super.getReviewManager().addReview(review);
+    } catch (Exception e) {
+      System.out.println("Something went wrong while booking your tickets");
+      System.out.println(e.getMessage());
+    }
   }
 
   /**
@@ -39,14 +57,50 @@ public class MovieGoerConsole extends ParentConsole {
    * which is then passed to BookingManager to make the booking
    * @param movieGoerAccount
    */
-  public void makeBooking(MovieGoerAccount movieGoerAccount) {}
+  public void makeBooking(MovieGoerAccount movieGoerAccount) {
+    try {
+      Movie movie = super.getMovie(Utils.asArrayList(SortCriteria.TITLE), Utils.asArrayList(ShowStatus.NOW_SHOWING));
+      Screening screening = super.getScreening(movie);
+      ArrayList<Seat> seats = this.selectSeats(screening);
+      String userChoice = super.getUserChoiceFromCount("Choose a screening", TicketType.values().length);
+      TicketType ticketType = TicketType.values()[Integer.parseInt(userChoice)];
+
+      super.getBookingManager().makeBooking(movieGoerAccount, screening, seats, ticketType);
+    } catch (Exception e) {
+      System.out.println("Something went wrong while booking your tickets");
+      System.out.println(e.getMessage());
+    }
+  }
 
   /**
    * Allows the user to select seats for a booking
    * uses super.getScreening() to get the screening that the user wants to book
    */
-  private ArrayList<Seat> selectSeats(MovieGoerAccount movieGoerAccount) {
-    return null;
+  private ArrayList<Seat> selectSeats(Screening screening) {
+    // TODO: Confirm the seat selection display, need to wait for the screenings to be done before this is done
+    for (int i=0; i<screening.getSeats().size(); i++) {
+      System.out.println("Seat Number: " + screening.getSeats().get(i).toString());
+    }
+
+    Scanner scannerObj = new Scanner(System.in);
+    ArrayList<Seat> seats = new ArrayList<Seat>();
+    System.out.println("Enter the seat ID that you want to book (Enter 'done' when you are done): ");
+
+    while (true) {
+      String seatId = scannerObj.nextLine();
+      if (seatId == "done") {
+        break;
+      }
+      Seat seat = screening.getSeatFromId(seatId);
+      if (seat == null) {
+        System.out.println("Invalid seat number");
+        continue;
+      }
+      seats.add(seat);
+    }
+    scannerObj.close();
+
+    return seats;
   }
 
   /**
@@ -54,15 +108,28 @@ public class MovieGoerConsole extends ParentConsole {
    * @param movieGoerAccount
    */
   public void viewBookingHistory(MovieGoerAccount movieGoerAccount) {
+    try {
+      ArrayList<Booking> bookings = super.getBookingManager().getBookingsByUser(movieGoerAccount);
+      for (Booking booking : bookings) {
+        System.out.println(booking);
+      }
+    } catch (Exception e) {
+      System.out.println("Something went wrong while getting your booking history");
+      System.out.println(e.getMessage());
+    }
 
   }
 
   @Override
   public void display(Account account) {
-    String userSelection = this.getUserChoice("Enter '1' to submit review, \n'2' to make booking, \n'3' to view booking history, \n'4' to quit", Utils.asArrayList("1", "2", "3", "4"));
-    if (account instanceof MovieGoerAccount) {
-      throw new Exception("Account is not a MovieGoerAccount");
+    // should never trigger as it can only reach MovieGoerConsole if the logged in user is a MovieGoerAccount
+    if (!(account instanceof MovieGoerAccount)) {
+      System.out.println("Something went wrong in the login process");
+      this.exitProgram();
     }
+    
+    String userSelection = this.getUserChoice("Enter '1' to submit review, \n'2' to make booking, \n'3' to view booking history, \n'4' to quit", Utils.asArrayList("1", "2", "3", "4"));
+
     MovieGoerAccount movieGoerAccount = (MovieGoerAccount) account;
 
     switch (userSelection) {

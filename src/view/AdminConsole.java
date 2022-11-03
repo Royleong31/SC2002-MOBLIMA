@@ -3,6 +3,7 @@ import controller.SalesManager;
 import controller.CineplexManager;
 import model.Movie;
 import model.Account.Account;
+import model.Account.AdminAccount;
 
 
 
@@ -15,16 +16,7 @@ import model.Account.Account;
  @since 2022-10-30
 */
 public class AdminConsole extends ParentConsole {
-  // TODO: Do we need cineplex manager?
-  /**
-   * Handles state and methods related to cineplexes
-   */
-  private CineplexManager cineplexManager = new CineplexManager();
 
-  /**
-   * Helper static class that helps to sort sales related data
-   */
-  private SalesManager salesManager = new SalesManager();
 
   /**
    * Displays the current system configuration
@@ -119,7 +111,11 @@ public class AdminConsole extends ParentConsole {
   }
 
   public void display(Account account) {
-    
+    // should never trigger as it can only reach AdminConsole if the logged in user is a AdminAccount
+    if (!(account instanceof AdminAccount)) {
+      System.out.println("Something went wrong in the login process");
+      this.exitProgram();
+    }
   }
 
 }

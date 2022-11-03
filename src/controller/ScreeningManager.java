@@ -2,6 +2,7 @@ package controller;
 import java.util.ArrayList;
 
 import model.DateTime;
+import model.Movie;
 import model.Screening;
 
 /**
@@ -36,6 +37,11 @@ public class ScreeningManager {
 
   // TODO: Overload this so that it works with diff optional params
   public ArrayList<Screening> getScreenings(String movieTitle, String cinemaCode, String date) {
+  }
+
+  public ArrayList<Screening> getScreenings(String movieTitle) {
+    // Sort by movie
+    return this.screeningsArr;
   }
 
   /**

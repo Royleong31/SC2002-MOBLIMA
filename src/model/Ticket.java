@@ -1,8 +1,6 @@
 package model;
 
-enum TicketType {
-  NORMAL, STUDENT, SENIOR, CHILD
-}
+import enums.TicketType;
 
 /**
  * Account for a staff member.

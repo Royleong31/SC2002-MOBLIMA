@@ -7,14 +7,11 @@ public class Utils {
   /*
    * Creates a new ArrayList from the given array
    */
-  public static ArrayList<String> asArrayList(String... values) {
-    return new ArrayList<String>(Arrays.asList(values));
+  // TODO: Use generics instead of String
+  public static <T> ArrayList<T> asArrayList(T... values) {
+    ArrayList<T> foo = new ArrayList<T>(Arrays.asList(values));
+    foo.removeIf((T value) -> value == null);
+    return new ArrayList<T>(Arrays.asList(values));
   }
-
-  public static ArrayList<Integer> asArrayList(Integer... values) {
-    return new ArrayList<Integer>(Arrays.asList(values));
-  }
-
-//   TODO: Create more overloaded functions if needed
 
 }

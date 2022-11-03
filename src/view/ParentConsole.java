@@ -1,11 +1,16 @@
 package view;
 import controller.ScreeningManager;
+import enums.ShowStatus;
+import enums.SortCriteria;
 import controller.SystemManager;
 import model.Movie;
 import model.Screening;
 import model.Account.Account;
 import controller.MovieManager;
+import controller.ReviewManager;
+import controller.SalesManager;
 import controller.BookingManager;
+import controller.CineplexManager;
 
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -21,31 +26,89 @@ import constants.Constants;
 */
 public abstract class ParentConsole {
   /**
+   * Handles state and methods related to bookings
+   */
+  private BookingManager bookingManager = new BookingManager();
+
+  /**
+   * Handles state and methods related to cineplexes
+   */
+  private CineplexManager cineplexManager = new CineplexManager();
+
+  /**
    * Handles state and methods related to movies
    */
   private MovieManager movieManager = new MovieManager();
+
+  /**
+   * Handles state and methods related to reviews
+   */
+  private final ReviewManager reviewManager = new ReviewManager();
+
+
+
+  /**
+   * Helper static class that helps to sort sales related data
+   */
+  private SalesManager salesManager = new SalesManager();
 
   /**
    * Handles state and methods related to screenings
    */
   private ScreeningManager screeningManager = new ScreeningManager();
 
-  /**
-   * Handles state and methods related to bookings
-   */
-  private BookingManager bookingManager = new BookingManager();
+
 
   /**
    * Handles state and methods related to system configurations
    */
   private SystemManager systemManager = new SystemManager(Constants.DEFAULT_PRICE);
 
+  // TODO: Authorisation check? So that only admins can access admin only stuff
+  protected CineplexManager getCineplexManager() {
+    return this.cineplexManager;
+  }
+
+  protected MovieManager getMovieManager() {
+    return this.movieManager;
+  }
+
+  protected ReviewManager getReviewManager() {
+    return this.reviewManager;
+  }
+
+  protected SalesManager getSalesManager() {
+    return this.salesManager;
+  }
+
+  protected ScreeningManager getScreeningManager() {
+    return this.screeningManager;
+  }
+
+  protected SystemManager getSystemManager() {
+    return this.systemManager;
+  }
+
 
   /**
    * Displays all movies in the system
    */
-  public void displayMovies() {
+  public void displayMovies(ArrayList<Movie> movies) {
+    System.out.println("Movies");
 
+    for (int i = 0; i < movies.size(); i++) {
+      System.out.println(i + ": " + movies.get(i).getTitle());
+    }
+  }
+
+  /**
+   * Displays all movies in the system
+   */
+  public void displayScreenings(ArrayList<Screening> screenings) {
+    for (int i = 0; i < screenings.size(); i++) {
+      Screening screening = screenings.get(i);
+      System.out.println(i + ": Time: " + screening.getDateTime().getDate() + "\n Cinema Code: " + screening.getCinema().getId());
+    }
   }
 
   /**
@@ -54,9 +117,16 @@ public abstract class ParentConsole {
    * Allows the user to pick a movie
    * @return the movie that the user picked
    */
-  protected Movie getMovie() {
-  }
+  // TODO: Add filtering and sorting criteria here so that it can be used by both MovieGoer and Admins
+  // TODO: Add overloads for this matching the MovieManager getMovies function
+  public Movie getMovie(ArrayList<SortCriteria> sortCriterias, ArrayList<ShowStatus> showStatuses) {
+    ArrayList<Movie> movies = this.movieManager.getMovies(sortCriterias, showStatuses);
+    this.displayMovies(movies);
+    String userChoice = this.getUserChoiceFromCount("Choose a movie", movies.size());
 
+    // TODO: Handle exceptions when the index is out of range (should never happen as we are using the size of the array)
+    return movies.get(Integer.parseInt(userChoice));
+  }
   
   /**
    * Helper method that returns all the screenings for a movie that are currently showing 
@@ -64,7 +134,16 @@ public abstract class ParentConsole {
    * @param movie the movie that the user wants to select a screening from
    * @return the screening that the user picked
    */
-  protected Screening getScreening(Movie movie) {
+  // TODO: Add overloaded functions for filtering by cinema code and date
+  public Screening getScreening(Movie movie) {
+    System.out.println("Screenings for " + movie.getTitle());
+    // Currently only gets all screenings for 1 movie
+    ArrayList<Screening> screenings = this.screeningManager.getScreenings(movie.getTitle());
+    this.displayScreenings(screenings);
+
+    String userChoice = this.getUserChoiceFromCount("Choose a screening", screenings.size());
+    // TODO: Handle exceptions when the index is out of range (should never happen as we are using the size of the array)
+    return screenings.get(Integer.parseInt(userChoice));
   }
 
   /**
@@ -86,16 +165,27 @@ public abstract class ParentConsole {
     }
 
     scannerObj.close();
-
     return userInput;
+  }
+
+  protected String getUserChoiceFromCount(String message, int count) {
+    ArrayList<String> validInputs = new ArrayList<String>();
+    for (int i=0; i<count; i++) {
+      validInputs.add(Integer.toString(i));
+    }
+    return this.getUserChoice(message, validInputs);
   }
 
   /**
    * This is the function that is called whenever the program exits, for e.g. when the user chooses to quit the program
    */
   protected void exitProgram() {
-    // save all state into storage
+    // TODO: save all state into storage
     System.exit(0);
+  }
+
+  protected BookingManager getBookingManager() {
+    return this.bookingManager;
   }
 
   /**

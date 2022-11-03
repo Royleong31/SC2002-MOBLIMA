@@ -1,4 +1,4 @@
-package enum;
+package enums;
 
 /**
  * Enum for the different statuses of movies

@@ -1,12 +1,12 @@
 package controller;
+import enums.ShowStatus;
+import enums.SortCriteria;
 
 import java.util.ArrayList;
 
 import model.Movie;
 
-enum SortCriteria {
-  TITLE, RATING, SALES
-}
+
 
 /**
  * Account for a staff member.
@@ -36,6 +36,10 @@ public class MovieManager {
   }
 
   public ArrayList<Movie> getMovies(SortCriteria sortCriteria){
+    return moviesArr;
+  }
+
+  public ArrayList<Movie> getMovies(){
     return moviesArr;
   }
 
