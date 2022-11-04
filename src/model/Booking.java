@@ -5,12 +5,12 @@ import java.util.ArrayList;
 import model.Account.MovieGoerAccount;
 
 /**
- * Account for a staff member.
- * Contains the staff id
+ * Booking information for each movie goer.
+ * Contains overall information with regards to booking. 
  *
- @author Roy Leong
- @version 1.0
- @since 2022-10-30
+ @author Roy Leong, Ryan Ng
+ @version 1.1
+ @since 2022-11-02
 */
 public class Booking {
   /**
