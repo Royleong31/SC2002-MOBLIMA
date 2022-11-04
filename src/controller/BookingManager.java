@@ -58,7 +58,8 @@ public class BookingManager {
    */
   public ArrayList<Seat> getAvailableSeats(Screening screening) {
     ArrayList<Seat> allSeats = screening.getSeats();
-    return (allSeats.removeAll(screening.getTakenSeats());
+    allSeats.removeAll(screening.getTakenSeats());
+    return allSeats;
   }
 
   /**
