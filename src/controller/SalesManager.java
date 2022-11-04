@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 
+import utils.SalesUtils;
 import model.Booking;
 
 /**
@@ -11,14 +12,14 @@ import model.Booking;
 public class SalesManager {
 
   public static float getTotalSales(ArrayList<Booking> bookingsArr) {
-    return 0;
+    return SalesUtils.getTotalSales(bookingsArr);
   }
 
   public static float getSalesByMovie(ArrayList<Booking> bookingsArr, String movieTitle) {
-    return 0;
+    return SalesUtils.getSalesByMovie(bookingsArr, movieTitle);
   }
 
   public static float getSalesByCineplex(ArrayList<Booking> bookingsArr, String cinemaCode) {
-    return 0;
+    return SalesUtils.getSalesByCineplex(bookingsArr, cinemaCode);
   }
 }

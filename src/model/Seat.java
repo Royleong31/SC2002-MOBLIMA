@@ -1,5 +1,7 @@
 package model;
 
+import enums.SeatType;
+
 /**
  * Account for a staff member.
  * Contains the staff id
@@ -11,11 +13,13 @@ package model;
 public class Seat {
   private int seatNumber;
   private boolean seatTaken;
+  private SeatType seatType;
   //private Ticket affiliatedTicket; // ?: Is this necessary?
 
-  public Seat(int seatNumber, boolean seatTaken, Ticket affiliatedTicket) {
+  public Seat(int seatNumber, boolean seatTaken, SeatType seatType, Ticket affiliatedTicket) {
     this.seatNumber = seatNumber;
     this.seatTaken = seatTaken;
+    this.seatType = seatType;
     //this.affiliatedTicket = affiliatedTicket;
   }
 
@@ -25,6 +29,10 @@ public class Seat {
 
   public boolean isSeatTaken() {
     return seatTaken;
+  }
+
+  public SeatType getSeatType() {
+    return seatType;
   }
 
 }
