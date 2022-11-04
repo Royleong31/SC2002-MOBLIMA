@@ -3,11 +3,11 @@ import enums.*;
 import java.util.ArrayList;
 
 /**
- * Account for a staff member.
- * Contains the staff id
+ * Movie class
+ * Contains details of movie and get/update functions
  *
- @author Roy Leong
- @version 1.0
+ @author Roy Leong, Augustine Lee
+ @version 1.1
  @since 2022-10-30
 */
 public class Movie {
@@ -56,5 +56,12 @@ public class Movie {
   public float getOverallRating() {
     // loop through the list of reviews and get the average rating
     return 0.0f;
+  }
+
+  /*
+   * Gets title of this movie
+   */
+  public String getTitle() {
+    return this.title;
   }
 }
