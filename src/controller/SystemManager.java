@@ -39,6 +39,10 @@ public class SystemManager {
     return holidaysArr;
   }
 
+  /*
+   * @param CinemaType
+   * @return Float The multiplier for the cinema type
+   */
   public float getCinemaMultiplier(CinemaType ct) throws Exception {
     if (!cinemaMultMap.containsKey(ct)) {
       throw new Exception("Cinema type do not exists.");
@@ -46,10 +50,19 @@ public class SystemManager {
     return cinemaMultMap.get(ct);
   }
 
-  public void setCinemaMultiplier(CinemaType ct, float price) {
-    cinemaMultMap.put(ct, price);
+  /*
+   * @param CinemaType
+   * @param Float The multiplier to set for the cinema type
+   * @return void
+   */
+  public void setCinemaMultiplier(CinemaType ct, float mult) {
+    cinemaMultMap.put(ct, mult);
   }
 
+  /*
+   * @param CinemaType
+   * @return void
+   */
   public void deleteCinemaMultipler(CinemaType ct) throws Exception {
     if (cinemaMultMap.containsKey(ct)) {
       cinemaMultMap.remove(ct);
@@ -57,6 +70,10 @@ public class SystemManager {
     throw new Exception("Cinema type do not exists.");
   }
 
+  /*
+   * @param SeatType
+   * @return Float The multiplier for the seat type
+   */
   public float getSeatMultiplier(SeatType st) throws Exception {
     if (!seatMultMap.containsKey(st)) {
       throw new Exception("Seat type do not exists.");
@@ -64,10 +81,19 @@ public class SystemManager {
     return seatMultMap.get(st);
   }
 
+  /*
+   * @param SeatType
+   * @param Float The multiplier to set for the seat type
+   * @return void
+   */
   public void setSeatMultiplier(SeatType st, float multiplier) {
     seatMultMap.put(st, multiplier);
   }
 
+  /*
+   * @param SeatType
+   * @return void
+   */
   public void deleteSeatMultiplier(SeatType st) throws Exception {
     if (seatMultMap.containsKey(st)) {
       seatMultMap.remove(st);
@@ -75,6 +101,10 @@ public class SystemManager {
     throw new Exception("Seat type do not exists.");
   }
 
+  /*
+   * @param FilterType
+   * @return void
+   */
   public void addFilter(FilterType ft) throws Exception {
     if (filtersApplied.contains(ft)) {
       throw new Exception("Filter is already applied");
@@ -82,6 +112,10 @@ public class SystemManager {
     filtersApplied.add(ft);
   }
 
+  /*
+   * @param FilterType
+   * @return void
+   */
   public void deleteFilter(FilterType ft) throws Exception {
     if (filtersApplied.contains(ft)) {
       filtersApplied.remove(ft);
@@ -89,6 +123,12 @@ public class SystemManager {
     throw new Exception("Filter is not applied");
   }
 
+  /*
+   * @param Int year
+   * @param Int month
+   * @param Int day
+   * @return void
+   */
   public void deleteHoliday(int year, int month, int day) throws Exception {
     String dateString = day + "." + month + "." + year;
     if (!holidaysArr.contains(dateString)) {
@@ -97,6 +137,12 @@ public class SystemManager {
     holidaysArr.removeIf(value -> dateString.equals(value));
   }
 
+  /*
+   * @param Int year
+   * @param Int month
+   * @param Int day
+   * @return void
+   */
   public void addHoliday(int year, int month, int day) throws Exception {
     String dateString = day + "." + month + "." + year;
     if (holidaysArr.contains(dateString)) {
@@ -105,6 +151,10 @@ public class SystemManager {
     holidaysArr.add(dateString);
   }
 
+  /*
+   * @param String dateString
+   * @return Boolean whether the dateString is in the holidays array
+   */
   public boolean isHoliday(String dateString) throws Exception {
     String reconstructedDateString = DateTimeUtils.dateTimeToDate(dateString) + "." + DateTimeUtils.dateTimeToMonth(dateString) + "." + DateTimeUtils.dateTimeToYear(dateString);
     return holidaysArr.contains(reconstructedDateString);
