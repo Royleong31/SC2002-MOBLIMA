@@ -1,34 +1,53 @@
 package controller;
 
 import java.util.ArrayList;
+import java.lang.Math;
 
 import model.Booking;
-import model.Movie;
 import model.Screening;
 import model.Seat;
-import enums.ShowStatus;
 import model.Ticket;
 import model.Account.MovieGoerAccount;
+import utils.DateTimeUtils;
+import utils.PriceUtils;
+import enums.TicketType;
 
 /**
  * Handles the booking of tickets for a movie screening.
  *
- @author Roy Leong
- @version 1.0
+ @author Roy Leong, Ryan Ng
+ @version 1.1
  @since 2022-10-30
 */
 public class BookingManager {
   private ArrayList<Booking> bookingsArr = new ArrayList<Booking>();
-
+  
   /**
    * Creates a booking from the user's choice of screening and seats.
-   * Multiple tickets can be created from a single booking.
+   * Multiple tickets of the same type and screening can be created in a single booking.
    * @param movieGoer
    * @param screening
-   * @param seat
+   * @param seatsArr
    * @param ticketType
    */
-  public void makeBooking(MovieGoerAccount movieGoer, Screening screening, Seat seat, Ticket ticketType) {
+  public void makeBooking(MovieGoerAccount movieGoer, Screening screening, ArrayList<Seat> seatsArr, enums.TicketType ticketType) throws Exception {
+    ArrayList<Ticket> ticketsArr = new ArrayList<Ticket>();
+    for(int i=0;i<seatsArr.size();i++){
+			
+      if(seatsArr.size()>1 && i<=seatsArr.size()-2){
+        if(Math.abs((seatsArr.get(i)).getSeatNumber()-(seatsArr.get(i+1)).getSeatNumber())>1){
+          throw new Exception("Error: seats must be together!");
+        }
+      }
+      ticketsArr.add(new Ticket(seatsArr.get(i), screening, ticketType));
+    }
+    int amountPaid = 0;
+    for(Ticket chosenTicket: ticketsArr){
+      amountPaid += utils.PriceUtils.getPrice(chosenTicket);
+      //TODO: is this the way to get the prices of the tickets to calculate amount paid?
+      //		    Since screening's getPrice() does not take into account the ticket type
+    }
+    bookingsArr.add(new Booking(screening.getCinemaId() + DateTimeUtils.getDateTime(), movieGoer, amountPaid, ticketsArr));
   }
 
   /**
@@ -38,7 +57,9 @@ public class BookingManager {
    * @return
    */
   public ArrayList<Seat> getAvailableSeats(Screening screening) {
-
+    ArrayList<Seat> allSeats = screening.getSeats();
+    allSeats.removeAll(screening.getTakenSeats());
+    return allSeats;
   }
 
   /**
@@ -48,7 +69,7 @@ public class BookingManager {
    * @return whether the seat in a screening is available
    */
   public boolean isSeatAvailable(Screening screening, Seat seat) {
-    return false;
+    return screening.checkIfSeatIsAvailable(seat);
   }
 
 
@@ -65,9 +86,14 @@ public class BookingManager {
    * @param movieGoer
    * @return
    */
-  public ArrayList<Booking> getBookingsByUser(MovieGoerAccount movieGoer) {
-    // TODO: Filter by the movieGoer
-    return bookingsArr;
+  public ArrayList<Booking> getBookingsByUser(MovieGoerAccount movieGoer){
+    ArrayList<Booking> checkArr = new ArrayList<Booking>();
+	
+    for(Booking findBooking: bookingsArr){
+      if(findBooking.getMovieGoer() == movieGoer)
+        checkArr.add(findBooking);
+    }
+    return checkArr;
   }
 
   /**
@@ -75,7 +101,19 @@ public class BookingManager {
    * @param bookingId
    * @return the booking that matches this booking id
    */
-  public Booking getBookingById(int bookingId) {
-    
+  public Booking getBookingById(String bookingId){
+    for(Booking findBooking: bookingsArr){
+      if(findBooking.getId() == bookingId)
+      return findBooking;
+    }
+  }
+  
+  public void deleteTicketsFromBookings(Screening screening){
+    for(Booking findBooking: bookingsArr){
+      for(Ticket findTicket: findBooking.getTicketsArr()){
+        if(findTicket.getScreening() == screening)
+          findTicket = null;
+      }
+    }
   }
 }

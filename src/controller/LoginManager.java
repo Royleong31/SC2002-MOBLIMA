@@ -1,8 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
-
-import model.Account.Account;
+import model.Account.*;
 
 enum LogInStatus {
   LOGIN,
@@ -10,45 +9,93 @@ enum LogInStatus {
   ADMIN
 }
 
-enum AccountType {
-  MOVIE_GOER,
-  ADMIN
-}
-
 /**
- * Account for a staff member.
- * Contains the staff id
+ * Manager for login process
+ * Aggregation relationship with Account class
+ * Accounts are part of LoginManager
  *
- @author Roy Leong
- @version 1.0
+ @author Roy Leong, Ryan Ng
+ @version 1.1
  @since 2022-10-30
 */
 public class LoginManager {
+  /**
+   * The current user and his/her status.
+   * There will be no mutator for this.
+   */
   private Account currentAccount = null;
-  private ArrayList<Account> usersArr;
-
+  
+  /**
+   * The list of user accounts.
+   */
+  private ArrayList<Account> usersArr = new ArrayList<Account>();
 
   /**
-   * @param username
-   * @param password
-   * @param accountType
-   * @return the logged in account
+   * Registers new staff/admin account, logged in after registering.
+   * @param username This new account's username.
+   * @param password This new account's password.
+   * @param id This new account's id, used to create staffId. 
+   * @return currentAccount The new staff account.
    */
-  public Account login(String username, String password, AccountType accountType) {
-    // currentAccount = account;
-    return null;
+     
+  public Account register(String username, String password, String id) throws Exception {
+	
+	if(checkIfExists(username)==null){
+		
+		currentAccount = new StaffAccount(username, password, "CS"+id);
+		usersArr.add(currentAccount);
+		return currentAccount;
+	}
+	throw new Exception("Error: username or account exists!");
+  }
+  
+    /**
+   * Registers new movie goer account, logged in after registering.
+   * @param username This new account's username.
+   * @param password This new account's password.
+   * @param name This new user's name.
+   * @param phoneNumber This new user's phone number.
+   * @param email This new user's email address.
+   * @return currentAccount The new movie goer account.
+   */
+  
+  public Account register(String username, String password, String name, String phoneNumber, String email) throws Exception{
+	
+	if(checkIfExists(username)==null){
+
+		currentAccount = new MovieGoerAccount(username, password, name, phoneNumber, email);
+		usersArr.add(currentAccount);
+		return currentAccount;
+	}
+	throw new Exception("Error: username or account exists!");
+  }
+  
+  /**
+   * Checks array of user accounts if the username is already used.
+   * @return Account The account that matches input username.
+   */
+  public Account checkIfExists(String username){
+	  for(Account check : usersArr){
+		  if(username == check.getUsername())
+			  return check;
+	  }
+	  return null;
   }
 
   /**
-   * Takes in username and password 
-   * Creates an admin account if accountType == ADMIN, else creates a movie goer account
-   * @param username
-   * @param password
-   * @return the new user account
+   * Log in to account, for both movie goer and staff.
+   * @param username This user's username.
+   * @param password This user's password.
+   * @return currentAccount The logged in account.
    */
-  public Account register(String username, String password, AccountType accountType) {
-    // currentAccount = account;
-    return null;
+  public Account login(String username, String password) throws Exception{  
+	for(Account search : usersArr){
+		if(search.login(username,password)!=null){
+			currentAccount = search;
+			return currentAccount;
+		}
+	}
+	throw new Exception("Error: account not found!");	
   }
 
   /**
@@ -59,18 +106,24 @@ public class LoginManager {
   }
 
   /**
-   * Returns the currently logged in account
-   * @return Account
+   * Gets the current user's account.
+   * @return Account This user's account.
    */
   public Account getCurrentAccount() {
     return currentAccount;
   }
 
   /**
-   * Return the type of the currently logged in user
-   * @return
+   * Gets the login status of the current user.
+   * @return LogInStatus The current state of the log in.
    */
   public LogInStatus getLoginStatus() {
-    return LogInStatus.LOGIN;
+	  if(currentAccount instanceof StaffAccount)
+		  return LogInStatus.ADMIN;
+	  
+	  else if(currentAccount instanceof MovieGoerAccount)
+		  return LogInStatus.MOVIE_GOER;
+	  
+	  return LogInStatus.LOGIN;
   }
 }
