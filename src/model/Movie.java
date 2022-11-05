@@ -36,23 +36,6 @@ public class Movie {
     reviews.add(review);
   }
 
-  // TODO: Update only parts of the movie attributes (allow the user to change only 1 thing without having to retype in everything)
-  // Need to have optional params for each field, and for empty fields, the current one will be used
-
-  // I feel that this can be handled by the console e.g. have default option when user does not key in an option
-  // Individual updates can be done via the movie manager with the user passing in the param they want to change in the form of an option e.g. 1 for title, 2 for synopsis
-  // i.e have individual setter functions instead of a batch setter function
-
-  /*public void setMovieDetails(String title, ShowStatus showingStatus, String synopsis, String director, ArrayList<String> cast, Advisory advisoryRating, Genre genre) {
-    this.title = title;
-    this.showingStatus = showingStatus;
-    this.synopsis = synopsis;
-    this.director = director;
-    this.cast = cast;
-    this.advisoryRating = advisoryRating;
-    this.genre = genre;
-  }*/
-
   public void setTitle(String title) {
     this.title = title;
   }
