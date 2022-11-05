@@ -16,16 +16,12 @@ public class Screening {
   private Movie movie;
   private Cinema cinema;
   private DateTime dateTime;
- 
-
-  private boolean isPH; // TODO: Do we need this? i think we can check the system config if it's a special date
   private ArrayList<Seat> seats = new ArrayList<Seat>();
 
-  public Screening(Movie movie, Cinema cinema, DateTime dateTime, boolean isPH, float price) {
+  public Screening(Movie movie, Cinema cinema, DateTime dateTime, float price) {
     this.movie = movie;
     this.cinema = cinema;
     this.dateTime = dateTime;
-    this.isPH = isPH;
   }
 
   public void addSeat(Seat seat) {
