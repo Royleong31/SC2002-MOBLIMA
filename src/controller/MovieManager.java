@@ -27,78 +27,89 @@ public class MovieManager {
   }
 
   public void deleteMovie(Movie movie){
-    this.moviesArr.remove(movie);
+    updateMovieShowingStatus(movie, ShowStatus.END_OF_SHOWING);
   }
 
-  /*public void updateMovie(Movie old_movie, Movie updated_movie){
-    // Can be changed to modifying the movie object instead of method below
-    this.moviesArr.remove(old_movie);
-    this.moviesArr.add(updated_movie);
-  }*/
+  public void updateMovieShowingStatus(Movie movie, ShowStatus showStatus) {
+    movie.setShowingStatus(showStatus);
+  }
 
-  // Not sure if I should handle the logic or leave it up to the console and I create multiple update method for this method :/
-  public void updateMovie(Movie movie, int choice, String input){
-    switch(choice) {
-      case 1:
-        movie.setTitle(input);
-      case 2:
-        movie.setSynopsis(input);
-      case 3:
-        movie.setDirector(input);
+  public void updateMovie(Movie movie, String title, String synopsis, String director, ArrayList<String> cast, Advisory advisoryRating, Genre genre, ShowStatus showStatus) {
+    if (!title.equals("")) {
+      movie.setTitle(title);
+    }
+    if (!synopsis.equals("")) {
+      movie.setSynopsis(synopsis);
+    }
+    if (!director.equals("")) {
+      movie.setDirector(director);
+    }
+    if (!cast.isEmpty()) {
+      movie.setCast(cast);
+    }
+    if (advisoryRating != Advisory.NULL) {
+      movie.setAdvisoryRating(advisoryRating);
+    }
+    if (genre != Genre.NULL) {
+      movie.setGenre(genre);
+    }
+    if(showStatus != ShowStatus.NULL) {
+      movie.setShowingStatus(showStatus);
     }
   }
 
-  public void updateMovie(Movie movie, ArrayList<String> cast) {
-    movie.setCast(cast);
-  }
-  
-  public void updateMovie(Movie movie, Advisory advisoryRating) {
-    movie.setAdvisoryRating(advisoryRating);
-  }
+  public ArrayList<Movie> getMovies(SortCriteria sortingCriteria, ArrayList<ShowStatus> showStatuses) {
+    ArrayList<Movie> movieLst = new ArrayList<Movie>();
 
-  public void updateMovie(Movie movie, Genre genre) {
-    movie.setGenre(genre);
-  }
+    // First attempt to filter movies by show statuses if applicable else copies the full exsisting movie list
+    if (showStatuses.isEmpty()) {
+      movieLst = (ArrayList<Movie>) moviesArr.clone();
+    }
+    else {
+      for (Movie movie : moviesArr) {
+        for (ShowStatus status : showStatuses) {
+          if (movie.getShowingStatus() == status) {
+            movieLst.add(movie);
+          }
+        }
+      }
+    }
 
-  // Idk if should change this method to overload the updateMovie method above... Please advise T^T
-  public void updateMovieShowingStatus(Movie movie, ShowStatus showStatus) {
-    movie.setShowingStatus(showStatus);
+    // Then sorts the list according to a specified sort criteria if applicable
+    if (sortingCriteria == SortCriteria.TITLE) {
+      movieLst.sort((m1, m2) -> m1.getTitle().compareTo(m2.getTitle()));
+    }
+    // Sorts movies by overall rating in descending order
+    else if (sortingCriteria == SortCriteria.RATING) {
+      Comparator<Movie> comparator = (m1, m2) -> ((Float) m1.getOverallRating()).compareTo((Float) m2.getOverallRating());
+      movieLst.sort(comparator.reversed());
+    }
+    else if (sortingCriteria == SortCriteria.SALES) {
+      // Sorts movies by overall sales in descending order
+      BookingManager bManager = new BookingManager();
+      Comparator<Movie> comparator = (m1, m2) -> ((Float) SalesManager.getSalesByMovie(bManager.getBookings(), m1.getTitle())).compareTo(
+                                                  (Float) SalesManager.getSalesByMovie(bManager.getBookings(), m2.getTitle()));
+      movieLst.sort(comparator.reversed());
+    }
+
+    return movieLst;
   }
 
   public ArrayList<Movie> getMovies(){
     return moviesArr;
   }
 
-  public ArrayList<Movie> getMovies(ShowStatus showStatus){
+  public ArrayList<Movie> getMovies(ArrayList<ShowStatus> showStatus){
     ArrayList<Movie> filteredArr = new ArrayList<Movie>();
-
-    for (Movie movie : moviesArr) {
-      if (movie.getShowingStatus() == showStatus) {
-        filteredArr.add(movie);
-      }
-    }
-
+    filteredArr = getMovies(SortCriteria.NULL, showStatus);
     return filteredArr;
   }
 
   public ArrayList<Movie> getMovies(SortCriteria sortCriteria){
-    ArrayList<Movie> sortedArr = moviesArr;
+    ArrayList<Movie> sortedArr = new ArrayList<Movie>();
+    ArrayList<ShowStatus> showStatuses = new ArrayList<ShowStatus>();
 
-    if (sortCriteria == SortCriteria.TITLE) {
-      sortedArr.sort((m1, m2) -> m1.getTitle().compareTo(m2.getTitle()));
-    }
-    // Sorts movies by overall rating in descending order
-    else if (sortCriteria == SortCriteria.RATING) {
-      Comparator<Movie> comparator = (m1, m2) -> ((Float) m1.getOverallRating()).compareTo((Float) m2.getOverallRating());
-      sortedArr.sort(comparator.reversed());
-    }
-    else if (sortCriteria == SortCriteria.SALES) {
-      /* NOT TESTED! Test when integrating with SalesManager */
-      BookingManager bManager = new BookingManager();
-      Comparator<Movie> comparator = (m1, m2) -> ((Float) SalesManager.getSalesByMovie(bManager.getBookings(), m1.getTitle())).compareTo(
-                                                  (Float) SalesManager.getSalesByMovie(bManager.getBookings(), m2.getTitle()));
-      sortedArr.sort(comparator.reversed());
-    }
+    sortedArr = getMovies(sortCriteria, showStatuses);
 
     return sortedArr;
   }

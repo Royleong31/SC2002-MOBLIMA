@@ -31,39 +31,46 @@ public class ScreeningManager {
     screening.setDateTime(newDateTime);
   }
 
-  /*
-   * Needs to cascade and delete all tickets related to the screening
-   * Do we need this? It's not listed in the brief
-   */
-  public void deleteScreening(Screening screening) {
-    BookingManager bManager = new BookingManager();
+  public void deleteScreening(Screening screening, BookingManager bManager) {
     bManager.deleteTicketsFromBookings(screening);
   }
 
-  // TODO: Overload this so that it works with diff optional params (Can we pass in the movie object
-  // cinema object and date object instead of strings to overload)
   public ArrayList<Screening> getScreenings(String movieTitle, String cinemaCode, String date) {
     ArrayList<Screening> screenings = new ArrayList<Screening>();
 
-    for (Screening screening : screeningsArr) {
-      if (screening.getMovieTitle().equals(movieTitle) && screening.getCinemaId().equals(cinemaCode) && screening.getDateTime().equals(date)) {
-        screenings.add(screening);
+    if (!(movieTitle.equals("")) && !(cinemaCode.equals("")) && !(date.equals(""))) {
+      for (Screening screening : screeningsArr) {
+        if (screening.getMovieTitle().equals(movieTitle) && screening.getCinemaId().equals(cinemaCode) && screening.getDateTime().equals(date)) {
+          screenings.add(screening);
+        } 
       }
+    }
+    else if (!(movieTitle.equals("")) && !(cinemaCode.equals(""))) {
+      for (Screening screening : screeningsArr) {
+        if (screening.getMovieTitle().equals(movieTitle) && screening.getCinemaId().equals(cinemaCode)) {
+          screenings.add(screening);
+        } 
+      }
+    }
+    else if (!(movieTitle.equals("")) && !(date.equals(""))) {
+      for (Screening screening : screeningsArr) {
+        if (screening.getMovieTitle().equals(movieTitle) && screening.getDateTime().equals(date)) {
+          screenings.add(screening);
+        } 
+      }
+    }
+    else if (!(cinemaCode.equals("")) && !(date.equals(""))) {
+      for (Screening screening : screeningsArr) {
+        if (screening.getCinemaId().equals(cinemaCode) && screening.getDateTime().equals(date)) {
+          screenings.add(screening);
+        } 
+      }
+    }
+    else {
+      return screeningsArr;
     }
 
     return screenings;
   }
 
-  /**
-   * Use the cinema type and the system manager stuff to get the price
-   * Use PriceUtils to calculate the price from the cinema type and date time
-   * @param systemManager
-   * @param screening
-   * @return
-   */
-  public float getPrice(SystemManager systemManager, Screening screening) {
-    // WIP
-    /*Cinema cinema = screening.getCinema();
-    cinema.*/
-  }
 }
