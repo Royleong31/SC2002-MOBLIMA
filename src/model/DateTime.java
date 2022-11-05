@@ -54,7 +54,11 @@ public class DateTime {
    * formats the date to a string
    * @return formatted date
    */
-  public String getDate() {
+  public static String getDateFromString(String dateString) {
+    return "";
+  }
+
+  public static String getStringFromDate(int year, int month, int day) {
     return "";
   }
   

@@ -5,11 +5,11 @@ import java.util.ArrayList;
 import controller.SalesManager;
 
 /**
- * Account for a staff member.
- * Contains the staff id
+ * Movie class
+ * Contains details of movie and get/update functions
  *
- @author Roy Leong
- @version 1.0
+ @author Roy Leong, Augustine Lee
+ @version 1.1
  @since 2022-10-30
 */
 public class Movie {
@@ -122,5 +122,4 @@ public class Movie {
     total /= reviews.size();
     return total;
   }
-
 }

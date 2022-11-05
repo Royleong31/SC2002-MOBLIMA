@@ -3,11 +3,10 @@ package model;
 import java.util.ArrayList;
 
 /**
- * Account for a staff member.
- * Contains the staff id
+ * Seating Plan
  *
- @author Roy Leong
- @version 1.0
+ @author Roy Leong, Ryan Ng
+ @version 1.1
  @since 2022-10-30
 */
 public class SeatingPlan {
@@ -21,14 +20,11 @@ public class SeatingPlan {
     this.aisle = aisle;
   }
 
-  public int remainingSeats(ArrayList<Seat> takenSeatsArr) {
-    int totalSeats = rows * cols;
-    int takenSeats = takenSeatsArr.size();
-    return totalSeats - takenSeats;
+  public int remainingSeats(ArrayList<Seat> takenSeatsArr){
+    return Math.max((rows*cols - takenSeatsArr.size()),0);
   }
 
   public boolean isSeatAvailable(ArrayList<Seat> takenSeatsArr, Seat seat) {
-    // use the arr of taken seats to check if the 
-    return false;
+    return takenSeatsArr.contains(seat);
   }
 }

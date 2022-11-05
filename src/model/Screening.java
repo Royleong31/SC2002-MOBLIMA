@@ -2,8 +2,6 @@ package model;
 
 import java.util.ArrayList;
 
-import model.Cinema.Cinema;
-
 /**
  * Account for a staff member.
  * Contains the staff id
