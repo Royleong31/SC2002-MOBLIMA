@@ -19,6 +19,8 @@ public class Movie {
   private ArrayList<Review> reviews = new ArrayList<Review>();
   private Advisory advisoryRating;
   private Genre genre;
+  private boolean isBlockbuster;
+  private boolean is3D;
 
   public Movie(String title, ShowStatus showingStatus, String synopsis, String director, ArrayList<String> cast, Advisory advisoryRating, Genre genre) {
     setMovieDetails(title, showingStatus, synopsis, director, cast, advisoryRating, genre);
@@ -32,7 +34,7 @@ public class Movie {
 
   // TODO: Update only parts of the movie attributes (allow the user to change only 1 thing without having to retype in everything)
   // Need to have optional params for each field, and for empty fields, the current one will be used
-  public void setMovieDetails(String title, ShowStatus showingStatus, String synopsis, String director, ArrayList<String> cast, Advisory advisoryRating, Genre genre) {
+  public void setMovieDetails(String title, ShowStatus showingStatus, String synopsis, String director, ArrayList<String> cast, Advisory advisoryRating, Genre genre, boolean isBlockbuster, boolean is3D) {
     this.title = title;
     this.showingStatus = showingStatus;
     this.synopsis = synopsis;
@@ -40,6 +42,8 @@ public class Movie {
     this.cast = cast;
     this.advisoryRating = advisoryRating;
     this.genre = genre;
+    this.isBlockbuster = isBlockbuster;
+    this.is3D = is3D;
   }
 
   /**
@@ -63,5 +67,19 @@ public class Movie {
    */
   public String getTitle() {
     return this.title;
+  }
+
+  /*
+   * Gets isBlockbuster value of this movie
+   */
+  public boolean isBlockbuster() {
+    return this.isBlockbuster;
+  }
+
+  /*
+   * Gets is3D value of this movie
+   */
+  public boolean is3D() {
+    return this.is3D;
   }
 }

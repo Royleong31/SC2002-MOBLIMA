@@ -23,12 +23,12 @@ enum SpecialDay {
 */
 public class SystemManager {
   private ArrayList<String> holidaysArr;
-  private HashMap<Enum, Float> cinemaBasePriceMap;
+  private HashMap<Enum, Float> cinemaMultMap;
   private HashMap<Enum, Float> seatMultMap;
   private ArrayList<FilterType> filtersApplied;
 
-  public SystemManager(HashMap<Enum, Float> cinemaBasePriceMap, HashMap<Enum, Float> seatMultMap) {
-    this.cinemaBasePriceMap = cinemaBasePriceMap;
+  public SystemManager(HashMap<Enum, Float> cinemaMultMap, HashMap<Enum, Float> seatMultMap) {
+    this.cinemaMultMap = cinemaMultMap;
     this.seatMultMap = seatMultMap;
     this.filtersApplied = new ArrayList<FilterType>();
     filtersApplied.add(FilterType.SALES);
@@ -39,20 +39,20 @@ public class SystemManager {
     return holidaysArr;
   }
 
-  public float getCinemaBasePrice(CinemaType ct) throws Exception {
-    if (!cinemaBasePriceMap.containsKey(ct)) {
+  public float getCinemaMultiplier(CinemaType ct) throws Exception {
+    if (!cinemaMultMap.containsKey(ct)) {
       throw new Exception("Cinema type do not exists.");
     }
-    return cinemaBasePriceMap.get(ct);
+    return cinemaMultMap.get(ct);
   }
 
-  public void setCinemaBasePrice(CinemaType ct, float price) {
-    cinemaBasePriceMap.put(ct, price);
+  public void setCinemaMultiplier(CinemaType ct, float price) {
+    cinemaMultMap.put(ct, price);
   }
 
-  public void deleteCinemaBasePrice(CinemaType ct) throws Exception {
-    if (cinemaBasePriceMap.containsKey(ct)) {
-      cinemaBasePriceMap.remove(ct);
+  public void deleteCinemaMultipler(CinemaType ct) throws Exception {
+    if (cinemaMultMap.containsKey(ct)) {
+      cinemaMultMap.remove(ct);
     }
     throw new Exception("Cinema type do not exists.");
   }
@@ -106,7 +106,7 @@ public class SystemManager {
   }
 
   public boolean isHoliday(String dateString) throws Exception {
-    String reconstructedDateString = DateTimeUtils.dateTimeToDay(dateString) + "." + DateTimeUtils.dateTimeToMonth(dateString) + "." + DateTimeUtils.dateTimeToYear(dateString);
+    String reconstructedDateString = DateTimeUtils.dateTimeToDate(dateString) + "." + DateTimeUtils.dateTimeToMonth(dateString) + "." + DateTimeUtils.dateTimeToYear(dateString);
     return holidaysArr.contains(reconstructedDateString);
   }
 

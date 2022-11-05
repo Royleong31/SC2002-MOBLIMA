@@ -2,6 +2,7 @@ package utils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.TimeZone;
 import java.lang.Integer;
 
@@ -93,6 +94,36 @@ public class DateTimeUtils {
 	SimpleDateFormat minuteForm = new SimpleDateFormat("mm");
 	return Integer.parseInt(minuteForm.format(actualDateTime));
   }
+
+  /**
+   * @param String The date and time in dd.MM.yyyy.HH.mm format 
+   *        (eg. 31 Dec 1998 7.30pm == 31.12.1998.19.30)
+   * @return String The date and time in dd.MM.yyyy.HH.mm format for the preceding day
+   *        (eg. 31 Dec 1998 7.30pm == 31.12.1998.19.30)
+   */
+  public static String getEveOfDate(String stringDateTime) throws Exception{
+    int date = dateTimeToDate(stringDateTime);
+    int month = dateTimeToMonth(stringDateTime);
+    if (date == 1) {
+      if (month == 1) { /* January */
+        date = 31;
+        month = 12;
+      }
+      else if (month == 3) { /* March */
+        date = 28;
+        month--;
+      }
+      else if (month == 2 || month == 4 || month ==6 || month == 8 || month == 9 || month == 11) { /* Months where preceding months has 31 days */
+        date = 31;
+        month--;
+      }
+      else { /* Months where preceding months has 30 days */
+        date = 30;
+        month--;
+      }
+    }
+    return date + "." + month + stringDateTime.substring(5);
+    }
   
   
   
