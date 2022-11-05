@@ -21,8 +21,9 @@ public class Movie {
   private ArrayList<Review> reviews = new ArrayList<Review>();
   private Advisory advisoryRating;
   private Genre genre;
+  private MovieType type;
 
-  public Movie(String title, ShowStatus showingStatus, String synopsis, String director, ArrayList<String> cast, Advisory advisoryRating, Genre genre) {
+  public Movie(String title, ShowStatus showingStatus, String synopsis, String director, ArrayList<String> cast, Advisory advisoryRating, Genre genre, MovieType type) {
     this.title = title;
     this.showingStatus = showingStatus;
     this.synopsis = synopsis;
@@ -30,6 +31,7 @@ public class Movie {
     this.cast = cast;
     this.advisoryRating = advisoryRating;
     this.genre = genre;
+    this.type = type;
   }
 
   public void addReview(Review review) {
@@ -68,6 +70,10 @@ public class Movie {
     this.genre = genre;
   }
 
+  public void setMovieType(MovieType type) {
+    this.type = type;
+  }
+
   public String getTitle() {
     return this.title;
   }
@@ -94,6 +100,10 @@ public class Movie {
 
   public Genre getGenre() {
     return this.genre;
+  }
+
+  public MovieType getMovieType() {
+    return this.type;
   }
 
   public ArrayList<Review> getReviews() {

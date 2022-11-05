@@ -8,6 +8,7 @@ import enums.ShowStatus;
 import enums.SortCriteria;
 import enums.Advisory;
 import enums.Genre;
+import enums.MovieType;
 
 /**
  * Account for a staff member.
