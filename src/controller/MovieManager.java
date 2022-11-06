@@ -48,13 +48,13 @@ public class MovieManager {
     if (!cast.isEmpty()) {
       movie.setCast(cast);
     }
-    if (advisoryRating != Advisory.NULL) {
+    if (advisoryRating != null) {
       movie.setAdvisoryRating(advisoryRating);
     }
-    if (genre != Genre.NULL) {
+    if (genre != null) {
       movie.setGenre(genre);
     }
-    if(showStatus != ShowStatus.NULL) {
+    if(showStatus != null) {
       movie.setShowingStatus(showStatus);
     }
   }

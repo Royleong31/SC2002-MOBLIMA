@@ -40,6 +40,14 @@ public class Movie {
     this.title = title;
   }
 
+  /**
+   * Allows the admins to change the status of the movie
+   * @param showStatus
+   */
+  public void setShowingStatus(ShowStatus showStatus) {
+    this.showingStatus = showStatus;
+  }
+
   public void setSynopsis(String synopsis) {
     this.synopsis = synopsis;
   }
@@ -52,39 +60,16 @@ public class Movie {
     this.cast = cast;
   }
 
+  public void setAdvisoryRating(Advisory advisoryRating) {
+    this.advisoryRating = advisoryRating;
+  }
+
+  public void setGenre(Genre genre) {
+    this.genre = genre;
+  }
+
   public void setMovieType(MovieType type) {
     this.type = type;
-  }
-
-  /**
-   * Allows the admins to change the status of the movie
-   * @param showStatus
-   */
-  public void setShowingStatus(ShowStatus showStatus) throws Exception {
-    if (showStatus != ShowStatus.NULL) {
-      this.showingStatus = showStatus;
-    }
-    else {
-      throw new Exception("Showing status cannot be NULL");
-    }
-  }
-
-  public void setAdvisoryRating(Advisory advisoryRating) throws Exception {
-    if (advisoryRating != Advisory.NULL) {
-      this.advisoryRating = advisoryRating;
-    }
-    else {
-      throw new Exception("Advisory rating cannot be NULL");
-    }
-  }
-
-  public void setGenre(Genre genre) throws Exception {
-    if (genre != Genre.NULL) {
-      this.genre = genre;
-    }
-    else {
-      throw new Exception("Genre cannot be NULL");
-    }
   }
 
   public String getTitle() {
