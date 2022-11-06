@@ -1,6 +1,8 @@
 package utils;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.TimeZone;
@@ -125,6 +127,10 @@ public class DateTimeUtils {
     else {
       date--;
     }
+    Date eve =new SimpleDateFormat("dd.MM.yyyy.HH.mm").parse(stringDateTime);
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.HH.mm");
+    LocalDateTime dateTime = LocalDateTime.parse("01.01.1998.19.30", formatter);
+    LocalDateTime eve = dateTime.minusHours(24);
     return date + "." + month + stringDateTime.substring(5);
     }
   
