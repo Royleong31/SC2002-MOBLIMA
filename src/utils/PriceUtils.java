@@ -32,7 +32,7 @@ public class PriceUtils {
     float seatMultiplier = sm.getSeatMultiplier(seatType);
 
     String eveOfDate = DateTimeUtils.getEveOfDate(dateString);
-    boolean isHoliday = sm.isHoliday(dateString) && sm.isHoliday(eveOfDate);
+    boolean isHoliday = sm.isHoliday(dateString) || sm.isHoliday(eveOfDate);
     boolean isBlockbuster = screening.getMovie().isBlockbuster();
     boolean is3D = screening.getMovie().is3D();
 

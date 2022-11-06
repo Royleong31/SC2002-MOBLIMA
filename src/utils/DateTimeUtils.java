@@ -122,6 +122,9 @@ public class DateTimeUtils {
         month--;
       }
     }
+    else {
+      date--;
+    }
     return date + "." + month + stringDateTime.substring(5);
     }
   
