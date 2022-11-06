@@ -38,15 +38,15 @@ public class ScreeningManager {
     ArrayList<Screening> screenings = (ArrayList<Screening>) screeningsArr.clone();
 
     for (Screening screening : screenings) {
-      if (!screening.getMovieTitle().equals(movieTitle) && (!movieTitle.equals(""))) {
+      if ((!screening.getMovieTitle().equals(movieTitle)) && (!movieTitle.equals(""))) {
         screenings.remove(screening);
         continue;
       }
-      if (!screening.getCinemaId().equals(cinemaCode) && (!cinemaCode.equals(""))) {
+      if ((!screening.getCinemaId().equals(cinemaCode)) && (!cinemaCode.equals(""))) {
         screenings.remove(screening);
         continue;
       }
-      if (!screening.getDateTime().equals(date) && (!date.equals(""))) {
+      if ((!screening.getDateTime().equals(date)) && (!date.equals(""))) {
         screenings.remove(screening);
         continue;
       }
