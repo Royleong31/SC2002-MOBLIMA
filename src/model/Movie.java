@@ -19,9 +19,11 @@ public class Movie {
   private ArrayList<Review> reviews = new ArrayList<Review>();
   private Advisory advisoryRating;
   private Genre genre;
+  private boolean isBlockbuster;
+  private boolean is3D;
   private MovieType type;
 
-  public Movie(String title, ShowStatus showingStatus, String synopsis, String director, ArrayList<String> cast, Advisory advisoryRating, Genre genre, MovieType type) {
+  public Movie(String title, ShowStatus showingStatus, String synopsis, String director, ArrayList<String> cast, Advisory advisoryRating, Genre genre, boolean isBlockbuster, boolean is3D) {
     this.title = title;
     this.showingStatus = showingStatus;
     this.synopsis = synopsis;
@@ -29,9 +31,10 @@ public class Movie {
     this.cast = cast;
     this.advisoryRating = advisoryRating;
     this.genre = genre;
-    this.type = type;
+    this.isBlockbuster = isBlockbuster;
+    this.is3D = is3D;
   }
-
+  
   public void addReview(Review review) {
     reviews.add(review);
   }
@@ -68,8 +71,12 @@ public class Movie {
     this.genre = genre;
   }
 
-  public void setMovieType(MovieType type) {
-    this.type = type;
+  public void setBlockbuster(boolean isBlockbuster) {
+    this.isBlockbuster = isBlockbuster;
+  }
+  
+   public void set3D(boolean is3D) {
+    this.is3D = is3D;
   }
 
   public String getTitle() {
@@ -119,5 +126,19 @@ public class Movie {
     }
     total /= reviews.size();
     return total;
+  }
+
+  /*
+   * Gets isBlockbuster value of this movie
+   */
+  public boolean isBlockbuster() {
+    return this.isBlockbuster;
+  }
+
+  /*
+   * Gets is3D value of this movie
+   */
+  public boolean is3D() {
+    return this.is3D;
   }
 }

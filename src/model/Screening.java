@@ -13,10 +13,10 @@ import java.util.ArrayList;
 public class Screening {
   private Movie movie;
   private Cinema cinema;
-  private DateTime dateTime;
+  private String dateTime;
   private ArrayList<Seat> seats = new ArrayList<Seat>();
 
-  public Screening(Movie movie, Cinema cinema, DateTime dateTime, float price) {
+  public Screening(Movie movie, Cinema cinema, String dateTime, float price) {
     this.movie = movie;
     this.cinema = cinema;
     this.dateTime = dateTime;
@@ -48,15 +48,20 @@ public class Screening {
     return this.cinema.getId();
   }
 
-  public String getDateTime() {
-    return this.dateTime.getDate();
-  }
-
   public Cinema getCinema() {
     return this.cinema;
   }
 
-  public void setDateTime(DateTime dateTime) {
+   public String getDateTime() {
+    return dateTime;
+   }
+
+  public void setDateTime(String dateTime) {
     this.dateTime = dateTime;
   }
+
+  public Movie getMovie() {
+    return movie;
+  }
+
 }
