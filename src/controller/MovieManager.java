@@ -82,15 +82,13 @@ public class MovieManager {
     }
     // Sorts movies by overall rating in descending order
     else if (sortingCriteria == SortCriteria.RATING) {
-      Comparator<Movie> comparator = (m1, m2) -> ((Float) m1.getOverallRating()).compareTo((Float) m2.getOverallRating());
-      movieLst.sort(comparator.reversed());
+      movieLst.sort((m1, m2) -> ((Float) m2.getOverallRating()).compareTo((Float) m1.getOverallRating()));
     }
     else if (sortingCriteria == SortCriteria.SALES) {
       // Sorts movies by overall sales in descending order
       BookingManager bManager = new BookingManager();
-      Comparator<Movie> comparator = (m1, m2) -> ((Float) SalesManager.getSalesByMovie(bManager.getBookings(), m1.getTitle())).compareTo(
-                                                  (Float) SalesManager.getSalesByMovie(bManager.getBookings(), m2.getTitle()));
-      movieLst.sort(comparator.reversed());
+      movieLst.sort((m1, m2) -> ((Float) SalesManager.getSalesByMovie(bManager.getBookings(), m2.getTitle())).compareTo(
+                                (Float) SalesManager.getSalesByMovie(bManager.getBookings(), m1.getTitle())));
     }
 
     return movieLst;

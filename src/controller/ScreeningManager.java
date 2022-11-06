@@ -3,7 +3,6 @@ import java.util.ArrayList;
 
 import model.DateTime;
 import model.Screening;
-import model.Cinema.Cinema;
 
 /**
  * Account for a staff member.
@@ -36,38 +35,21 @@ public class ScreeningManager {
   }
 
   public ArrayList<Screening> getScreenings(String movieTitle, String cinemaCode, String date) {
-    ArrayList<Screening> screenings = new ArrayList<Screening>();
+    ArrayList<Screening> screenings = (ArrayList<Screening>) screeningsArr.clone();
 
-    if (!(movieTitle.equals("")) && !(cinemaCode.equals("")) && !(date.equals(""))) {
-      for (Screening screening : screeningsArr) {
-        if (screening.getMovieTitle().equals(movieTitle) && screening.getCinemaId().equals(cinemaCode) && screening.getDateTime().equals(date)) {
-          screenings.add(screening);
-        } 
+    for (Screening screening : screenings) {
+      if (!screening.getMovieTitle().equals(movieTitle) && (!movieTitle.equals(""))) {
+        screenings.remove(screening);
+        continue;
       }
-    }
-    else if (!(movieTitle.equals("")) && !(cinemaCode.equals(""))) {
-      for (Screening screening : screeningsArr) {
-        if (screening.getMovieTitle().equals(movieTitle) && screening.getCinemaId().equals(cinemaCode)) {
-          screenings.add(screening);
-        } 
+      if (!screening.getCinemaId().equals(cinemaCode) && (!cinemaCode.equals(""))) {
+        screenings.remove(screening);
+        continue;
       }
-    }
-    else if (!(movieTitle.equals("")) && !(date.equals(""))) {
-      for (Screening screening : screeningsArr) {
-        if (screening.getMovieTitle().equals(movieTitle) && screening.getDateTime().equals(date)) {
-          screenings.add(screening);
-        } 
+      if (!screening.getDateTime().equals(date) && (!date.equals(""))) {
+        screenings.remove(screening);
+        continue;
       }
-    }
-    else if (!(cinemaCode.equals("")) && !(date.equals(""))) {
-      for (Screening screening : screeningsArr) {
-        if (screening.getCinemaId().equals(cinemaCode) && screening.getDateTime().equals(date)) {
-          screenings.add(screening);
-        } 
-      }
-    }
-    else {
-      return screeningsArr;
     }
 
     return screenings;
