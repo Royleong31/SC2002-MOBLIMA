@@ -1,5 +1,5 @@
 package enums;
 
 public enum TicketType {
-  NORMAL, STUDENT, SENIOR, CHILD
+  NORMAL, STUDENT, SENIOR, CARDS;
 }

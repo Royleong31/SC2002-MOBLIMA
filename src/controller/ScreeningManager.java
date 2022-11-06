@@ -14,44 +14,36 @@ import model.Screening;
  @since 2022-10-30
 */
 public class ScreeningManager {
-  private ArrayList<Screening> screeningsArr;
+  private ArrayList<Screening> screeningsArr = new ArrayList<Screening>();
 
   public void addScreening(Screening screening) {
+    screeningsArr.add(screening);
   }
 
   /**
+   * 
    * Update the showtime of a screening
    * Need to call the setDateTime method on screening object
    * @param screening
    * @param newDateTime
    */
   public void updateShowtime(Screening screening, DateTime newDateTime) {
+    screening.setDateTime(newDateTime);
   }
 
-  /*
-   * Needs to cascade and delete all tickets related to the screening
-   * Do we need this? It's not listed in the brief
-   */
-  public void deleteScreening(Screening screening) {
+  public void deleteScreening(Screening screening, BookingManager bManager) {
+    bManager.deleteTicketsFromBookings(screening);
   }
 
-  // TODO: Overload this so that it works with diff optional params
   public ArrayList<Screening> getScreenings(String movieTitle, String cinemaCode, String date) {
+    ArrayList<Screening> screenings = (ArrayList<Screening>) screeningsArr.clone();
+
+    screenings.removeIf(screening -> (((!screening.getMovieTitle().equals(movieTitle)) && (movieTitle != null)) ||
+                                      ((!screening.getCinemaId().equals(cinemaCode)) && (cinemaCode != null)) ||
+                                      ((!screening.getDateTime().equals(date)) && (date != null))
+                                      ));
+
+    return screenings;
   }
 
-  public ArrayList<Screening> getScreenings(String movieTitle) {
-    // Sort by movie
-    return this.screeningsArr;
-  }
-
-  /**
-   * Use the cinema type and the system manager stuff to get the price
-   * Use PriceUtils to calculate the price from the cinema type and date time
-   * @param systemManager
-   * @param screening
-   * @return
-   */
-  public float getPrice(SystemManager systemManager, Screening screening) {
-
-  }
 }
