@@ -104,34 +104,10 @@ public class DateTimeUtils {
    *        (eg. 31 Dec 1998 7.30pm == 31.12.1998.19.30)
    */
   public static String getEveOfDate(String stringDateTime) throws Exception{
-    int date = dateTimeToDate(stringDateTime);
-    int month = dateTimeToMonth(stringDateTime);
-    if (date == 1) {
-      if (month == 1) { /* January */
-        date = 31;
-        month = 12;
-      }
-      else if (month == 3) { /* March */
-        date = 28;
-        month--;
-      }
-      else if (month == 2 || month == 4 || month ==6 || month == 8 || month == 9 || month == 11) { /* Months where preceding months has 31 days */
-        date = 31;
-        month--;
-      }
-      else { /* Months where preceding months has 30 days */
-        date = 30;
-        month--;
-      }
-    }
-    else {
-      date--;
-    }
-    Date eve =new SimpleDateFormat("dd.MM.yyyy.HH.mm").parse(stringDateTime);
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.HH.mm");
-    LocalDateTime dateTime = LocalDateTime.parse("01.01.1998.19.30", formatter);
-    LocalDateTime eve = dateTime.minusHours(24);
-    return date + "." + month + stringDateTime.substring(5);
+    LocalDateTime date = LocalDateTime.parse(stringDateTime, formatter);
+    LocalDateTime eve = date.minusHours(24); //does not edit the original date
+    return formatter.format(eve);
     }
   
   
