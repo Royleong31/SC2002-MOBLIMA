@@ -1,5 +1,5 @@
 package view;
-import controller.SalesManager;
+import utils.SalesUtils;
 import controller.CineplexManager;
 import model.Movie;
 
@@ -19,11 +19,6 @@ public class AdminConsole extends ParentConsole {
    * Handles state and methods related to cineplexes
    */
   private CineplexManager cineplexManager = new CineplexManager();
-
-  /**
-   * Helper static class that helps to sort sales related data
-   */
-  private SalesManager salesManager = new SalesManager();
 
   public AdminConsole() {
     super();
