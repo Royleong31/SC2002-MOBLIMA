@@ -27,4 +27,8 @@ public class SeatingPlan {
   public boolean isSeatAvailable(ArrayList<Seat> takenSeatsArr, Seat seat) {
     return takenSeatsArr.contains(seat);
   }
+
+  public int getAisle() {
+    return this.aisle;
+  }
 }

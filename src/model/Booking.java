@@ -60,8 +60,14 @@ public class Booking {
    * 
    * @return all the tickets booked in this booking
    */
-  public ArrayList<Ticket> getTicketsArr() {
+  public ArrayList<Ticket> getTickets() {
     return ticketsArr;
+  }
+
+  public void setTickets(ArrayList<Ticket> tickets) {
+    ticketsArr = tickets;
+  }
+
   }
 
   /**

@@ -30,7 +30,7 @@ public class BookingManager {
    * @param seatsArr
    * @param ticketType
    */
-  public void makeBooking(MovieGoerAccount movieGoer, Screening screening, ArrayList<Seat> seatsArr, enums.TicketType ticketType) throws Exception {
+  public void makeBooking(MovieGoerAccount movieGoer, Screening screening, ArrayList<Seat> seatsArr, enums.TicketType ticketType, SystemManager systemManager) throws Exception {
     ArrayList<Ticket> ticketsArr = new ArrayList<Ticket>();
     for(int i=0;i<seatsArr.size();i++){
 			
@@ -43,7 +43,7 @@ public class BookingManager {
     }
     int amountPaid = 0;
     for(Ticket chosenTicket: ticketsArr){
-      amountPaid += utils.PriceUtils.getPrice(chosenTicket);
+      amountPaid += utils.PriceUtils.getPrice(systemManager, chosenTicket);
       //TODO: is this the way to get the prices of the tickets to calculate amount paid?
       //		    Since screening's getPrice() does not take into account the ticket type
     }
@@ -58,8 +58,15 @@ public class BookingManager {
    */
   public ArrayList<Seat> getAvailableSeats(Screening screening) {
     ArrayList<Seat> allSeats = screening.getSeats();
-    allSeats.removeAll(screening.getTakenSeats());
-    return allSeats;
+    ArrayList<Seat> availableSeats = new ArrayList<Seat>();
+
+    for (Seat seat : allSeats) {
+      if (screening.isSeatAvailable(seat)) {
+        availableSeats.add(seat);
+      }
+    }
+
+    return availableSeats;
   }
 
   /**
@@ -69,7 +76,7 @@ public class BookingManager {
    * @return whether the seat in a screening is available
    */
   public boolean isSeatAvailable(Screening screening, Seat seat) {
-    return screening.checkIfSeatIsAvailable(seat);
+    return screening.isSeatAvailable(seat);
   }
 
 
@@ -106,14 +113,23 @@ public class BookingManager {
       if(findBooking.getId() == bookingId)
       return findBooking;
     }
+
+    return null;
   }
-  
-  public void deleteTicketsFromBookings(Screening screening){
-    for(Booking findBooking: bookingsArr){
-      for(Ticket findTicket: findBooking.getTicketsArr()){
-        if(findTicket.getScreening() == screening)
-          findTicket = null;
+
+  public void deleteBooking(Screening screening) {
+    this.bookingsArr.removeIf(
+      findBooking -> {
+        ArrayList<Ticket> ticketsArr = new ArrayList<Ticket>();
+
+        for (Ticket ticket: findBooking.getTickets()) {
+          if (ticket.getScreening() == screening) {
+            ticketsArr.add(ticket);
+          }
+        }
+
+        return ticketsArr.size() != 0;
       }
-    }
+      );
   }
 }

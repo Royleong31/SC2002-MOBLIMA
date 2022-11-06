@@ -1,5 +1,7 @@
 package view;
 import controller.ScreeningManager;
+import enums.CinemaType;
+import enums.SeatType;
 import enums.ShowStatus;
 import enums.SortCriteria;
 import controller.SystemManager;
@@ -8,11 +10,11 @@ import model.Screening;
 import model.Account.Account;
 import controller.MovieManager;
 import controller.ReviewManager;
-import controller.SalesManager;
 import controller.BookingManager;
 import controller.CineplexManager;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 import constants.Constants;
@@ -45,13 +47,6 @@ public abstract class ParentConsole {
    */
   private final ReviewManager reviewManager = new ReviewManager();
 
-
-
-  /**
-   * Helper static class that helps to sort sales related data
-   */
-  private SalesManager salesManager = new SalesManager();
-
   /**
    * Handles state and methods related to screenings
    */
@@ -62,7 +57,7 @@ public abstract class ParentConsole {
   /**
    * Handles state and methods related to system configurations
    */
-  private SystemManager systemManager = new SystemManager(Constants.DEFAULT_PRICE);
+  private SystemManager systemManager = new SystemManager();
 
   // TODO: Authorisation check? So that only admins can access admin only stuff
   protected CineplexManager getCineplexManager() {
@@ -75,10 +70,6 @@ public abstract class ParentConsole {
 
   protected ReviewManager getReviewManager() {
     return this.reviewManager;
-  }
-
-  protected SalesManager getSalesManager() {
-    return this.salesManager;
   }
 
   protected ScreeningManager getScreeningManager() {
@@ -107,7 +98,7 @@ public abstract class ParentConsole {
   public void displayScreenings(ArrayList<Screening> screenings) {
     for (int i = 0; i < screenings.size(); i++) {
       Screening screening = screenings.get(i);
-      System.out.println(i + ": Time: " + screening.getDateTime().getDate() + "\n Cinema Code: " + screening.getCinema().getId());
+      System.out.println(i + ": Time: " + screening.getDateTime() + "\n Cinema Code: " + screening.getCinema().getId());
     }
   }
 
@@ -119,7 +110,7 @@ public abstract class ParentConsole {
    */
   // TODO: Add filtering and sorting criteria here so that it can be used by both MovieGoer and Admins
   // TODO: Add overloads for this matching the MovieManager getMovies function
-  public Movie getMovie(ArrayList<SortCriteria> sortCriterias, ArrayList<ShowStatus> showStatuses) {
+  public Movie getMovie(SortCriteria sortCriterias, ArrayList<ShowStatus> showStatuses) {
     ArrayList<Movie> movies = this.movieManager.getMovies(sortCriterias, showStatuses);
     this.displayMovies(movies);
     String userChoice = this.getUserChoiceFromCount("Choose a movie", movies.size());
@@ -138,7 +129,7 @@ public abstract class ParentConsole {
   public Screening getScreening(Movie movie) {
     System.out.println("Screenings for " + movie.getTitle());
     // Currently only gets all screenings for 1 movie
-    ArrayList<Screening> screenings = this.screeningManager.getScreenings(movie.getTitle());
+    ArrayList<Screening> screenings = this.screeningManager.getScreeningsByMovie(movie.getTitle());
     this.displayScreenings(screenings);
 
     String userChoice = this.getUserChoiceFromCount("Choose a screening", screenings.size());
@@ -152,28 +143,41 @@ public abstract class ParentConsole {
    * Case checking is done inside here
    * @param message
    * @param validInputs valid inputs that the user can enter(all lowercase), no repeated values
-   * @return
+   * @return lowercased user input
    */
   protected String getUserChoice(String message, ArrayList<String> validInputs) {
-    Scanner scannerObj = new Scanner(System.in);
-    System.out.println(message);
-    String userInput = scannerObj.nextLine().toLowerCase();
-
-    while (!validInputs.contains(userInput)) {
-      System.out.println("Invalid input. Please try again");
-      userInput = scannerObj.nextLine().toLowerCase();
+    while (true) {
+      String userInput = this.getUserInput(message).toLowerCase();
+      if (validInputs.contains(userInput)) {
+        return userInput;
+      } else {
+        System.out.println("Invalid input. Please try again");
+      }
     }
-
-    scannerObj.close();
-    return userInput;
   }
 
   protected String getUserChoiceFromCount(String message, int count) {
     ArrayList<String> validInputs = new ArrayList<String>();
-    for (int i=0; i<count; i++) {
+    for (int i=1; i<count+1; i++) {
       validInputs.add(Integer.toString(i));
     }
     return this.getUserChoice(message, validInputs);
+  }
+  
+  protected String getUserInput(String message) {
+    Scanner scannerObj = new Scanner(System.in);
+    System.out.println(message);
+    String userInput = scannerObj.nextLine();
+    scannerObj.close();
+    return userInput;
+  }
+  
+  protected Integer getUserIntegerInput(String message) {
+    Scanner scannerObj = new Scanner(System.in);
+    System.out.println(message);
+    Integer userInput = scannerObj.nextInt();
+    scannerObj.close();
+    return userInput;
   }
 
   /**

@@ -8,7 +8,7 @@ package model.Account;
  @version 1.1
  @since 2022-10-30
 */
-public class StaffAccount extends Account {
+public class AdminAccount extends Account {
   /**
    * The identifcation of the staff.
    * There will be no mutator for this.
@@ -16,7 +16,7 @@ public class StaffAccount extends Account {
   private String staffId;
   
   /**
-   * Constructor for the StaffAccount class.
+   * Constructor for the AdminAccount class.
    * This is the register method.
    * @param username This staff's username.
    *				 Inherited from Account superclass.
@@ -30,8 +30,8 @@ public class StaffAccount extends Account {
   }
 
   /**
-   * Gets the staffId of the StaffAccount.
-   * @return staffId This StaffAccount's staffId.
+   * Gets the staffId of the AdminAccount.
+   * @return staffId This AdminAccount's staffId.
   */
   public String getStaffId() {
     return staffId;

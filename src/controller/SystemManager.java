@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import utils.DateTimeUtils;
+import utils.Utils;
 import enums.CinemaType;
 import enums.SeatType;
+import enums.SortCriteria;
 import enums.FilterType;
 
 enum SpecialDay {
@@ -22,18 +24,11 @@ enum SpecialDay {
  @since 2022-10-30
 */
 public class SystemManager {
-  private ArrayList<String> holidaysArr;
-  private HashMap<Enum, Float> cinemaMultMap;
-  private HashMap<Enum, Float> seatMultMap;
-  private ArrayList<FilterType> filtersApplied;
-
-  public SystemManager(HashMap<Enum, Float> cinemaMultMap, HashMap<Enum, Float> seatMultMap) {
-    this.cinemaMultMap = cinemaMultMap;
-    this.seatMultMap = seatMultMap;
-    this.filtersApplied = new ArrayList<FilterType>();
-    filtersApplied.add(FilterType.SALES);
-    filtersApplied.add(FilterType.RATING);
-  }
+  private ArrayList<String> holidaysArr = new ArrayList<String>();
+  private HashMap<CinemaType, Float> cinemaMultMap = new HashMap<CinemaType, Float>();
+  private HashMap<SeatType, Float> seatMultMap = new HashMap<SeatType, Float>();
+  private ArrayList<FilterType> filtersApplied = Utils.asArrayList(FilterType.SALES, FilterType.RATING);
+  private SortCriteria movieSortingCriteria = SortCriteria.SALES; // default
 
   public ArrayList<String> getHolidays() {
     return holidaysArr;
@@ -50,6 +45,7 @@ public class SystemManager {
     return cinemaMultMap.get(ct);
   }
 
+  // TODO: Add authorisation decorators for all admin methods. Do the same for other methods in other managers
   /*
    * @param CinemaType
    * @param Float The multiplier to set for the cinema type
@@ -57,6 +53,14 @@ public class SystemManager {
    */
   public void setCinemaMultiplier(CinemaType ct, float mult) {
     cinemaMultMap.put(ct, mult);
+  }
+
+  public SortCriteria getSortingCriteria() {
+    return this.movieSortingCriteria;
+  }
+
+  public void setSortingCriteria(SortCriteria sc) {
+    this.movieSortingCriteria = sc;
   }
 
   /*

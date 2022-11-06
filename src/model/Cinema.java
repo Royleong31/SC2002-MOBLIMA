@@ -1,5 +1,7 @@
 package model;
 
+import java.util.ArrayList;
+
 import enums.CinemaType;
 import utils.IdUtils;
 import utils.CinemaPremiumUtils;
@@ -14,6 +16,7 @@ import utils.CinemaPremiumUtils;
 public class Cinema {
   private final String id;
   private static int cinemaCounter;
+  private static ArrayList<Cinema> cinemasArr;
   private SeatingPlan seatingPlan;
   private Cineplex cineplex;
   private CinemaType cinemaType;
@@ -23,9 +26,18 @@ public class Cinema {
     this.seatingPlan = seatingPlan;
     this.cineplex = cineplex;
     this.cinemaType = cinemaType;
-    this.cinemaCounter++; /* increment cinemaCounter by 1 to denote an increase in cinemas */
+    Cinema.cinemaCounter++; /* increment cinemaCounter by 1 to denote an increase in cinemas */
+    Cinema.cinemasArr.add(this);
   }
 
+  public static Cinema getCinemaById(String cinemaId) {
+    for (int i = 0; i < cinemasArr.size(); i++) {
+      if (cinemasArr.get(i).getId() == cinemaId) {
+        return cinemasArr.get(i);
+      }
+    }
+    return null;
+  }
 
   public String getId() {
     return id;

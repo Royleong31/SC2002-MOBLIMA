@@ -97,7 +97,7 @@ public class Cineplex {
    * Delete a movie from this cineplex
    * @param movie
    */
-  public void deleteMovie(Movie movie) throws Exception {
+  public void removeMovie(Movie movie) throws Exception {
     // throw exception if movie do not exist
      if (!movieCollection.contains(movie)) {
       throw new Exception("Movie do not exist in cineplex's movie collection.");

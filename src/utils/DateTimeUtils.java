@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.TimeZone;
 import java.lang.Integer;
 
@@ -110,6 +109,9 @@ public class DateTimeUtils {
     return formatter.format(eve);
     }
   
+  public static String getDateStringFromDate(String day, String month, String year, String hour, String minute) {
+    return day + "." + month + "." + year + "." + hour + "." + minute;
+  }
   
   
 }

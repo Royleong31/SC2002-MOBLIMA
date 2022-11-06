@@ -11,12 +11,14 @@ import enums.SeatType;
  @since 2022-10-30
 */
 public class Seat {
-  private int seatNumber;
+  private final String row;
+  private final Integer seatNumber;
   private boolean seatTaken;
-  private SeatType seatType;
+  private final SeatType seatType;
   //private Ticket affiliatedTicket; // ?: Is this necessary?
 
-  public Seat(int seatNumber, boolean seatTaken, SeatType seatType, Ticket affiliatedTicket) {
+  public Seat(String row, Integer seatNumber, boolean seatTaken, SeatType seatType, Ticket affiliatedTicket) {
+    this.row = row;
     this.seatNumber = seatNumber;
     this.seatTaken = seatTaken;
     this.seatType = seatType;
@@ -27,8 +29,16 @@ public class Seat {
     return seatNumber;
   }
 
+  public String getRow() {
+    return this.row;
+  }
+
+  public String getId() {
+    return this.row.toString() + this.seatNumber.toString();
+  }
+
   public boolean isSeatTaken() {
-    return seatTaken;
+    return this.seatTaken;
   }
   
    public void setTaken() {
@@ -36,7 +46,7 @@ public class Seat {
   }
 
   public SeatType getSeatType() {
-    return seatType;
+    return this.seatType;
   }
 
 }

@@ -1,6 +1,8 @@
 package controller;
 
 import java.util.ArrayList;
+
+import enums.LoginStatus;
 import model.Account.*;
 
 
@@ -33,11 +35,11 @@ public class LoginManager {
    * @return currentAccount The new staff account.
    */
      
-  public Account register(String username, String password, String id) throws Exception {
-	
+  public Account registerAdmin(String username, String password, String staffId) throws Exception {
+	// TODO: Add a check for username in approved as well as linked password so only approved staff can create accounts
 	if(checkIfExists(username)==null){
 		
-		currentAccount = new StaffAccount(username, password, "CS"+id);
+		currentAccount = new AdminAccount(username, password, "CS"+staffId);
 		usersArr.add(currentAccount);
 		return currentAccount;
 	}
@@ -54,8 +56,7 @@ public class LoginManager {
    * @return currentAccount The new movie goer account.
    */
   
-  public Account register(String username, String password, String name, String phoneNumber, String email) throws Exception{
-	
+  public Account registerMovieGoer(String username, String password, String name, String phoneNumber, String email) throws Exception{
 	if(checkIfExists(username)==null){
 
 		currentAccount = new MovieGoerAccount(username, password, name, phoneNumber, email);
@@ -112,13 +113,13 @@ public class LoginManager {
    * Gets the login status of the current user.
    * @return LogInStatus The current state of the log in.
    */
-  public LogInStatus getLoginStatus() {
-	  if(currentAccount instanceof StaffAccount)
-		  return LogInStatus.ADMIN;
+  public LoginStatus getLoginStatus() {
+	  if(currentAccount instanceof AdminAccount)
+		  return LoginStatus.ADMIN;
 	  
 	  else if(currentAccount instanceof MovieGoerAccount)
-		  return LogInStatus.MOVIE_GOER;
+		  return LoginStatus.MOVIE_GOER;
 	  
-	  return LogInStatus.LOGIN;
+	  return LoginStatus.LOGIN;
   }
 }

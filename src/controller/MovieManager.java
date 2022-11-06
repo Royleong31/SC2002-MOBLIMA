@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import model.Movie;
+import utils.SalesUtils;
 import enums.ShowStatus;
 import enums.SortCriteria;
 import enums.Advisory;
@@ -29,7 +30,8 @@ public class MovieManager {
     this.moviesArr.add(movie);
   }
 
-  public void deleteMovie(Movie movie){
+  public void removeMovie(String movieTitle){
+    Movie movie = this.getMovieByName(movieTitle);
     updateMovieShowingStatus(movie, ShowStatus.END_OF_SHOWING);
   }
 
@@ -89,8 +91,8 @@ public class MovieManager {
     else if (sortingCriteria == SortCriteria.SALES) {
       // Sorts movies by overall sales in descending order
       BookingManager bManager = new BookingManager();
-      movieLst.sort((m1, m2) -> ((Float) SalesManager.getSalesByMovie(bManager.getBookings(), m2.getTitle())).compareTo(
-                                (Float) SalesManager.getSalesByMovie(bManager.getBookings(), m1.getTitle())));
+      movieLst.sort((m1, m2) -> ((Float) SalesUtils.getSalesByMovie(bManager.getBookings(), m2.getTitle())).compareTo(
+                                (Float) SalesUtils.getSalesByMovie(bManager.getBookings(), m1.getTitle())));
     }
 
     return movieLst;
@@ -101,18 +103,21 @@ public class MovieManager {
   }
 
   public ArrayList<Movie> getMovies(ArrayList<ShowStatus> showStatus){
-    ArrayList<Movie> filteredArr = new ArrayList<Movie>();
-    filteredArr = getMovies(SortCriteria.NULL, showStatus);
-    return filteredArr;
+    return getMovies(null, showStatus);
   }
 
   public ArrayList<Movie> getMovies(SortCriteria sortCriteria){
-    ArrayList<Movie> sortedArr = new ArrayList<Movie>();
-    ArrayList<ShowStatus> showStatuses = new ArrayList<ShowStatus>();
-
-    sortedArr = getMovies(sortCriteria, showStatuses);
-
-    return sortedArr;
+    return getMovies(sortCriteria, null);
   }
+
+  public Movie getMovieByName(String title) {
+    for (Movie movie : moviesArr) {
+      if (movie.getTitle().equals(title)) {
+        return movie;
+      }
+    }
+    return null;
+  }
+
   
 }

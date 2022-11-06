@@ -43,10 +43,8 @@ public class LoginConsole extends ParentConsole {
     Scanner scannerObj = new Scanner(System.in);
     while (true) {
       try {
-        System.out.print("Username: ");
-        String username = scannerObj.nextLine();
-        System.out.print("Password: ");
-        String password = scannerObj.nextLine();
+        String username = super.getUserInput("Username: ");
+        String password = super.getUserInput("Password: ");
         loginManager.login(username, password);
         break;
       } catch (Exception e) {
@@ -62,22 +60,27 @@ public class LoginConsole extends ParentConsole {
    * @return
    */
   private void register() {
-    Scanner scannerObj = new Scanner(System.in);
     while (true) {
       try {
-        System.out.print("Username: ");
-        String username = scannerObj.nextLine();
-        System.out.print("Password: ");
-        String password = scannerObj.nextLine();
+        String username = super.getUserInput("Username: ");
+        String password = super.getUserInput("Password: ");
         Boolean isAdmin = this.getUserChoice("Are you an admin? (y/n)", Utils.asArrayList("y", "n")).equals("y");
-        loginManager.register(username, password, isAdmin ? AccountType.ADMIN : AccountType.MOVIE_GOER);
-        break;
+
+        if (isAdmin) {
+          String staffId = super.getUserInput("Staff ID: ");
+          this.loginManager.registerAdmin(username, password, staffId);
+        } else {
+          String name = super.getUserInput("Name: ");
+          String phoneNumber = super.getUserInput("Phone Number: ");
+          String email = super.getUserInput("Email: ");
+          this.loginManager.registerMovieGoer(username, password, name, phoneNumber, email);
+        }
+
       } catch (Exception e) {
         System.out.println(e.getMessage());
         continue;
       }
     }
-    scannerObj.close();
   }
 }
 

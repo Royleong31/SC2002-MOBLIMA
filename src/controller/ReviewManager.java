@@ -9,13 +9,11 @@ public class ReviewManager {
 
   public void addReview(Review review) throws Exception {
     Movie movie = review.getMovie();
-    ArrayList<Review> reviews = movie.getReviews();
-    if (!hasPreviouslySubmittedReview(review.getMovieGoer(), movie)) {
-      movie.addReview(review);
-    }
-    else {
+    
+    if (hasPreviouslySubmittedReview(review.getMovieGoer(), movie)) {
       throw new Exception("User has already submitted a review for this movie");
     }
+    movie.addReview(review);
   }
 
   public boolean hasPreviouslySubmittedReview(MovieGoerAccount movieGoer, Movie movie) {

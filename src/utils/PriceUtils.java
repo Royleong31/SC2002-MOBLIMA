@@ -1,17 +1,12 @@
 package utils;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 import controller.SystemManager;
 import model.Screening;
 import model.Ticket;
-import model.Seat;
-import utils.DateTimeUtils;
 import enums.SeatType;
 import enums.TicketType;
 import enums.CinemaType;
-import enums.Genre;
+import enums.MovieType;
 
 /**
  * Use this to calculate the price of each ticket at a particular date and time
@@ -21,6 +16,7 @@ public class PriceUtils {
   //  so each method requires SystemsManager, DateTime, and screening as parameters
   // Regarding the different types of Cinemas, we can use an enum instead of multiple classes so we can store different prices for each type of cinema. This gives more flexibility than having a price multiplier
   // we can also have different prices for different genres of movies, for example 3D, blockbuster
+  // TODO: Extract to constants file and use a mapping
   public static float getPrice(SystemManager sm, Ticket ticket) throws Exception {
     Screening screening = ticket.getScreening();
     SeatType seatType = ticket.getSeat().getSeatType();
@@ -33,8 +29,8 @@ public class PriceUtils {
 
     String eveOfDate = DateTimeUtils.getEveOfDate(dateString);
     boolean isHoliday = sm.isHoliday(dateString) || sm.isHoliday(eveOfDate);
-    boolean isBlockbuster = screening.getMovie().isBlockbuster();
-    boolean is3D = screening.getMovie().is3D();
+    boolean isBlockbuster = screening.getMovie().getMovieType() == MovieType.BLOCKBUSTER;
+    boolean is3D = screening.getMovie().getMovieType() == MovieType.THREE_D;
 
     float price = 0;
     int dayOfWeek = DateTimeUtils.dateTimeToDay(dateString);
