@@ -1,7 +1,10 @@
 package utils;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.TimeZone;
 import java.lang.Integer;
 
@@ -93,6 +96,19 @@ public class DateTimeUtils {
 	SimpleDateFormat minuteForm = new SimpleDateFormat("mm");
 	return Integer.parseInt(minuteForm.format(actualDateTime));
   }
+
+  /**
+   * @param String The date and time in dd.MM.yyyy.HH.mm format 
+   *        (eg. 31 Dec 1998 7.30pm == 31.12.1998.19.30)
+   * @return String The date and time in dd.MM.yyyy.HH.mm format for the preceding day
+   *        (eg. 31 Dec 1998 7.30pm == 31.12.1998.19.30)
+   */
+  public static String getEveOfDate(String stringDateTime) throws Exception{
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.HH.mm");
+    LocalDateTime date = LocalDateTime.parse(stringDateTime, formatter);
+    LocalDateTime eve = date.minusHours(24); //does not edit the original date
+    return formatter.format(eve);
+    }
   
   
   

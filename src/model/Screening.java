@@ -13,13 +13,13 @@ import java.util.ArrayList;
 public class Screening {
   private Movie movie;
   private Cinema cinema;
-  private DateTime dateTime;
+  private String dateTime;
  
 
   private boolean isPH; // TODO: Do we need this? i think we can check the system config if it's a special date
   private ArrayList<Seat> seats = new ArrayList<Seat>();
 
-  public Screening(Movie movie, Cinema cinema, DateTime dateTime, boolean isPH, float price) {
+  public Screening(Movie movie, Cinema cinema, String dateTime, boolean isPH, float price) {
     this.movie = movie;
     this.cinema = cinema;
     this.dateTime = dateTime;
@@ -36,11 +36,19 @@ public class Screening {
 
   public void updateSeat(ArrayList<Seat> seats) {}
 
-   public DateTime getDateTime() {
+   public String getDateTime() {
     return dateTime;
   }
 
-  public void setDateTime(DateTime dateTime) {
+  public void setDateTime(String dateTime) {
     this.dateTime = dateTime;
+  }
+
+  public Movie getMovie() {
+    return movie;
+  }
+
+  public Cinema getCinema() {
+    return cinema;
   }
 }
