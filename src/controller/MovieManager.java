@@ -1,12 +1,14 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import model.Movie;
-
-enum SortCriteria {
-  TITLE, RATING, SALES
-}
+import enums.ShowStatus;
+import enums.SortCriteria;
+import enums.Advisory;
+import enums.Genre;
+import enums.MovieType;
 
 /**
  * Account for a staff member.
@@ -17,27 +19,98 @@ enum SortCriteria {
  @since 2022-10-30
 */
 public class MovieManager {
-  private ArrayList<Movie> moviesArr;
+  private ArrayList<Movie> moviesArr = new ArrayList<Movie>();
+
+  public MovieManager() {}
 
   public void addMovie(Movie movie) {
-    return false;
+    this.moviesArr.add(movie);
   }
 
   public void deleteMovie(Movie movie){
-    return false;
+    updateMovieShowingStatus(movie, ShowStatus.END_OF_SHOWING);
   }
 
-  public void updateMovie(Movie movie){
-    return false;
+  public void updateMovieShowingStatus(Movie movie, ShowStatus showStatus) {
+    movie.setShowingStatus(showStatus);
   }
 
-  public void updateMovieShowingStatus(ShowStatus showStatus) {
-    
+  public void updateMovie(Movie movie, String title, String synopsis, String director, ArrayList<String> cast, Advisory advisoryRating, Genre genre, ShowStatus showStatus) {
+    if (title != null) {
+      movie.setTitle(title);
+    }
+    if (synopsis != null) {
+      movie.setSynopsis(synopsis);
+    }
+    if (director != null) {
+      movie.setDirector(director);
+    }
+    if (cast != null) {
+      movie.setCast(cast);
+    }
+    if (advisoryRating != null) {
+      movie.setAdvisoryRating(advisoryRating);
+    }
+    if (genre != null) {
+      movie.setGenre(genre);
+    }
+    if(showStatus != null) {
+      movie.setShowingStatus(showStatus);
+    }
   }
 
-  public ArrayList<Movie> getMovies(SortCriteria sortCriteria){
+  public ArrayList<Movie> getMovies(SortCriteria sortingCriteria, ArrayList<ShowStatus> showStatuses) {
+    ArrayList<Movie> movieLst = new ArrayList<Movie>();
+
+    // First attempt to filter movies by show statuses if applicable else copies the full exsisting movie list
+    if (showStatuses.isEmpty()) {
+      movieLst = (ArrayList<Movie>) moviesArr.clone();
+    }
+    else {
+      for (Movie movie : moviesArr) {
+        for (ShowStatus status : showStatuses) {
+          if (movie.getShowingStatus() == status) {
+            movieLst.add(movie);
+          }
+        }
+      }
+    }
+
+    // Then sorts the list according to a specified sort criteria if applicable
+    if (sortingCriteria == SortCriteria.TITLE) {
+      movieLst.sort((m1, m2) -> m1.getTitle().compareTo(m2.getTitle()));
+    }
+    // Sorts movies by overall rating in descending order
+    else if (sortingCriteria == SortCriteria.RATING) {
+      movieLst.sort((m1, m2) -> ((Float) m2.getOverallRating()).compareTo((Float) m1.getOverallRating()));
+    }
+    else if (sortingCriteria == SortCriteria.SALES) {
+      // Sorts movies by overall sales in descending order
+      BookingManager bManager = new BookingManager();
+      movieLst.sort((m1, m2) -> ((Float) SalesManager.getSalesByMovie(bManager.getBookings(), m2.getTitle())).compareTo(
+                                (Float) SalesManager.getSalesByMovie(bManager.getBookings(), m1.getTitle())));
+    }
+
+    return movieLst;
+  }
+
+  public ArrayList<Movie> getMovies(){
     return moviesArr;
   }
 
-  // TODO: Create more overloaded functions for getMovies to allow optional params
+  public ArrayList<Movie> getMovies(ArrayList<ShowStatus> showStatus){
+    ArrayList<Movie> filteredArr = new ArrayList<Movie>();
+    filteredArr = getMovies(SortCriteria.NULL, showStatus);
+    return filteredArr;
+  }
+
+  public ArrayList<Movie> getMovies(SortCriteria sortCriteria){
+    ArrayList<Movie> sortedArr = new ArrayList<Movie>();
+    ArrayList<ShowStatus> showStatuses = new ArrayList<ShowStatus>();
+
+    sortedArr = getMovies(sortCriteria, showStatuses);
+
+    return sortedArr;
+  }
+  
 }

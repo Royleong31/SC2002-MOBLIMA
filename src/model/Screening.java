@@ -14,31 +14,47 @@ public class Screening {
   private Movie movie;
   private Cinema cinema;
   private String dateTime;
- 
-
-  private boolean isPH; // TODO: Do we need this? i think we can check the system config if it's a special date
   private ArrayList<Seat> seats = new ArrayList<Seat>();
 
-  public Screening(Movie movie, Cinema cinema, String dateTime, boolean isPH, float price) {
+  public Screening(Movie movie, Cinema cinema, String dateTime, float price) {
     this.movie = movie;
     this.cinema = cinema;
     this.dateTime = dateTime;
-    this.isPH = isPH;
   }
 
   public void addSeat(Seat seat) {
     seats.add(seat);
   }
 
-  public boolean checkIfSeatIsAvailable() {
-    return false;
+  public boolean checkIfSeatIsAvailable(Seat targetSeat) {
+    for (Seat seat : this.seats) {
+      if (seat.equals(targetSeat)) {
+        return false;
+      }
+    }
+    return true;
   }
 
-  public void updateSeat(ArrayList<Seat> seats) {}
+  public void updateSeat(Seat seat) {
+    seat.setTaken();
+    addSeat(seat);
+  }
+
+  public String getMovieTitle() {
+    return this.movie.getTitle();
+  }
+
+  public String getCinemaId() {
+    return this.cinema.getId();
+  }
+
+  public Cinema getCinema() {
+    return this.cinema;
+  }
 
    public String getDateTime() {
     return dateTime;
-  }
+   }
 
   public void setDateTime(String dateTime) {
     this.dateTime = dateTime;
@@ -48,7 +64,4 @@ public class Screening {
     return movie;
   }
 
-  public Cinema getCinema() {
-    return cinema;
-  }
 }

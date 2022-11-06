@@ -30,6 +30,10 @@ public class Seat {
   public boolean isSeatTaken() {
     return seatTaken;
   }
+  
+   public void setTaken() {
+    this.seatTaken = true;
+  }
 
   public SeatType getSeatType() {
     return seatType;
