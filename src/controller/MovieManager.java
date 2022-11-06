@@ -36,16 +36,16 @@ public class MovieManager {
   }
 
   public void updateMovie(Movie movie, String title, String synopsis, String director, ArrayList<String> cast, Advisory advisoryRating, Genre genre, ShowStatus showStatus) {
-    if (!title.equals("")) {
+    if (title != null) {
       movie.setTitle(title);
     }
-    if (!synopsis.equals("")) {
+    if (synopsis != null) {
       movie.setSynopsis(synopsis);
     }
-    if (!director.equals("")) {
+    if (director != null) {
       movie.setDirector(director);
     }
-    if (!cast.isEmpty()) {
+    if (cast != null) {
       movie.setCast(cast);
     }
     if (advisoryRating != null) {

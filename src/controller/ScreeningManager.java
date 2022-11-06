@@ -37,20 +37,10 @@ public class ScreeningManager {
   public ArrayList<Screening> getScreenings(String movieTitle, String cinemaCode, String date) {
     ArrayList<Screening> screenings = (ArrayList<Screening>) screeningsArr.clone();
 
-    for (Screening screening : screenings) {
-      if ((!screening.getMovieTitle().equals(movieTitle)) && (!movieTitle.equals(""))) {
-        screenings.remove(screening);
-        continue;
-      }
-      if ((!screening.getCinemaId().equals(cinemaCode)) && (!cinemaCode.equals(""))) {
-        screenings.remove(screening);
-        continue;
-      }
-      if ((!screening.getDateTime().equals(date)) && (!date.equals(""))) {
-        screenings.remove(screening);
-        continue;
-      }
-    }
+    screenings.removeIf(screening -> (((!screening.getMovieTitle().equals(movieTitle)) && (movieTitle != null)) ||
+                                      ((!screening.getCinemaId().equals(cinemaCode)) && (cinemaCode != null)) ||
+                                      ((!screening.getDateTime().equals(date)) && (date != null))
+                                      ));
 
     return screenings;
   }
