@@ -46,9 +46,18 @@ public class ScreeningManager {
                                       ((!screening.getDateTime().equals(date)) && (date != null))
                                       ));
 
-    Comparator<Screening> comparator = Comparator.comparing(Screening::getMovieTitle).thenComparing(Screening::getCinemaId).thenComparing(Screening::getDateTime);
+    Comparator<Screening> comparator = (s1, s2) -> {
+      try {
+        return s1.getDateTimeObj().compareTo(s2.getDateTimeObj());
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+      return 0;
+    };
+    
+    comparator.thenComparing(Screening::getCinemaId).thenComparing(Screening::getMovieTitle);
     screenings.sort(comparator);
-
+    
     return screenings;
   }
 
