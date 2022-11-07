@@ -85,10 +85,10 @@ public class MovieGoerConsole extends ParentConsole {
     while (true) {
       // show seelcted seat IDs
       String seatId = super.getUserInput("Seat ID: ");
-      if (seatId == "done") break;
+      if (seatId.equals("done")) break;
 
       Seat seat = screening.getSeatFromId(seatId);
-      if (seat == null) {
+      if (seat.equals(null)) {
         System.out.println("Invalid seat number");
         continue;
       }
@@ -164,7 +164,8 @@ public class MovieGoerConsole extends ParentConsole {
     
       default:
         // Should never reach here as error checking is done in this.getUserChoice()
-        throw new Error("An unexpected error occured");
+        System.out.println("An unexpected error occured");
+        this.exitProgram();
     }
   }
 }

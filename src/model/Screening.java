@@ -67,7 +67,7 @@ public class Screening {
   // TODO: Get seat from seat ID
   public Seat getSeatFromId(String id) {
     for (Seat seat: this.seats) {
-      if (seat.getId() == id) {
+      if (seat.getId().equals( id)) {
         return seat;
       }
     }

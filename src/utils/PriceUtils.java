@@ -29,13 +29,13 @@ public class PriceUtils {
 
     String eveOfDate = DateTimeUtils.getEveOfDate(dateString);
     boolean isHoliday = sm.isHoliday(dateString) || sm.isHoliday(eveOfDate);
-    boolean isBlockbuster = screening.getMovie().getMovieType() == MovieType.BLOCKBUSTER;
-    boolean is3D = screening.getMovie().getMovieType() == MovieType.THREE_D;
+    boolean isBlockbuster = screening.getMovie().getMovieType().equals(MovieType.BLOCKBUSTER);
+    boolean is3D = screening.getMovie().getMovieType().equals(MovieType.THREE_D);
 
     float price = 0;
     int dayOfWeek = DateTimeUtils.dateTimeToDay(dateString);
 
-    if (ticketType == TicketType.CARDS) { //Preferred Credit & Loyalty Cards
+    if (ticketType.equals(TicketType.CARDS)) { //Preferred Credit & Loyalty Cards
       if (is3D) {
         throw new Exception("Cards tickets not valid for 3D movies");
       }
@@ -46,7 +46,7 @@ public class PriceUtils {
     else if (isHoliday || dayOfWeek == 6 || dayOfWeek == 7) { //Weekends and PH/Eve of PH
       price = is3D ? 15 : 11;
     }
-    else if (ticketType == TicketType.SENIOR) { //Senior Citizens
+    else if (ticketType.equals(TicketType.SENIOR)) { //Senior Citizens
       if (is3D) {
         throw new Exception("Senior Citizen ticket not valid for 3D movies");
       }
@@ -57,7 +57,7 @@ public class PriceUtils {
         price = 4;
       }
     }
-    else if (ticketType == TicketType.STUDENT) { //Students
+    else if (ticketType.equals(TicketType.STUDENT)) { //Students
       if (DateTimeUtils.dateTimeToHour(dateString) >= 18) {
         throw new Exception("Student ticket only valid for movies before 6pm");
       }

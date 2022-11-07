@@ -28,7 +28,7 @@ public class SalesUtils {
       */
       Ticket ticket = booking.getTickets().get(0); /* get first ticket object */
       String ticketMovieTitle = ticket.getScreening().getMovie().getTitle();
-      if (ticketMovieTitle == movieTitle) {
+      if (ticketMovieTitle.equals(movieTitle)) {
         totalSales += booking.getAmountPaid();
       }
     }
@@ -42,7 +42,7 @@ public class SalesUtils {
       Ticket ticket = booking.getTickets().get(0);
       String curCineplexLocation = ticket.getScreening().getCinema().getCineplex().getLocation();
 
-      if (curCineplexLocation == cineplexLocation) {
+      if (curCineplexLocation.equals(cineplexLocation)) {
         totalSales += booking.getAmountPaid();
       }
     }

@@ -59,7 +59,7 @@ public class SystemManager {
   
   public void setSortingCriteria(SortCriteria sc) throws Exception {
     // These are the only 2 sorting criteria allowed
-    if (sc == SortCriteria.SALES || sc == SortCriteria.RATING) {
+    if (sc.equals(SortCriteria.SALES) || sc.equals(SortCriteria.RATING)) {
       this.movieSortingCriteria = sc;
     } else {
       throw new Exception("Invalid sorting criteria");

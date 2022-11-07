@@ -108,7 +108,7 @@ public class BookingManager {
    */
   public Booking getBookingById(String bookingId){
     for(Booking findBooking: bookingsArr){
-      if(findBooking.getId() == bookingId)
+      if(findBooking.getId().equals(bookingId))
       return findBooking;
     }
 

@@ -70,7 +70,7 @@ public class MovieManager {
     else {
       for (Movie movie : this.moviesArr) {
         for (ShowStatus status : showStatuses) {
-          if (movie.getShowingStatus() == status) {
+          if (movie.getShowingStatus().equals(status)) {
             movieLst.add(movie);
           }
         }
@@ -78,14 +78,14 @@ public class MovieManager {
     }
 
     // Then sorts the list according to a specified sort criteria if applicable
-    if (sortingCriteria == SortCriteria.TITLE) {
+    if (sortingCriteria.equals(SortCriteria.TITLE)) {
       movieLst.sort((m1, m2) -> m1.getTitle().compareTo(m2.getTitle()));
     }
     // Sorts movies by overall rating in descending order
-    else if (sortingCriteria == SortCriteria.RATING) {
+    else if (sortingCriteria.equals(SortCriteria.RATING)) {
       movieLst.sort((m1, m2) -> ((Float) m2.getOverallRating()).compareTo((Float) m1.getOverallRating()));
     }
-    else if (sortingCriteria == SortCriteria.SALES) {
+    else if (sortingCriteria.equals(SortCriteria.SALES)) {
       // Sorts movies by overall sales in descending order
       BookingManager bManager = new BookingManager();
       movieLst.sort((m1, m2) -> ((Float) SalesUtils.getSalesByMovie(bManager.getBookings(), m2.getTitle())).compareTo(

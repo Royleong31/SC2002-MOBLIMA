@@ -37,12 +37,13 @@ public class LoginManager {
    * @return currentAccount The new staff account.
    */
   public Account registerAdmin(String username, String password, String staffId, String code) throws Exception {
-    if (code != Constants.STAFF_ID_CODE)
-      throw new Error("Error: Invalid code!");
+    
+    if (!code.equals(Constants.STAFF_ID_CODE))
+      throw new Exception("Error: Invalid code!");
     
     // needs to be a valid staff Id that is not used
     if (!Constants.APPROVED_STAFF_IDS.contains(staffId) || this.usedStaffIds.contains(staffId))
-      throw new Error("Error: Invalid staff id!");
+      throw new Exception("Error: Invalid staff id!");
 
     if (!this.isUsernameAvailable(username)) 
       throw new Exception("Error: username or account exists!");
@@ -75,9 +76,11 @@ public class LoginManager {
    * @return Account The account that matches input username.
    */
   public boolean isUsernameAvailable(String username){
+    System.out.println(this.usersArr.toString());
 	  for (Account check : this.usersArr){
-		  if (username == check.getUsername())
-			  return false;
+		  if (username.equals(check.getUsername())) {
+        return false;
+      }
 	  }
 
 	  return true;
@@ -91,7 +94,7 @@ public class LoginManager {
    */
   public Account login(String username, String password) throws Exception{  
     for (Account search : this.usersArr){
-      if (search.login(username,password) != null){
+      if (!search.login(username,password).equals(null)){
         this.currentAccount = search;
         return this.currentAccount;
       }

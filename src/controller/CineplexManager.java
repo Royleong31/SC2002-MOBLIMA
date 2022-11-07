@@ -21,7 +21,7 @@ public class CineplexManager {
 
   public void addCineplex(String location) throws Exception {
     for (int i = 0; i < cineplexesArr.size(); i++) {
-      if (cineplexesArr.get(i).getLocation() == location) {
+      if (cineplexesArr.get(i).getLocation().equals(location)) {
         // throw exception
         throw new Exception("Cineplex already exists.");
       }

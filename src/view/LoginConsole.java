@@ -19,6 +19,7 @@ public class LoginConsole extends ParentConsole {
   
   @Override
   public void display(Account account) { // account is unused as it's null
+    System.out.println("Inside login console");
     Integer userSelection = this.getUserChoiceFromCount("Enter '1' to log in, '2' to register, '3' to exit", 3);
 
     if (userSelection == 1) {
@@ -29,7 +30,8 @@ public class LoginConsole extends ParentConsole {
       this.exitProgram();
     } else {
       // Should never reach here as error checking is done in this.getUserChoice()
-      throw new Error("An unexpected error occured");
+      System.out.println("An unexpected error occured");
+      this.exitProgram();
     }
   }
 
@@ -43,7 +45,8 @@ public class LoginConsole extends ParentConsole {
         String username = super.getUserInput("Username: ");
         String password = super.getUserInput("Password: ");
         loginManager.login(username, password);
-        break;
+        System.out.println("Successfully logged in!");
+        return;
       } catch (Exception e) {
         System.out.println(e.getMessage());
         continue;
@@ -66,11 +69,13 @@ public class LoginConsole extends ParentConsole {
           String staffId = super.getUserInput("Staff ID: ");
           String staffCode = super.getUserInput("Staff Code: ");
           this.loginManager.registerAdmin(username, password, staffId, staffCode);
+          break;
         } else {
           String name = super.getUserInput("Name: ");
           String phoneNumber = super.getUserInput("Phone Number: ");
           String email = super.getUserInput("Email: ");
           this.loginManager.registerMovieGoer(username, password, name, phoneNumber, email);
+          break;
         }
 
       } catch (Exception e) {
@@ -78,6 +83,8 @@ public class LoginConsole extends ParentConsole {
         continue;
       }
     }
+
+    System.out.println("Successfully registered!");
   }
 }
 

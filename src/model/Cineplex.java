@@ -59,7 +59,7 @@ public class Cineplex {
     // add in a movie to the moviesArr
     // check that a movie of the same name doesn't alr exist
     for (int i = 0; i < movieCollection.size(); i++) {
-      if (movieCollection.get(i).getTitle() == movie.getTitle()) {
+      if (movieCollection.get(i).getTitle().equals(movie.getTitle())) {
         // throw exception
         throw new Exception("Movie already exists in cineplex's movie collection.");
       }

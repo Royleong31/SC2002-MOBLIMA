@@ -22,6 +22,7 @@ import java.util.Scanner;
  @since 2022-10-30
 */
  public abstract class ParentConsole {
+  private final static Scanner scannerObj = new Scanner(System.in);
   /**
    * Handles state and methods related to bookings
    */
@@ -89,7 +90,7 @@ import java.util.Scanner;
   protected void displayScreenings(ArrayList<Screening> screenings) {
     for (int i = 0; i < screenings.size(); i++) {
       Screening screening = screenings.get(i);
-      System.out.println(i+1 + ": Time: " + screening.getShowtime() + "\n Cinema Code: " + screening.getCinema().getId());
+      System.out.println(i+1 + ": Time: " + screening.getShowtime() + " Cinema Code: " + screening.getCinema().getId());
     }
   }
 
@@ -152,26 +153,20 @@ import java.util.Scanner;
   }
   
   protected String getUserInput(String message) {
-    Scanner scannerObj = new Scanner(System.in);
     System.out.println(message);
     String userInput = scannerObj.nextLine();
-    scannerObj.close();
     return userInput;
   }
   
   protected Integer getUserIntegerInput(String message) {
-    Scanner scannerObj = new Scanner(System.in);
     System.out.println(message);
     Integer userInput = scannerObj.nextInt();
-    scannerObj.close();
     return userInput;
   }
   
   protected Float getUserFloatInput(String message) {
-    Scanner scannerObj = new Scanner(System.in);
     System.out.println(message);
     Float userInput = scannerObj.nextFloat();
-    scannerObj.close();
     return userInput;
   }
 
@@ -182,6 +177,7 @@ import java.util.Scanner;
    */
   protected void exitProgram() {
     // TODO: save all state into storage
+    ParentConsole.scannerObj.close();
     System.exit(0);
   }
 

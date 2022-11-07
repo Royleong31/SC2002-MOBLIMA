@@ -32,7 +32,7 @@ public class Cinema {
 
   public static Cinema getCinemaById(String cinemaId) throws Exception {
     for (int i = 0; i < cinemasArr.size(); i++) {
-      if (cinemasArr.get(i).getId() == cinemaId) {
+      if (cinemasArr.get(i).getId().equals(cinemaId)) {
         return cinemasArr.get(i);
       }
     }

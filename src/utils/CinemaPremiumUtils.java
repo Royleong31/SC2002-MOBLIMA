@@ -4,13 +4,13 @@ import enums.CinemaType;
 
 public class CinemaPremiumUtils {
     public static Number getPremium(CinemaType ct) {
-        if (ct == CinemaType.GOLD_CLASS) {
+        if (ct.equals(CinemaType.GOLD_CLASS)) {
             return 2.0;
         }
-        else if (ct == CinemaType.DELUXE) {
+        else if (ct.equals(CinemaType.DELUXE)) {
             return 1.75;
         }
-        else if (ct == CinemaType.PREMIUM) {
+        else if (ct.equals(CinemaType.PREMIUM)) {
             return 1.5;
         }
         else {

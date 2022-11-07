@@ -9,7 +9,7 @@ public class Utils {
    */
   public static <T> ArrayList<T> asArrayList(final T... values) {
     ArrayList<T> foo = new ArrayList<T>(Arrays.asList(values));
-    foo.removeIf((T value) -> value == null);
+    foo.removeIf((T value) -> value.equals(null));
     return new ArrayList<T>(Arrays.asList(values));
   }
 }

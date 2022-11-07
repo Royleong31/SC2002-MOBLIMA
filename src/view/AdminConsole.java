@@ -167,7 +167,7 @@ public class AdminConsole extends ParentConsole {
    */
   public void getMoviesByRank() { //display top 5 movie by sales and top 5 by rating, admin can choose which of these or both to display to user
     String filterType = super.getUserInput("Enter the type of filter: \n'1' for Top 5 by Sales, \n'2' for Top 5 by Rating");
-    SortCriteria sortCriteria = filterType == "1" ? SortCriteria.SALES : SortCriteria.RATING;
+    SortCriteria sortCriteria = filterType.equals("1") ? SortCriteria.SALES : SortCriteria.RATING;
     ArrayList<Movie> movies = super.getMovieManager().getMovies(sortCriteria); // get top 5 movies
     movies = new ArrayList<Movie>(movies.subList(0, 4));
     super.displayMovies(movies);
@@ -369,7 +369,9 @@ public class AdminConsole extends ParentConsole {
     
       default:
         // Should never reach here as error checking is done in this.getUserChoice()
-        throw new Error("An unexpected error occured");
+         // Should never reach here as error checking is done in this.getUserChoice()
+        System.out.println("An unexpected error occured");
+        this.exitProgram();
     }
   }
 
