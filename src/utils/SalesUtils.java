@@ -29,22 +29,24 @@ public class SalesUtils {
       Ticket ticket = booking.getTickets().get(0); /* get first ticket object */
       String ticketMovieTitle = ticket.getScreening().getMovie().getTitle();
       if (ticketMovieTitle == movieTitle) {
-        totalSales = totalSales + booking.getAmountPaid();
+        totalSales += booking.getAmountPaid();
       }
     }
     return totalSales; /* returns 0 if there is no bookings so no need for exception handling */
   }
 
-  public static float getSalesByCineplex(ArrayList<Booking> bookingsArr, String cinemaCode) {
+  public static float getSalesByCineplex(ArrayList<Booking> bookingsArr, String cineplexLocation) {
     float totalSales = 0;
+
     for (Booking booking : bookingsArr) {
-      String bookingID = booking.getId();
-      /* first 3 letters of booking ID is cinema code */
-      String bookingCinemaID = bookingID.substring(0, 2);
-      if (bookingCinemaID == cinemaCode) {
-        totalSales = totalSales + booking.getAmountPaid();
+      Ticket ticket = booking.getTickets().get(0);
+      String curCineplexLocation = ticket.getScreening().getCinema().getCineplex().getLocation();
+
+      if (curCineplexLocation == cineplexLocation) {
+        totalSales += booking.getAmountPaid();
       }
     }
+
     return totalSales; /* returns 0 if there is no bookings so no need for exception handling */
   }
 }

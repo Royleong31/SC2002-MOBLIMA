@@ -12,17 +12,15 @@ import enums.SeatType;
 */
 public class Seat {
   private final String row;
-  private final Integer seatNumber;
+  private final Integer seatNumber; // The column that the seat is in
   private boolean seatTaken;
   private final SeatType seatType;
-  //private Ticket affiliatedTicket; // ?: Is this necessary?
 
   public Seat(String row, Integer seatNumber, boolean seatTaken, SeatType seatType, Ticket affiliatedTicket) {
     this.row = row;
     this.seatNumber = seatNumber;
     this.seatTaken = seatTaken;
     this.seatType = seatType;
-    //this.affiliatedTicket = affiliatedTicket;
   }
 
   public int getSeatNumber() {

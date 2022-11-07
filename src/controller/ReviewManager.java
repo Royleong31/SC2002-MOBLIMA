@@ -7,12 +7,11 @@ import model.Account.MovieGoerAccount;
 
 public class ReviewManager {
 
-  public void addReview(Review review) throws Exception {
-    Movie movie = review.getMovie();
-    
-    if (hasPreviouslySubmittedReview(review.getMovieGoer(), movie)) {
+  public void addReview(Movie movie, String comments, Float rating, MovieGoerAccount movieGoer) throws Exception {
+    if (hasPreviouslySubmittedReview(movieGoer, movie)) 
       throw new Exception("User has already submitted a review for this movie");
-    }
+
+    Review review = new Review(movie, comments, rating, movieGoer);
     movie.addReview(review);
   }
 

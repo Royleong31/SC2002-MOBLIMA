@@ -30,13 +30,13 @@ public class Cinema {
     Cinema.cinemasArr.add(this);
   }
 
-  public static Cinema getCinemaById(String cinemaId) {
+  public static Cinema getCinemaById(String cinemaId) throws Exception {
     for (int i = 0; i < cinemasArr.size(); i++) {
       if (cinemasArr.get(i).getId() == cinemaId) {
         return cinemasArr.get(i);
       }
     }
-    return null;
+    throw new Exception("No cinema with that id exists");
   }
 
   public String getId() {

@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 import constants.Constants;
 import utils.DateTimeUtils;
-import utils.Utils;
 import enums.CinemaType;
 import enums.SeatType;
 import enums.SortCriteria;
@@ -39,7 +38,7 @@ public class SystemManager {
    */
   public float getCinemaMultiplier(CinemaType ct) throws Exception {
     if (!cinemaMultMap.containsKey(ct)) {
-      throw new Exception("Cinema type do not exists.");
+      throw new Exception("Cinema type does not exists.");
     }
     return cinemaMultMap.get(ct);
   }
@@ -53,11 +52,11 @@ public class SystemManager {
   public void setCinemaMultiplier(CinemaType ct, float mult) {
     cinemaMultMap.put(ct, mult);
   }
-
+  
   public SortCriteria getSortingCriteria() {
     return this.movieSortingCriteria;
   }
-
+  
   public void setSortingCriteria(SortCriteria sc) throws Exception {
     // These are the only 2 sorting criteria allowed
     if (sc == SortCriteria.SALES || sc == SortCriteria.RATING) {
@@ -66,12 +65,13 @@ public class SystemManager {
       throw new Exception("Invalid sorting criteria");
     }
   }
-
+  
   /*
-   * @param CinemaType
-   * @return void
-   */
-  public void deleteCinemaMultipler(CinemaType ct) throws Exception {
+  * @param CinemaType
+  * @return void
+  */
+  // TODO: Can't we set it to 1 instead? Why do we need to remove it?
+  public void deleteCinemaMultiplier(CinemaType ct) throws Exception {
     if (cinemaMultMap.containsKey(ct)) {
       cinemaMultMap.remove(ct);
     }
@@ -97,16 +97,17 @@ public class SystemManager {
   public void setSeatMultiplier(SeatType st, float multiplier) {
     seatMultMap.put(st, multiplier);
   }
-
+  
   /*
-   * @param SeatType
-   * @return void
-   */
+  * @param SeatType
+  * @return void
+  */
+  // TODO: Can't we set it to 1 instead? Why do we need to remove it?
   public void deleteSeatMultiplier(SeatType st) throws Exception {
     if (seatMultMap.containsKey(st)) {
       seatMultMap.remove(st);
     }
-    throw new Exception("Seat type do not exists.");
+    throw new Exception("Seat type does not exists.");
   }
 
   /*
@@ -115,12 +116,14 @@ public class SystemManager {
    * @param Int day
    * @return void
    */
-  public void deleteHoliday(int year, int month, int day) throws Exception {
+  // !: Needs to be in 2-digit format
+  public void deleteHoliday(String year, String month, String day) throws Exception {
     String dateString = day + "." + month + "." + year;
-    if (!holidaysArr.contains(dateString)) {
-      throw new Exception("Holiday do not exist in database.");
+    if (!this.holidaysArr.contains(dateString)) {
+      throw new Exception("Holiday does not exist in database.");
     }
-    holidaysArr.removeIf(value -> dateString.equals(value));
+
+    this.holidaysArr.removeIf(value -> dateString.equals(value));
   }
 
   /*
@@ -129,12 +132,12 @@ public class SystemManager {
    * @param Int day
    * @return void
    */
-  public void addHoliday(int year, int month, int day) throws Exception {
+  public void addHoliday(String year, String month, String day) throws Exception {
     String dateString = day + "." + month + "." + year;
-    if (holidaysArr.contains(dateString)) {
+    if (this.holidaysArr.contains(dateString)) {
       throw new Exception("Holiday already exists in database.");
     }
-    holidaysArr.add(dateString);
+    this.holidaysArr.add(dateString);
   }
 
   /*
@@ -143,7 +146,7 @@ public class SystemManager {
    */
   public boolean isHoliday(String dateString) throws Exception {
     String reconstructedDateString = DateTimeUtils.dateTimeToDate(dateString) + "." + DateTimeUtils.dateTimeToMonth(dateString) + "." + DateTimeUtils.dateTimeToYear(dateString);
-    return holidaysArr.contains(reconstructedDateString);
+    return this.holidaysArr.contains(reconstructedDateString);
   }
 
 }

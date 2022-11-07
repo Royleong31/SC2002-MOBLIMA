@@ -37,6 +37,7 @@ public class ScreeningManager {
   }
 
   public ArrayList<Screening> getScreenings(String movieTitle, String cinemaCode, String date) {
+    // TODO: Fix this warning
     ArrayList<Screening> screenings = (ArrayList<Screening>) screeningsArr.clone();
 
     screenings.removeIf(screening -> (((!screening.getMovieTitle().equals(movieTitle)) && (movieTitle != null)) ||
@@ -44,6 +45,7 @@ public class ScreeningManager {
                                       ((!screening.getShowtime().equals(date)) && (date != null))
                                       ));
 
+    // TODO: Sort by cinema code and date
     return screenings;
   }
 

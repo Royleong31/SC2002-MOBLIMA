@@ -9,8 +9,6 @@ import model.Seat;
 import model.Ticket;
 import model.Account.MovieGoerAccount;
 import utils.DateTimeUtils;
-import utils.PriceUtils;
-import enums.TicketType;
 
 /**
  * Handles the booking of tickets for a movie screening.
@@ -97,7 +95,7 @@ public class BookingManager {
     ArrayList<Booking> checkArr = new ArrayList<Booking>();
 	
     for(Booking findBooking: bookingsArr){
-      if(findBooking.getMovieGoer() == movieGoer)
+      if(findBooking.getMovieGoer().equals(movieGoer))
         checkArr.add(findBooking);
     }
     return checkArr;
@@ -123,11 +121,12 @@ public class BookingManager {
         ArrayList<Ticket> ticketsArr = new ArrayList<Ticket>();
 
         for (Ticket ticket: findBooking.getTickets()) {
-          if (ticket.getScreening() == screening) {
+          if (ticket.getScreening().equals(screening)) {
             ticketsArr.add(ticket);
           }
         }
 
+        // Remove if it has tickets for the screening
         return ticketsArr.size() != 0;
       }
       );

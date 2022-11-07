@@ -1,7 +1,5 @@
 package view;
 import controller.ScreeningManager;
-import enums.CinemaType;
-import enums.SeatType;
 import enums.ShowStatus;
 import enums.SortCriteria;
 import controller.SystemManager;
@@ -15,8 +13,6 @@ import controller.CineplexManager;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-
-import constants.Constants;
 
 /**
  * All methods here do not require authentication
@@ -83,7 +79,7 @@ import constants.Constants;
     System.out.println("Movies");
 
     for (int i = 0; i < movies.size(); i++) {
-      System.out.println(i + ": " + movies.get(i).getTitle());
+      System.out.println(i+1 + ": " + movies.get(i).getTitle());
     }
   }
 
@@ -93,7 +89,7 @@ import constants.Constants;
   protected void displayScreenings(ArrayList<Screening> screenings) {
     for (int i = 0; i < screenings.size(); i++) {
       Screening screening = screenings.get(i);
-      System.out.println(i + ": Time: " + screening.getShowtime() + "\n Cinema Code: " + screening.getCinema().getId());
+      System.out.println(i+1 + ": Time: " + screening.getShowtime() + "\n Cinema Code: " + screening.getCinema().getId());
     }
   }
 
@@ -103,8 +99,6 @@ import constants.Constants;
    * Allows the user to pick a movie
    * @return the movie that the user picked
    */
-  // TODO: Add filtering and sorting criteria here so that it can be used by both MovieGoer and Admins
-  // TODO: Add overloads for this matching the MovieManager getMovies function
   protected Movie getMovie(SortCriteria sortCriterias, ArrayList<ShowStatus> showStatuses) {
     ArrayList<Movie> movies = this.movieManager.getMovies(sortCriterias, showStatuses);
     this.displayMovies(movies);
@@ -120,7 +114,6 @@ import constants.Constants;
    * @param movie the movie that the user wants to select a screening from
    * @return the screening that the user picked
    */
-  // TODO: Add overloaded functions for filtering by cinema code and date
   protected Screening getScreening(Movie movie) {
     System.out.println("Screenings for " + movie.getTitle());
     // Currently only gets all screenings for 1 movie

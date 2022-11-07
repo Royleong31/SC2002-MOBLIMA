@@ -72,4 +72,8 @@ public class Booking {
     return amountPaid;
   }
 
+  public String getCinemaId() {
+    return ticketsArr.get(0).getScreening().getCinemaId();
+  }
+
 }

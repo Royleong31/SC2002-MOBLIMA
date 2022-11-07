@@ -3,15 +3,10 @@ import enums.ShowStatus;
 import enums.SortCriteria;
 
 import java.util.ArrayList;
-import java.util.Comparator;
-
 import model.Movie;
 import utils.SalesUtils;
-import enums.ShowStatus;
-import enums.SortCriteria;
 import enums.Advisory;
 import enums.Genre;
-import enums.MovieType;
 
 /**
  * Account for a staff member.
@@ -30,9 +25,9 @@ public class MovieManager {
     this.moviesArr.add(movie);
   }
 
-  public void removeMovie(String movieTitle){
+  public void removeMovie(String movieTitle) throws Exception{
     Movie movie = this.getMovieByName(movieTitle);
-    updateMovieShowingStatus(movie, ShowStatus.END_OF_SHOWING);
+    this.updateMovieShowingStatus(movie, ShowStatus.END_OF_SHOWING);
   }
 
   public void updateMovieShowingStatus(Movie movie, ShowStatus showStatus) {
@@ -68,10 +63,12 @@ public class MovieManager {
 
     // First attempt to filter movies by show statuses if applicable else copies the full exsisting movie list
     if (showStatuses.isEmpty()) {
-      movieLst = (ArrayList<Movie>) moviesArr.clone();
+      for (Movie movie : this.moviesArr) {
+        movieLst.add(movie);
+      }
     }
     else {
-      for (Movie movie : moviesArr) {
+      for (Movie movie : this.moviesArr) {
         for (ShowStatus status : showStatuses) {
           if (movie.getShowingStatus() == status) {
             movieLst.add(movie);
@@ -110,14 +107,14 @@ public class MovieManager {
     return getMovies(sortCriteria, null);
   }
 
-  public Movie getMovieByName(String title) {
+  public Movie getMovieByName(String title) throws Exception {
     for (Movie movie : moviesArr) {
       if (movie.getTitle().equals(title)) {
         return movie;
       }
     }
-    return null;
+    
+    throw new Exception("No movie with that name found");
   }
-
   
 }

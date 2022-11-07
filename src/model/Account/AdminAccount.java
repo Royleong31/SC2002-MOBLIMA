@@ -24,7 +24,7 @@ public class AdminAccount extends Account {
    * 				 Inherited from Account superclass.
    * @param staffId This staff's identifcation.
    */
-  public AdminAccount(String username, String password, String staffId) {
+  public AdminAccount(String username, String password, String staffId){
     super(username, password);
     this.staffId = staffId;
   }

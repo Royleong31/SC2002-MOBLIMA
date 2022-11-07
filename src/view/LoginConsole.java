@@ -19,13 +19,13 @@ public class LoginConsole extends ParentConsole {
   
   @Override
   public void display(Account account) { // account is unused as it's null
-    String userSelection = this.getUserChoice("Enter '1' to log in, '2' to register, '3' to exit", Utils.asArrayList("1", "2", "3"));
+    Integer userSelection = this.getUserChoiceFromCount("Enter '1' to log in, '2' to register, '3' to exit", 3);
 
-    if (userSelection == "1") {
+    if (userSelection == 1) {
       this.login();
-    } else if (userSelection == "2") {
+    } else if (userSelection == 2) {
       this.register();
-    } else if (userSelection == "3") {
+    } else if (userSelection == 3) {
       this.exitProgram();
     } else {
       // Should never reach here as error checking is done in this.getUserChoice()
@@ -64,7 +64,8 @@ public class LoginConsole extends ParentConsole {
 
         if (isAdmin) {
           String staffId = super.getUserInput("Staff ID: ");
-          this.loginManager.registerAdmin(username, password, staffId);
+          String staffCode = super.getUserInput("Staff Code: ");
+          this.loginManager.registerAdmin(username, password, staffId, staffCode);
         } else {
           String name = super.getUserInput("Name: ");
           String phoneNumber = super.getUserInput("Phone Number: ");
