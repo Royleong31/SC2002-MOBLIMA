@@ -1,6 +1,8 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 /**
  * Account for a staff member.
@@ -54,6 +56,11 @@ public class Screening {
 
    public String getDateTime() {
     return dateTime;
+   }
+
+   public Date getDateTimeObj() throws Exception {
+    Date DateTime = new SimpleDateFormat("dd.MM.yyyy.HH.mm").parse(dateTime);
+    return DateTime;
    }
 
   public void setDateTime(String dateTime) {
