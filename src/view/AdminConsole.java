@@ -1,9 +1,7 @@
 package view;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 import enums.*;
-import controller.CineplexManager;
 import controller.SystemManager;
 import model.Movie;
 import model.Account.Account;
@@ -124,9 +122,9 @@ public class AdminConsole extends ParentConsole {
    */
   public void getSalesReport() {
     Integer userInput = this.getUserChoiceFromCount("\nSelect the type of sales report: "+
-                                                "\nEnter '1' for Total Sales, "+
-                                                "\n'2' for Sales by Movie, "+
-                                                "\n'3' for Sales by Cineplex", 3);
+                                                    "\nEnter '1' for Total Sales, "+
+                                                    "\n'2' for Sales by Movie, "+
+                                                    "\n'3' for Sales by Cineplex", 3);
 
     ArrayList<Booking> bookingArr = super.getBookingManager().getBookings();
     
@@ -134,14 +132,17 @@ public class AdminConsole extends ParentConsole {
       case 1:
         System.out.print("\nTotal Sales: $" + SalesUtils.getTotalSales(bookingArr));
         break;
+
       case 2:
         String movieTitle = super.getUserInput("Enter Movie Title: ");
         System.out.println(movieTitle + "'s Sales: $" + SalesUtils.getSalesByMovie(bookingArr, movieTitle));
         break;
+
       case 3:
         String cineplexName = super.getUserInput("Enter Cineplex Name: ");
         System.out.print(cineplexName + "'s Sales: $" + SalesUtils.getSalesByCineplex(bookingArr, cineplexName));
         break;
+
       default:
         break;
     }
@@ -168,20 +169,18 @@ public class AdminConsole extends ParentConsole {
    * Call the movieManager's updateMovie method to update the movie
    */
   public void updateMovie() {
-    Scanner sc = new Scanner(System.in);
-    System.out.print("\nEnter movie to update: ");
-    String movieInput = sc.nextLine();
+    String movieInput = super.getUserInput("Enter movie to update: ");
     Movie movie = super.getMovieManager().getMovieByName(movieInput);
 
     String userChoice = super.getUserChoice("\nMovie Details: "+
-                        "\n1 - Title: " + movie.getTitle()+
-                        "\n2 - Show Status: " + movie.getShowingStatus().toString() +
-                        "\n3 - Synopsis" + movie.getSynopsis()+
-                        "\n4 - Director: " + movie.getDirector()+
-                        "\n5 - Cast: \n" + movie.getCast()+ // TODO: Show the array of cast members
-                        "\n6 - Advisory: " + movie.getAdvisoryRating().toString() +
-                        "\n7 - Genre: " + movie.getGenre().toString() +
-                        "\n-1 - Exit", Utils.asArrayList("1", "2", "3", "4", "5", "6", "7", "-1"));
+                                            "\n1 - Title: " + movie.getTitle()+
+                                            "\n2 - Show Status: " + movie.getShowingStatus().toString() +
+                                            "\n3 - Synopsis" + movie.getSynopsis()+
+                                            "\n4 - Director: " + movie.getDirector()+
+                                            "\n5 - Cast: \n" + movie.getCast()+ // TODO: Show the array of cast members
+                                            "\n6 - Advisory: " + movie.getAdvisoryRating().toString() +
+                                            "\n7 - Genre: " + movie.getGenre().toString() +
+                                            "\n-1 - Exit", Utils.asArrayList("1", "2", "3", "4", "5", "6", "7", "-1"));
 
     while(userChoice != "-1"){
       switch(userChoice){
@@ -215,7 +214,7 @@ public class AdminConsole extends ParentConsole {
                                                                "\nEnter '1' for PG13, "+
                                                                "\n'2' for NC16, "+
                                                                "\n'3' for M18, "+
-                                                               "\n '4' for R21", 4);
+                                                               "\n '4' for R21", Advisory.values().length);
 
           Advisory advisory = Advisory.values()[advisoryInput - 1];
         // add validation for positive 2 decimal places number
@@ -224,15 +223,15 @@ public class AdminConsole extends ParentConsole {
 
         case "6":
           Integer genreInput = super.getUserChoiceFromCount("Enter the genre of the movie" +
-          "\nEnter '1' for Action, "+
-          "\n'2' for Adventure, "+
-          "\n'3' for Comedy, "+
-          "\n '4' for Drama, "+
-          "\n '5' for Fantasy, "+
-          "\n '6' for Horror, "+
-          "\n '7' for Romance, "+
-          "\n '8' for Thriller, "+
-          "\n '9' for Western", 9);
+                                                            "\nEnter '1' for Action, "+
+                                                            "\n'2' for Adventure, "+
+                                                            "\n'3' for Comedy, "+
+                                                            "\n '4' for Drama, "+
+                                                            "\n '5' for Fantasy, "+
+                                                            "\n '6' for Horror, "+
+                                                            "\n '7' for Romance, "+
+                                                            "\n '8' for Thriller, "+
+                                                            "\n '9' for Western", Genre.values().length);
 
           Genre genre = Genre.values()[genreInput - 1];
           super.getMovieManager().updateMovie(movie, null, null, null, null, null, genre, null);
@@ -240,10 +239,10 @@ public class AdminConsole extends ParentConsole {
 
         case "7":
      Integer statusInput = super.getUserChoiceFromCount("Enter the show status of the movie" +
-          "\nEnter '1' for Coming Soon, "+
-          "\n'2' for Preview, "+
-          "\n'3' for Now Showing, "+
-          "\n '4' for End of Showing, ",9);
+                                                        "\nEnter '1' for Coming Soon, "+
+                                                        "\n'2' for Preview, "+
+                                                        "\n'3' for Now Showing, "+
+                                                        "\n '4' for End of Showing, ",ShowStatus.values().length);
 
           ShowStatus showStatus = ShowStatus.values()[statusInput - 1];
           super.getMovieManager().updateMovie(movie, null, null, null, null, null, null, showStatus);

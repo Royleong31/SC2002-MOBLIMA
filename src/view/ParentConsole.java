@@ -14,7 +14,6 @@ import controller.BookingManager;
 import controller.CineplexManager;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
 
 import constants.Constants;
@@ -51,8 +50,6 @@ import constants.Constants;
    * Handles state and methods related to screenings
    */
   private ScreeningManager screeningManager = new ScreeningManager();
-
-
 
   /**
    * Handles state and methods related to system configurations
@@ -184,6 +181,8 @@ import constants.Constants;
     scannerObj.close();
     return userInput;
   }
+
+  protected void startProgram() {}
 
   /**
    * This is the function that is called whenever the program exits, for e.g. when the user chooses to quit the program

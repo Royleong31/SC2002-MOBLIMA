@@ -33,15 +33,10 @@ public class MovieGoerConsole extends ParentConsole {
     // get the user's review and rating and creates a review
     try {
       Movie movie = super.getMovie(SortCriteria.TITLE, null);
-
-      Scanner scannerObj = new Scanner(System.in);
-      System.out.println("Please enter your comments: ");
-      String comments = scannerObj.nextLine();
-      System.out.println("Please enter your rating (1-5): ");
-      float rating = scannerObj.nextFloat();
-      scannerObj.close();
-
+      String comments = super.getUserInput("Please enter your comments: ");
+      Float rating = super.getUserFloatInput("Please enter your rating (1-5): ");
       Review review = new Review(movie, comments, rating, movieGoerAccount);
+      
       super.getReviewManager().addReview(review);
     } catch (Exception e) {
       System.out.println("Something went wrong while booking your tickets");
@@ -61,8 +56,11 @@ public class MovieGoerConsole extends ParentConsole {
       Movie movie = super.getMovie(SortCriteria.TITLE, Utils.asArrayList(ShowStatus.NOW_SHOWING, ShowStatus.PREVIEW));
       Screening screening = super.getScreening(movie);
       ArrayList<Seat> seats = this.selectSeats(screening);
-      // TODO: Add variable ticket types
-      Integer userChoice = super.getUserChoiceFromCount("Choose a ticket type\n ", TicketType.values().length);
+      Integer userChoice = super.getUserChoiceFromCount("Choose a ticket type: " + 
+                  "\n '1' for Normal, " +
+                  "\n '2' for Student, " +
+                  "\n '3' for Senior, " +
+                  "\n '4' for Cards", TicketType.values().length);
       TicketType ticketType = TicketType.values()[userChoice - 1];
 
       super.getBookingManager().makeBooking(movieGoerAccount, screening, seats, ticketType, super.getSystemManager());

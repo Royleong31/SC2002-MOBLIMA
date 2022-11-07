@@ -1,8 +1,6 @@
 package view;
-import java.util.Scanner;
 
 import controller.LoginManager;
-import enums.AccountType;
 import model.Account.Account;
 import utils.Utils;
 
@@ -40,7 +38,6 @@ public class LoginConsole extends ParentConsole {
    * @return
    */
   private void login() {
-    Scanner scannerObj = new Scanner(System.in);
     while (true) {
       try {
         String username = super.getUserInput("Username: ");
@@ -52,7 +49,6 @@ public class LoginConsole extends ParentConsole {
         continue;
       }
     }
-    scannerObj.close();
   }
 
   /**
