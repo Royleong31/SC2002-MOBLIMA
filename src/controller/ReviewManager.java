@@ -17,11 +17,9 @@ public class ReviewManager {
 
   public boolean hasPreviouslySubmittedReview(MovieGoerAccount movieGoer, Movie movie) {
     ArrayList<Review> reviews = movie.getReviews();
-    Review review;
 
-    for(int i = 0; i < reviews.size(); i++) {
-      review = reviews.get(i);
-      if(review.getMovieGoer().equals(movieGoer) && review.getMovie().equals(movie)) {
+    for(Review cur: reviews) {
+      if(cur.getMovieGoer().equals(movieGoer) && cur.getMovie().equals(movie)) {
         return true;
       }
     }

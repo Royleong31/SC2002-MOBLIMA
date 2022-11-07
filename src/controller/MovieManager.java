@@ -7,6 +7,7 @@ import model.Movie;
 import utils.SalesUtils;
 import enums.Advisory;
 import enums.Genre;
+import enums.MovieType;
 
 /**
  * Account for a staff member.
@@ -34,7 +35,7 @@ public class MovieManager {
     movie.setShowingStatus(showStatus);
   }
 
-  public void updateMovie(Movie movie, String title, String synopsis, String director, ArrayList<String> cast, Advisory advisoryRating, Genre genre, ShowStatus showStatus) {
+  public void updateMovie(Movie movie, String title, String synopsis, String director, ArrayList<String> cast, Advisory advisoryRating, Genre genre, ShowStatus showStatus, MovieType type) {
     if (title != null) {
       movie.setTitle(title);
     }
@@ -55,6 +56,9 @@ public class MovieManager {
     }
     if(showStatus != null) {
       movie.setShowingStatus(showStatus);
+    }
+    if (type != null) {
+      movie.setMovieType(type);
     }
   }
 

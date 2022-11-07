@@ -32,18 +32,20 @@ public class BookingManager {
     ArrayList<Ticket> ticketsArr = new ArrayList<Ticket>();
     for(int i=0;i<seatsArr.size();i++){
 			
+      // if more than 1 ticket is seelcted, and i is the second last ticket or before, check if it is 
       if(seatsArr.size()>1 && i<=seatsArr.size()-2){
         if(Math.abs((seatsArr.get(i)).getSeatNumber()-(seatsArr.get(i+1)).getSeatNumber())>1){
           throw new Exception("Error: seats must be together!");
         }
       }
+
       ticketsArr.add(new Ticket(seatsArr.get(i), screening, ticketType));
     }
+
     int amountPaid = 0;
+
     for(Ticket chosenTicket: ticketsArr){
       amountPaid += utils.PriceUtils.getPrice(systemManager, chosenTicket);
-      //TODO: is this the way to get the prices of the tickets to calculate amount paid?
-      //		    Since screening's getPrice() does not take into account the ticket type
     }
     bookingsArr.add(new Booking(screening.getCinemaId() + DateTimeUtils.getDateTime(), movieGoer, amountPaid, ticketsArr));
   }

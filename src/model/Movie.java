@@ -112,7 +112,7 @@ public class Movie {
   /*
    * Gets the overall rating from all the reviews of this movie
    */
-  public float getOverallRating() {
+  public Float getOverallRating() {
     // loop through the list of reviews and get the average rating
     float total = 0;
     for (Review review : reviews) {

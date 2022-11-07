@@ -37,10 +37,10 @@ public class SystemManager {
    * @return Float The multiplier for the cinema type
    */
   public float getCinemaMultiplier(CinemaType ct) throws Exception {
-    if (!cinemaMultMap.containsKey(ct)) {
+    if (!this.cinemaMultMap.containsKey(ct)) {
       throw new Exception("Cinema type does not exists.");
     }
-    return cinemaMultMap.get(ct);
+    return this.cinemaMultMap.get(ct);
   }
 
   // TODO: Add authorisation decorators for all admin methods. Do the same for other methods in other managers
@@ -50,7 +50,7 @@ public class SystemManager {
    * @return void
    */
   public void setCinemaMultiplier(CinemaType ct, float mult) {
-    cinemaMultMap.put(ct, mult);
+    this.cinemaMultMap.put(ct, mult);
   }
   
   public SortCriteria getSortingCriteria() {

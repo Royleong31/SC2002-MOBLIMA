@@ -159,17 +159,28 @@ import java.util.Scanner;
   }
   
   protected Integer getUserIntegerInput(String message) {
-    System.out.println(message);
-    Integer userInput = scannerObj.nextInt();
-    return userInput;
+    while (true) {
+      try { 
+        String userInput = this.getUserInput(message);
+        return Integer.parseInt(userInput);
+      } catch(NumberFormatException e) {
+        System.out.println("Invalid input. Please try again");
+      }
+    }
   }
   
   protected Float getUserFloatInput(String message) {
-    System.out.println(message);
-    Float userInput = scannerObj.nextFloat();
-    return userInput;
+    while (true) {
+      try { 
+        String userInput = this.getUserInput(message);
+        return Float.parseFloat(userInput);
+      } catch(NumberFormatException e) {
+        System.out.println("Invalid input. Please try again");
+      }
+    }
   }
 
+  // TODO:
   protected void startProgram() {}
 
   /**

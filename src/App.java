@@ -1,4 +1,5 @@
 import enums.LoginStatus;
+import model.Account.AdminAccount;
 import controller.LoginManager;
 import view.AdminConsole;
 import view.LoginConsole;
@@ -34,7 +35,8 @@ public class App {
             System.out.println(loginStatus);
             // matches the index of this.consolesArr
             int consolesArrIndex = loginStatus.equals(LoginStatus.LOGIN) ? 0 : loginStatus.equals(LoginStatus.MOVIE_GOER) ? 1 : 2;
-            consolesArr[consolesArrIndex].display(loginManager.getCurrentAccount());
+            // consolesArr[consolesArrIndex].display(loginManager.getCurrentAccount());
+            consolesArr[2].display(new AdminAccount("fsdfsd", "fsadkfsad", "1234"));
         }
     }
 }

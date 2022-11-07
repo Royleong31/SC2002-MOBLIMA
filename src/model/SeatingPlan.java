@@ -24,10 +24,6 @@ public class SeatingPlan {
     return Math.max((rows*cols - takenSeatsArr.size()),0);
   }
 
-  public boolean isSeatAvailable(ArrayList<Seat> takenSeatsArr, Seat seat) {
-    return takenSeatsArr.contains(seat);
-  }
-
   public int getAisle() {
     return this.aisle;
   }
