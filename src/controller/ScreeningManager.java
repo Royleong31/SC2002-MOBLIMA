@@ -1,5 +1,6 @@
 package controller;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import model.DateTime;
 import model.Screening;
@@ -35,12 +36,18 @@ public class ScreeningManager {
   }
 
   public ArrayList<Screening> getScreenings(String movieTitle, String cinemaCode, String date) {
-    ArrayList<Screening> screenings = (ArrayList<Screening>) screeningsArr.clone();
+    ArrayList<Screening> screenings = new ArrayList<Screening>();
+    for (Screening screening : screeningsArr) {
+      screenings.add(screening);
+    }
 
     screenings.removeIf(screening -> (((!screening.getMovieTitle().equals(movieTitle)) && (movieTitle != null)) ||
                                       ((!screening.getCinemaId().equals(cinemaCode)) && (cinemaCode != null)) ||
                                       ((!screening.getDateTime().equals(date)) && (date != null))
                                       ));
+
+    Comparator<Screening> comparator = Comparator.comparing(Screening::getMovieTitle).thenComparing(Screening::getCinemaId).thenComparing(Screening::getDateTime);
+    screenings.sort(comparator);
 
     return screenings;
   }
