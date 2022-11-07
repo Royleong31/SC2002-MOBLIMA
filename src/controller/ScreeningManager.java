@@ -2,7 +2,6 @@ package controller;
 import java.util.ArrayList;
 
 import model.Cinema;
-import model.DateTime;
 import model.Movie;
 import model.Screening;
 
@@ -42,7 +41,7 @@ public class ScreeningManager {
 
     screenings.removeIf(screening -> (((!screening.getMovieTitle().equals(movieTitle)) && (movieTitle != null)) ||
                                       ((!screening.getCinemaId().equals(cinemaCode)) && (cinemaCode != null)) ||
-                                      ((!screening.getDateTime().equals(date)) && (date != null))
+                                      ((!screening.getShowtime().equals(date)) && (date != null))
                                       ));
 
     return screenings;

@@ -20,7 +20,7 @@ public class PriceUtils {
   public static float getPrice(SystemManager sm, Ticket ticket) throws Exception {
     Screening screening = ticket.getScreening();
     SeatType seatType = ticket.getSeat().getSeatType();
-    String dateString = screening.getDateTime();
+    String dateString = screening.getShowtime();
     TicketType ticketType = ticket.getTicketType();
     CinemaType cinemaType = screening.getCinema().getCinemaType();
 

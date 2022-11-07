@@ -3,12 +3,12 @@ package controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import constants.Constants;
 import utils.DateTimeUtils;
 import utils.Utils;
 import enums.CinemaType;
 import enums.SeatType;
 import enums.SortCriteria;
-import enums.FilterType;
 
 enum SpecialDay {
   WEEKEND,
@@ -25,10 +25,9 @@ enum SpecialDay {
 */
 public class SystemManager {
   private ArrayList<String> holidaysArr = new ArrayList<String>();
-  private HashMap<CinemaType, Float> cinemaMultMap = new HashMap<CinemaType, Float>();
-  private HashMap<SeatType, Float> seatMultMap = new HashMap<SeatType, Float>();
-  private ArrayList<FilterType> filtersApplied = Utils.asArrayList(FilterType.SALES, FilterType.RATING);
-  private SortCriteria movieSortingCriteria = SortCriteria.SALES; // default
+  private HashMap<CinemaType, Float> cinemaMultMap = Constants.DEFAULT_CINEMA_PRICE_MAP;
+  private HashMap<SeatType, Float> seatMultMap = Constants.DEFAULT_SEAT_PRICE_MAP;
+  private SortCriteria movieSortingCriteria = Constants.DEFAULT_SORT_CRITERIA;
 
   public ArrayList<String> getHolidays() {
     return holidaysArr;
@@ -103,28 +102,6 @@ public class SystemManager {
       seatMultMap.remove(st);
     }
     throw new Exception("Seat type do not exists.");
-  }
-
-  /*
-   * @param FilterType
-   * @return void
-   */
-  public void addFilter(FilterType ft) throws Exception {
-    if (filtersApplied.contains(ft)) {
-      throw new Exception("Filter is already applied");
-    }
-    filtersApplied.add(ft);
-  }
-
-  /*
-   * @param FilterType
-   * @return void
-   */
-  public void deleteFilter(FilterType ft) throws Exception {
-    if (filtersApplied.contains(ft)) {
-      filtersApplied.remove(ft);
-    }
-    throw new Exception("Filter is not applied");
   }
 
   /*

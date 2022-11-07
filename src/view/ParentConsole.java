@@ -98,7 +98,7 @@ public abstract class ParentConsole {
   public void displayScreenings(ArrayList<Screening> screenings) {
     for (int i = 0; i < screenings.size(); i++) {
       Screening screening = screenings.get(i);
-      System.out.println(i + ": Time: " + screening.getDateTime() + "\n Cinema Code: " + screening.getCinema().getId());
+      System.out.println(i + ": Time: " + screening.getShowtime() + "\n Cinema Code: " + screening.getCinema().getId());
     }
   }
 

@@ -23,7 +23,7 @@ import utils.Utils;
  @version 1.0
  @since 2022-10-30
 */
-private class MovieGoerConsole extends ParentConsole {
+class MovieGoerConsole extends ParentConsole {
   /**
    * Displays all reviews that have been made by this user
    * @param movieGoerAccount
@@ -100,6 +100,11 @@ private class MovieGoerConsole extends ParentConsole {
     return seats;
   }
 
+  private void displayAllMovies() {
+    ArrayList<Movie> movies = super.getMovieManager().getMovies(Utils.asArrayList(ShowStatus.PREVIEW, ShowStatus.NOW_SHOWING));
+    super.displayMovies(movies);
+  }
+
   /**
    * Displays all bookings that have been made by this user
    * @param movieGoerAccount
@@ -129,7 +134,7 @@ private class MovieGoerConsole extends ParentConsole {
       this.exitProgram();
     }
     
-    String userSelection = this.getUserChoice("Enter '1' to submit review, \n'2' to make booking, \n'3' to view booking history, \n'4' to quit", Utils.asArrayList("1", "2", "3", "4"));
+    String userSelection = this.getUserChoiceFromCount("Enter '1' to submit review, \n'2' to make booking, \n'3' to view booking history, \n'4' to display all available movies, \n'5' to quit", 5);
 
     MovieGoerAccount movieGoerAccount = (MovieGoerAccount) account;
 
@@ -145,8 +150,12 @@ private class MovieGoerConsole extends ParentConsole {
       case "3":
         this.viewBookingHistory(movieGoerAccount);
         break;
-    
+
       case "4":
+        this.displayAllMovies();
+        break;
+    
+      case "5":
         this.exitProgram();
         break;
     
