@@ -26,7 +26,7 @@ import constants.Constants;
  @version 1.0
  @since 2022-10-30
 */
-public abstract class ParentConsole {
+ public abstract class ParentConsole {
   /**
    * Handles state and methods related to bookings
    */
@@ -79,12 +79,10 @@ public abstract class ParentConsole {
   protected SystemManager getSystemManager() {
     return this.systemManager;
   }
-
-
   /**
    * Displays all movies in the system
    */
-  public void displayMovies(ArrayList<Movie> movies) {
+  protected void displayMovies(ArrayList<Movie> movies) {
     System.out.println("Movies");
 
     for (int i = 0; i < movies.size(); i++) {
@@ -95,7 +93,7 @@ public abstract class ParentConsole {
   /**
    * Displays all movies in the system
    */
-  public void displayScreenings(ArrayList<Screening> screenings) {
+  protected void displayScreenings(ArrayList<Screening> screenings) {
     for (int i = 0; i < screenings.size(); i++) {
       Screening screening = screenings.get(i);
       System.out.println(i + ": Time: " + screening.getShowtime() + "\n Cinema Code: " + screening.getCinema().getId());
@@ -110,13 +108,13 @@ public abstract class ParentConsole {
    */
   // TODO: Add filtering and sorting criteria here so that it can be used by both MovieGoer and Admins
   // TODO: Add overloads for this matching the MovieManager getMovies function
-  public Movie getMovie(SortCriteria sortCriterias, ArrayList<ShowStatus> showStatuses) {
+  protected Movie getMovie(SortCriteria sortCriterias, ArrayList<ShowStatus> showStatuses) {
     ArrayList<Movie> movies = this.movieManager.getMovies(sortCriterias, showStatuses);
     this.displayMovies(movies);
-    String userChoice = this.getUserChoiceFromCount("Choose a movie", movies.size());
+    Integer userChoice = this.getUserChoiceFromCount("Choose a movie", movies.size());
 
-    // TODO: Handle exceptions when the index is out of range (should never happen as we are using the size of the array)
-    return movies.get(Integer.parseInt(userChoice));
+    // Convert back to 0 index
+    return movies.get(userChoice - 1);
   }
   
   /**
@@ -126,15 +124,14 @@ public abstract class ParentConsole {
    * @return the screening that the user picked
    */
   // TODO: Add overloaded functions for filtering by cinema code and date
-  public Screening getScreening(Movie movie) {
+  protected Screening getScreening(Movie movie) {
     System.out.println("Screenings for " + movie.getTitle());
     // Currently only gets all screenings for 1 movie
     ArrayList<Screening> screenings = this.screeningManager.getScreeningsByMovie(movie.getTitle());
     this.displayScreenings(screenings);
 
-    String userChoice = this.getUserChoiceFromCount("Choose a screening", screenings.size());
-    // TODO: Handle exceptions when the index is out of range (should never happen as we are using the size of the array)
-    return screenings.get(Integer.parseInt(userChoice));
+    Integer userChoice = this.getUserChoiceFromCount("Choose a screening", screenings.size());
+    return screenings.get(userChoice - 1);
   }
 
   /**
@@ -156,12 +153,12 @@ public abstract class ParentConsole {
     }
   }
 
-  protected String getUserChoiceFromCount(String message, int count) {
+  protected Integer getUserChoiceFromCount(String message, int count) {
     ArrayList<String> validInputs = new ArrayList<String>();
     for (int i=1; i<count+1; i++) {
       validInputs.add(Integer.toString(i));
     }
-    return this.getUserChoice(message, validInputs);
+    return Integer.parseInt(this.getUserChoice(message, validInputs));
   }
   
   protected String getUserInput(String message) {
@@ -176,6 +173,14 @@ public abstract class ParentConsole {
     Scanner scannerObj = new Scanner(System.in);
     System.out.println(message);
     Integer userInput = scannerObj.nextInt();
+    scannerObj.close();
+    return userInput;
+  }
+  
+  protected Float getUserFloatInput(String message) {
+    Scanner scannerObj = new Scanner(System.in);
+    System.out.println(message);
+    Float userInput = scannerObj.nextFloat();
     scannerObj.close();
     return userInput;
   }

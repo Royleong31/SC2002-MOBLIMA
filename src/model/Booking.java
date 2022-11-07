@@ -64,12 +64,6 @@ public class Booking {
     return ticketsArr;
   }
 
-  public void setTickets(ArrayList<Ticket> tickets) {
-    ticketsArr = tickets;
-  }
-
-  }
-
   /**
    * 
    * @return the amount that the movie goer paid for this booking

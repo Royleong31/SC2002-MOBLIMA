@@ -23,7 +23,7 @@ import utils.Utils;
  @version 1.0
  @since 2022-10-30
 */
-class MovieGoerConsole extends ParentConsole {
+public class MovieGoerConsole extends ParentConsole {
   /**
    * Displays all reviews that have been made by this user
    * @param movieGoerAccount
@@ -62,8 +62,8 @@ class MovieGoerConsole extends ParentConsole {
       Screening screening = super.getScreening(movie);
       ArrayList<Seat> seats = this.selectSeats(screening);
       // TODO: Add variable ticket types
-      String userChoice = super.getUserChoiceFromCount("Choose a ticket type\n ", TicketType.values().length);
-      TicketType ticketType = TicketType.values()[Integer.parseInt(userChoice)];
+      Integer userChoice = super.getUserChoiceFromCount("Choose a ticket type\n ", TicketType.values().length);
+      TicketType ticketType = TicketType.values()[userChoice - 1];
 
       super.getBookingManager().makeBooking(movieGoerAccount, screening, seats, ticketType, super.getSystemManager());
     } catch (Exception e) {
@@ -122,40 +122,41 @@ class MovieGoerConsole extends ParentConsole {
   }
 
   private void displayTopMovies() {
-    ArrayList<Movie> movies = super.getMovieManager().getMovies(super.getSystemManager().getSortingCriteria()).subList(0, 4); // get top 5 movies
+    ArrayList<Movie> movies = super.getMovieManager().getMovies(super.getSystemManager().getSortingCriteria()); // get top 5 movies
+    movies = new ArrayList<Movie>(movies.subList(0, 4));
     super.displayMovies(movies);
   }
 
   @Override
-  private void display(Account account) {
+  public void display(Account account) {
     // should never trigger as it can only reach MovieGoerConsole if the logged in user is a MovieGoerAccount
     if (!(account instanceof MovieGoerAccount)) {
       System.out.println("Something went wrong in the login process");
       this.exitProgram();
     }
     
-    String userSelection = this.getUserChoiceFromCount("Enter '1' to submit review, \n'2' to make booking, \n'3' to view booking history, \n'4' to display all available movies, \n'5' to quit", 5);
+    Integer userSelection = this.getUserChoiceFromCount("Enter '1' to submit review, \n'2' to make booking, \n'3' to view booking history, \n'4' to display all available movies, \n'5' to quit", 5);
 
     MovieGoerAccount movieGoerAccount = (MovieGoerAccount) account;
 
     switch (userSelection) {
-      case "1":
+      case 1:
         this.submitReview(movieGoerAccount);
         break;
     
-      case "2":
+      case 2:
         this.makeBooking(movieGoerAccount);
         break;
     
-      case "3":
+      case 3:
         this.viewBookingHistory(movieGoerAccount);
         break;
 
-      case "4":
+      case 4:
         this.displayAllMovies();
         break;
     
-      case "5":
+      case 5:
         this.exitProgram();
         break;
     

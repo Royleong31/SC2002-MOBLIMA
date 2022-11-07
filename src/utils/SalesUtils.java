@@ -26,7 +26,7 @@ public class SalesUtils {
       * 1. All tickets for each booking have same screening
       * 2. There is at least one ticket for each booking
       */
-      Ticket ticket = booking.getTicketsArr().get(0); /* get first ticket object */
+      Ticket ticket = booking.getTickets().get(0); /* get first ticket object */
       String ticketMovieTitle = ticket.getScreening().getMovie().getTitle();
       if (ticketMovieTitle == movieTitle) {
         totalSales = totalSales + booking.getAmountPaid();
