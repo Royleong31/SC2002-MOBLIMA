@@ -100,6 +100,19 @@ public class MovieManager {
                                 (Float) SalesUtils.getSalesByMovie(bManager.getBookings(), m1.getTitle())));
     }
 
+    // Move movies with less than 2 reviews to the end of the list
+    ArrayList<Movie> delList = new ArrayList<Movie>();
+    for (Movie movie : movieLst) {
+      if (movie.getReviews().size() < 2) {
+        movieLst.add(movie);
+        delList.add(movie);
+      }
+    }
+
+    for (Movie movie : delList) {
+      movieLst.remove(movie);
+    }
+
     return movieLst;
   }
 
