@@ -17,8 +17,10 @@ import model.Screening;
 public class ScreeningManager {
   private ArrayList<Screening> screeningsArr = new ArrayList<Screening>();
 
-  public void addScreening(Movie movie, Cinema cinema, String dateTime) {
-    screeningsArr.add(new Screening(movie, cinema, dateTime));
+  public Screening addScreening(Movie movie, Cinema cinema, String dateTime) {
+    Screening screening = new Screening(movie, cinema, dateTime);
+    screeningsArr.add(screening);
+    return screening;
   }
 
   /**
@@ -28,8 +30,9 @@ public class ScreeningManager {
    * @param screening
    * @param newDateTime
    */
-  public void updateShowtime(Screening screening, String newShowTime) {
+  public Screening updateShowtime(Screening screening, String newShowTime) {
     screening.setShowTime(newShowTime);
+    return screening;
   }
 
   public void deleteScreening(Screening screening, BookingManager bManager) {

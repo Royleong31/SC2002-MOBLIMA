@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 /**
@@ -15,20 +16,20 @@ import java.text.SimpleDateFormat;
 public class Screening {
   private Movie movie;
   private Cinema cinema;
-  private String dateTime;
+  private String showTime;
   private ArrayList<Seat> seats = new ArrayList<Seat>();
 
-  public Screening(Movie movie, Cinema cinema, String dateTime, float price) {
+  public Screening(Movie movie, Cinema cinema, String showTime) {
     this.movie = movie;
     this.cinema = cinema;
-    this.dateTime = dateTime;
+    this.showTime = showTime;
   }
 
   public void addSeat(Seat seat) {
     seats.add(seat);
   }
 
-  public boolean checkIfSeatIsAvailable(Seat targetSeat) {
+  public boolean isSeatAvailable(Seat targetSeat) {
     for (Seat seat : this.seats) {
       if (seat.equals(targetSeat)) {
         return false;
@@ -54,21 +55,36 @@ public class Screening {
     return this.cinema;
   }
 
-   public String getDateTime() {
-    return dateTime;
+   public String getShowtime() {
+    return this.showTime;
    }
 
-   public Date getDateTimeObj() throws Exception {
-    Date DateTime = new SimpleDateFormat("dd.MM.yyyy.HH.mm").parse(dateTime);
+  public void setShowTime(String newShowtime) {
+    this.showTime = newShowtime;
+  }
+
+  public Date getDateTimeObj() throws ParseException {
+    Date DateTime = new SimpleDateFormat("dd.MM.yyyy.HH.mm").parse(showTime);
     return DateTime;
-   }
+  }
 
-  public void setDateTime(String dateTime) {
-    this.dateTime = dateTime;
+  public ArrayList<Seat> getSeats() {
+    return this.seats;
+  }
+
+  // TODO: Get seat from seat ID
+  public Seat getSeatFromId(String id) {
+    for (Seat seat: this.seats) {
+      if (seat.getId().equals( id)) {
+        return seat;
+      }
+    }
+    
+    return null;
   }
 
   public Movie getMovie() {
-    return movie;
+    return this.movie;
   }
 
 }

@@ -9,7 +9,6 @@ import model.Ticket;
  * This class should only contain static methods
  */
 public class SalesUtils {
-
   public static float getTotalSales(ArrayList<Booking> bookingsArr) {
     float totalSales = 0;
     for (Booking booking : bookingsArr) {

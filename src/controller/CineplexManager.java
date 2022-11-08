@@ -30,11 +30,12 @@ public class CineplexManager {
     this.cineplexesArr.add(new Cineplex(location));
   }
 
-  public void addCinema(Cineplex cineplex, int rows, int columns, int aisle, CinemaType cinemaType) throws Exception {
+  public Cinema addCinema(Cineplex cineplex, int rows, int columns, int aisle, CinemaType cinemaType) throws Exception {
     SeatingPlan seatingPlan = new SeatingPlan(rows, columns, aisle);
     Cinema cinema = new Cinema(seatingPlan, cineplex, cinemaType);
     this.cinemasArr.add(cinema);
     cineplex.addCinema(cinema);
+    return cinema;
   }
 
   public Cinema getCinemaById(String cinemaId) throws Exception {

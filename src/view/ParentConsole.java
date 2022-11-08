@@ -1,5 +1,10 @@
 package view;
 import controller.ScreeningManager;
+import enums.Advisory;
+import enums.CinemaType;
+import enums.Genre;
+import enums.MovieType;
+import enums.SeatType;
 import enums.ShowStatus;
 import enums.SortCriteria;
 import controller.SystemManager;
@@ -115,10 +120,14 @@ import java.util.Scanner;
    * @param movie the movie that the user wants to select a screening from
    * @return the screening that the user picked
    */
-  protected Screening getScreening(Movie movie) {
+  protected Screening getScreening(Movie movie) throws Exception {
     System.out.println("Screenings for " + movie.getTitle());
     // Currently only gets all screenings for 1 movie
     ArrayList<Screening> screenings = this.screeningManager.getScreeningsByMovie(movie.getTitle());
+
+    if (screenings.size() == 0) 
+      throw new Exception("No screenings found for movie " + movie.getTitle());
+
     this.displayScreenings(screenings);
 
     Integer userChoice = this.getUserChoiceFromCount("Choose a screening", screenings.size());
@@ -149,12 +158,14 @@ import java.util.Scanner;
     for (int i=1; i<count+1; i++) {
       validInputs.add(Integer.toString(i));
     }
+    // no need error checking as only integers are accepted as they were added above
     return Integer.parseInt(this.getUserChoice(message, validInputs));
   }
   
   protected String getUserInput(String message) {
     System.out.println(message);
     String userInput = scannerObj.nextLine();
+    System.out.println("");
     return userInput;
   }
   
@@ -167,6 +178,79 @@ import java.util.Scanner;
         System.out.println("Invalid input. Please try again");
       }
     }
+  }
+
+  protected Integer getSelectInput(ArrayList<String> options, String message) {
+    System.out.println(message);
+    for (int i=1; i<=options.size(); i++) {
+      System.out.println("Enter " + i + " to " + options.get(i-1));
+    }
+    return getUserChoiceFromCount("", options.size());
+  }
+
+  protected Genre selectGenre() {
+    ArrayList<String> options = new ArrayList<String>();
+    for (Genre cur : Genre.values()) {
+      options.add(cur.toString());
+    }
+    Integer userChoice = getSelectInput(options, "Select a genre");
+    return Genre.values()[userChoice-1];
+  }
+
+  protected Advisory selectAdvisory() {
+    ArrayList<String> options = new ArrayList<String>();
+    for (Advisory cur : Advisory.values()) {
+      options.add(cur.toString());
+    }
+    Integer userChoice = getSelectInput(options, "Select an advisory rating");
+    return Advisory.values()[userChoice-1];
+  }
+
+  protected ShowStatus selectShowStatus() {
+    ArrayList<String> options = new ArrayList<String>();
+    for (ShowStatus cur : ShowStatus.values()) {
+      options.add(cur.toString());
+    }
+    Integer userChoice = getSelectInput(options, "Select a show status");
+    return ShowStatus.values()[userChoice-1];
+  }
+
+  protected MovieType selectMovieType() {
+    ArrayList<String> options = new ArrayList<String>();
+    for (MovieType cur : MovieType.values()) {
+      options.add(cur.toString());
+    }
+    Integer userChoice = getSelectInput(options, "Select a movie type");
+    return MovieType.values()[userChoice-1];
+  }
+
+  protected CinemaType selectCinemaType() {
+    ArrayList<String> options = new ArrayList<String>();
+    for (CinemaType cur : CinemaType.values()) {
+      options.add(cur.toString());
+    }
+    Integer userChoice = getSelectInput(options, "Select a cinema type");
+    return CinemaType.values()[userChoice-1];
+  }
+
+  protected SeatType selectSeatType() {
+    ArrayList<String> options = new ArrayList<String>();
+    for (SeatType cur : SeatType.values()) {
+      options.add(cur.toString());
+    }
+    Integer userChoice = getSelectInput(options, "Select a seat type");
+    return SeatType.values()[userChoice-1];
+  }
+
+  protected ArrayList<String> getCastMembers() {
+    ArrayList<String> castArr = new ArrayList<String>();
+    Integer castCount = this.getUserIntegerInput("Enter the number of cast members"); 
+    for (int i=1; i<=castCount; i++) {
+      String cast = this.getUserInput("Enter the cast member " + i + "'s name: ");
+      castArr.add(cast);
+    }
+
+    return castArr;
   }
   
   protected Float getUserFloatInput(String message) {

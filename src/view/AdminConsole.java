@@ -29,40 +29,34 @@ public class AdminConsole extends ParentConsole {
    */
   public void updateSystemConfig() {
     SystemManager systemManager = super.getSystemManager();
-    Integer userInput = this.getUserChoiceFromCount("Enter '1' for updating cinema price multiplier, "+
-                                                "\n'2' for updating seat price multiplier, "+
-                                                "\n'3' for updating user movie sorting criteria, ", 3);
+    Integer userInput = super.getSelectInput(Utils.asArrayList("update cinema price multiplier", 
+                                                               "to update seat price multiplier", 
+                                                               "update user movie sorting criteria"), "Select type of configuration to update: ");
     
     switch (userInput) {
       case 1: {
-        Integer cinemaInput = super.getUserChoiceFromCount("Enter '1' for Normal cinemas, "+
-        "\n'2' for Gold Class cinemas, "+
-        "\n'3' for Deluxe cinemas, "+
-        "\n '4' for Premium cinemas", 4);
+        CinemaType cinemaType = super.selectCinemaType();
         // add validation for positive 2 decimal places number
-        Float multiplierInput = super.getUserFloatInput("Enter the new price: ");
-
-        CinemaType cinemaType = CinemaType.values()[cinemaInput - 1];
-        systemManager.setCinemaMultiplier(cinemaType, multiplierInput);
+        Float cinemaPriceMultiplier = super.getUserFloatInput("Enter the new price multiplier: ");
+        systemManager.setCinemaMultiplier(cinemaType, cinemaPriceMultiplier);
+        System.out.println("New Multiplier: " + cinemaType.toString() + ": " + systemManager.getCinemaMultiplier(cinemaType));
         break; 
       }
 
       case 2: {
-        Integer seatInput = super.getUserChoiceFromCount("Enter '1' for Normal seats, "+
-                                                        "\n'2' for Gold seats, "+
-                                                        "\n'3' for Platinum seats, "+
-                                                        "\n '4' for Jubilee seats", 4);
+        SeatType seatType = super.selectSeatType();
         // add validation for positive 2 decimal places number
-        Float multiplierInput = super.getUserFloatInput("Enter the new price: ");
-        SeatType seatType = SeatType.values()[seatInput - 1];
-        systemManager.setSeatMultiplier(seatType, multiplierInput);
+        Float seatPriceMultiplier = super.getUserFloatInput("Enter the new price multiplier: ");
+        systemManager.setSeatMultiplier(seatType, seatPriceMultiplier);
+        System.out.println("New Multiplier: " + seatType.toString() + ": " + systemManager.getSeatMultiplier(seatType));
         break;
       }
 
       case 3: {
         try {
-          Integer sortingCriteria = super.getUserChoiceFromCount("Enter '1' for ratings" + "\n '2' for sales", 2);
+          Integer sortingCriteria = super.getSelectInput(Utils.asArrayList("for ratings", "for sales"), "Select the sorting criteria: ");
           systemManager.setSortingCriteria(sortingCriteria == 1 ? SortCriteria.RATING : SortCriteria.SALES);
+          System.out.println("New sorting criteria: " + systemManager.getSortingCriteria().toString());
           // Won't have an exception as only allowed sorting criteria are passed in
         } catch (Exception e) {
           System.out.println("Something went wrong while updating the sorting criteria");
@@ -75,8 +69,6 @@ public class AdminConsole extends ParentConsole {
     }
   }
 
-
-
   /**
    * Ask the user for input to add a movie such as the title, cast, etc
    * call the addMovie method in the MovieManager class to add it
@@ -88,22 +80,13 @@ public class AdminConsole extends ParentConsole {
     String title = super.getUserInput("Enter the title of the movie");
     String synopsis = super.getUserInput("Enter the synopsis of the movie");
     String director = super.getUserInput("Enter the director of the movie");
+    ArrayList<String> cast = super.getCastMembers();
+    ShowStatus showStatus = super.selectShowStatus();
+    Advisory advisoryRating = super.selectAdvisory();
+    Genre genre = super.selectGenre();
+    MovieType movieType = super.selectMovieType();
 
-    // TODO: Get user inputs for this
-    ShowStatus showStatus = ShowStatus.COMING_SOON;
-    Advisory advisoryRating = Advisory.M18;
-    Genre genre = Genre.ADVENTURE;
-    MovieType movieType = MovieType.BLOCKBUSTER;
-
-    ArrayList<String> castArr = new ArrayList<String>();
-    int castCount = super.getUserIntegerInput("Enter the number of cast members");
-
-    for (int i=0; i<castCount; i++) {
-      String cast = super.getUserInput("Enter the cast member: ");
-      castArr.add(cast);
-    }
-
-    Movie movie = new Movie(title, showStatus, synopsis, director, castArr, advisoryRating, genre, movieType);
+    Movie movie = new Movie(title, showStatus, synopsis, director, cast, advisoryRating, genre, movieType);
     super.getMovieManager().addMovie(movie);
   }
 
@@ -128,11 +111,9 @@ public class AdminConsole extends ParentConsole {
    * Call the SalesUtils's methods to get the appropriate report
    */
   public void getSalesReport() {
-    Integer userInput = this.getUserChoiceFromCount("\nSelect the type of sales report: "+
-                                                    "\nEnter '1' for Total Sales, "+
-                                                    "\n'2' for Sales by Movie, "+
-                                                    "\n'3' for Sales by Cineplex", 3);
-
+    Integer userInput = super.getSelectInput(Utils.asArrayList("for total sales", 
+                                                               "for sales by movie", 
+                                                               "for sales by cineplex"), "Select the type of sales report:");
     ArrayList<Booking> bookingArr = super.getBookingManager().getBookings();
     
     switch(userInput){
@@ -169,8 +150,8 @@ public class AdminConsole extends ParentConsole {
    * Displays the list of movies
    */
   public void getMoviesByRank() { //display top 5 movie by sales and top 5 by rating, admin can choose which of these or both to display to user
-    String filterType = super.getUserInput("Enter the type of filter: \n'1' for Top 5 by Sales, \n'2' for Top 5 by Rating");
-    SortCriteria sortCriteria = filterType.equals("1") ? SortCriteria.SALES : SortCriteria.RATING;
+    Integer userInput = super.getSelectInput(Utils.asArrayList("for Top 5 by sales", "for top 5 by rating"), "Enter the type of filter");
+    SortCriteria sortCriteria = userInput == 1 ? SortCriteria.SALES : SortCriteria.RATING;
     ArrayList<Movie> movies = super.getMovieManager().getMovies(sortCriteria); // get top 5 movies
     movies = new ArrayList<Movie>(movies.subList(0, 4));
     super.displayMovies(movies);
@@ -188,102 +169,67 @@ public class AdminConsole extends ParentConsole {
       // An exception can be thrown from here if the movie is not found
       Movie movie = super.getMovieManager().getMovieByName(movieInput);
 
-      String userChoice = "";
-      while(userChoice != "-1"){
-        userChoice = super.getUserChoice("\nMovie Details: "+
-        "\n1 - Title: " + movie.getTitle()+
-        "\n2 - Show Status: " + movie.getShowingStatus().toString() +
-        "\n3 - Synopsis" + movie.getSynopsis()+
-        "\n4 - Director: " + movie.getDirector()+
-        "\n5 - Cast: \n" + movie.getCast()+ // TODO: Show the array of cast members
-        "\n6 - Advisory: " + movie.getAdvisoryRating().toString() +
-        "\n7 - Genre: " + movie.getGenre().toString() +
-        "\n8 - Movie Type: " + movie.getMovieType().toString() +
-        "\n-1 - Exit", Utils.asArrayList("1", "2", "3", "4", "5", "6", "7", "8", "-1"));
+      Integer userInput = null;
+      while(true){
+        userInput = super.getSelectInput(Utils.asArrayList("Title: " + movie.getTitle(), 
+                                                           "Synopsis: " + movie.getSynopsis(), 
+                                                           "Director: " + movie.getDirector(), 
+                                                           "Cast: " + movie.getCast(), 
+                                                           "Advisory: " + movie.getAdvisoryRating().toString(), 
+                                                           "Genre: " + movie.getGenre().toString(),
+                                                           "Show Status: " + movie.getShowingStatus().toString(), 
+                                                           "Movie Type: " + movie.getMovieType().toString(), 
+                                                           "Exit"), "Select the type of sales report:");
         
-        switch(userChoice){
-          case "1":
+        switch(userInput) {
+          case 1:
             String title = super.getUserInput("Enter the title of the movie");
             super.getMovieManager().updateMovie(movie, title, null, null, null, null, null, null, null);
             break;
 
-          case "2": // !: Wrong order
+          case 2:
             String synopsis = super.getUserInput("Enter the synopsis of the movie");
             super.getMovieManager().updateMovie(movie, null, synopsis, null, null, null, null, null, null);
             break;
 
-          case "3":
+          case 3:
             String director = super.getUserInput("Enter the director of the movie");
             super.getMovieManager().updateMovie(movie, null, null, director, null, null, null, null, null);
             break;
 
-          case "4":
-            ArrayList<String> castArr = new ArrayList<String>();
-            Integer castCount = super.getUserIntegerInput("Enter the number of cast members"); // !: Doesn't work propery
-            for (int i=0; i<castCount; i++) {
-              String cast = super.getUserInput("Enter the cast member");
-              castArr.add(cast);
-            }
-            super.getMovieManager().updateMovie(movie, null, null, null, castArr, null, null, null, null);
+          case 4:
+            ArrayList<String> cast = super.getCastMembers();
+            super.getMovieManager().updateMovie(movie, null, null, null, cast, null, null, null, null);
             break;
 
-          case "5":
-            Integer advisoryInput = super.getUserChoiceFromCount("Enter the advisory rating" + 
-                                                                "\nEnter '1' for PG13, "+
-                                                                "\n'2' for NC16, "+
-                                                                "\n'3' for M18, "+
-                                                              "\n '4' for R21", Advisory.values().length); //!: Order doesn't match the enum
-
-            Advisory advisory = Advisory.values()[advisoryInput - 1];
-          // add validation for positive 2 decimal places number
+          case 5:
+            Advisory advisory = super.selectAdvisory();
             super.getMovieManager().updateMovie(movie, null, null, null, null, advisory, null, null, null);
             break;
 
-          case "6":
-            Integer genreInput = super.getUserChoiceFromCount("Enter the genre of the movie" +
-                                                              "\nEnter '1' for Action, "+
-                                                              "\n'2' for Adventure, "+
-                                                              "\n'3' for Comedy, "+
-                                                              "\n '4' for Drama, "+
-                                                              "\n '5' for Fantasy, "+
-                                                              "\n '6' for Horror, "+
-                                                              "\n '7' for Romance, "+
-                                                              "\n '8' for Thriller, "+
-                                                              "\n '9' for Western", Genre.values().length);
-
-            Genre genre = Genre.values()[genreInput - 1];
+          case 6:
+            Genre genre = super.selectGenre();
             super.getMovieManager().updateMovie(movie, null, null, null, null, null, genre, null, null);
             break;
 
-          case "7":
-            Integer statusInput = super.getUserChoiceFromCount("Enter the show status of the movie" +
-                                                          "\nEnter '1' for Coming Soon, "+
-                                                          "\n'2' for Preview, "+
-                                                          "\n'3' for Now Showing, "+
-                                                          "\n '4' for End of Showing, ",ShowStatus.values().length);
-
-            ShowStatus showStatus = ShowStatus.values()[statusInput - 1];
+          case 7:
+            ShowStatus showStatus = super.selectShowStatus();
             super.getMovieManager().updateMovie(movie, null, null, null, null, null, null, showStatus, null);
             break;
 
-          case "8":
-            Integer movieTypeInput = super.getUserChoiceFromCount("Enter the movie type of the movie" +
-                                                          "\nEnter '1' for Blockbuster, "+
-                                                          "\n'2' for Regular, "+
-                                                          "\n'3' for 3D, ", MovieType.values().length);
-
-            MovieType movieType = MovieType.values()[movieTypeInput - 1];
+          case 8:
+            MovieType movieType = super.selectMovieType();
             super.getMovieManager().updateMovie(movie, null, null, null, null, null, null, null, movieType);
             break;
 
-          case "-1":
+          case 9:
             return;
 
           default:
+            System.out.println("Invalid input, please try again\n");
             break;
         }
       }
-
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
@@ -301,7 +247,8 @@ public class AdminConsole extends ParentConsole {
       Cinema cinema = this.getCineplexManager().getCinemaById(cinemaId);
       // TODO: Add validation
       String showTime = super.getUserInput("Enter the new showtime details in dd.MM.yyyy.HH.mm format");
-      super.getScreeningManager().addScreening(movie, cinema, showTime);
+      Screening screening = super.getScreeningManager().addScreening(movie, cinema, showTime);
+      System.out.println("Screening of movie " + screening.getMovie().getTitle() + " at " + screening.getCinemaId() + " on " + screening.getShowtime() + " has been added");
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
@@ -313,11 +260,12 @@ public class AdminConsole extends ParentConsole {
   public void updateShowtime() { 
     try {
       String movieName = super.getUserInput("Enter the movie name");
-      String newShowTime = super.getUserInput("Enter the new showtime details in dd.MM.yyyy.HH.mm format"); 
       Movie movie = super.getMovieManager().getMovieByName(movieName);
-
       Screening screening = super.getScreening(movie);
-      super.getScreeningManager().updateShowtime(screening, newShowTime);
+      String newShowTime = super.getUserInput("Enter the new showtime details in dd.MM.yyyy.HH.mm format"); 
+
+      Screening screeningReturn = super.getScreeningManager().updateShowtime(screening, newShowTime);
+      System.out.println("Screening of movie " + screeningReturn.getMovie().getTitle() + " at " + screeningReturn.getCinemaId() + " on " + screeningReturn.getShowtime() + " has been updated");
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
@@ -345,14 +293,9 @@ public class AdminConsole extends ParentConsole {
       int rows = super.getUserIntegerInput("Enter the number of rows");
       int columns = super.getUserIntegerInput("Enter the number of columns");
       int aisle = super.getUserIntegerInput("Enter the number of aisles");
-      Integer cinemaInput = super.getUserChoiceFromCount("Enter '1' for Normal cinemas, "+
-        "\n'2' for Gold Class cinemas, "+
-        "\n'3' for Deluxe cinemas, "+
-        "\n '4' for Premium cinemas", 4);
-        // add validation for positive 2 decimal places number
-
-      CinemaType cinemaType = CinemaType.values()[cinemaInput - 1];
-      super.getCineplexManager().addCinema(cineplex, rows, columns, aisle, cinemaType);
+      CinemaType cinemaType = super.selectCinemaType();
+      Cinema cinema = super.getCineplexManager().addCinema(cineplex, rows, columns, aisle, cinemaType);
+      System.out.println("Cinema " + cinema.getId() + " has been added at " + cineplex.getLocation());
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
@@ -375,14 +318,24 @@ public class AdminConsole extends ParentConsole {
       this.exitProgram();
     }
 
-    Integer userSelection = this.getUserChoiceFromCount("Enter '1' to add movie, \n'2' to update movie, \n'3' to remove movie, \n'4' to add screening, \n'5' to update showtime, \n'6' to delete showtime, \n'7' to update system configurations, \n'8' to add cineplex, \n'9' to add cinema \n'10' to quit", 10);
+    Integer userInput = super.getSelectInput(Utils.asArrayList("to add movie", 
+                                                               "to update movie", 
+                                                               "to remove movie", 
+                                                               "to add screening", 
+                                                               "to update showtime", 
+                                                               "to delete showtime", 
+                                                               "to update system configurations", 
+                                                               "to add cineplex", 
+                                                               "to add cinema", 
+                                                               "to quit"), "Select an option"); 
+
 
     // TODO: Use this for authorisation checks
 
     // TODO: Add setters for cinema and cineplex
     AdminAccount adminAccount = (AdminAccount) account;
 
-    switch (userSelection) {
+    switch (userInput) {
       case 1:
         this.addMovie();
         break;

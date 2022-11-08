@@ -36,10 +36,7 @@ public class SystemManager {
    * @param CinemaType
    * @return Float The multiplier for the cinema type
    */
-  public float getCinemaMultiplier(CinemaType ct) throws Exception {
-    if (!this.cinemaMultMap.containsKey(ct)) {
-      throw new Exception("Cinema type does not exists.");
-    }
+  public float getCinemaMultiplier(CinemaType ct) {
     return this.cinemaMultMap.get(ct);
   }
 
@@ -57,13 +54,11 @@ public class SystemManager {
     return this.movieSortingCriteria;
   }
   
-  public void setSortingCriteria(SortCriteria sc) throws Exception {
+  public void setSortingCriteria(SortCriteria sc) {
     // These are the only 2 sorting criteria allowed
     if (sc.equals(SortCriteria.SALES) || sc.equals(SortCriteria.RATING)) {
       this.movieSortingCriteria = sc;
-    } else {
-      throw new Exception("Invalid sorting criteria");
-    }
+    } 
   }
   
   /*
@@ -82,10 +77,7 @@ public class SystemManager {
    * @param SeatType
    * @return Float The multiplier for the seat type
    */
-  public float getSeatMultiplier(SeatType st) throws Exception {
-    if (!seatMultMap.containsKey(st)) {
-      throw new Exception("Seat type do not exists.");
-    }
+  public float getSeatMultiplier(SeatType st) {
     return seatMultMap.get(st);
   }
 
