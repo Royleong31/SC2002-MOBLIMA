@@ -203,7 +203,7 @@ public class AdminConsole extends ParentConsole {
                                                            "Genre: " + movie.getGenre().toString(),
                                                            "Show Status: " + movie.getShowingStatus().toString(), 
                                                            "Movie Type: " + movie.getMovieType().toString(), 
-                                                           "go back to main admin menu"), "Select the type of sales report:");
+                                                           "go back to main admin menu"), "Select the type of movie to update:");
         
         switch(userInput) {
           case 1:

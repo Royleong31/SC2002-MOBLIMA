@@ -48,7 +48,7 @@ public class BookingManager {
             boolean checker = true;
 
             for (Seat checkSeat: seatsArr){
-              if (checkSeat.getColumn() == (seatsArr.get(i).getColumn()+1)) 
+              if (checkSeat.getColumn() == (seatsArr.get(j).getColumn()+1)) 
                checker = false;
             }
 
@@ -61,7 +61,7 @@ public class BookingManager {
             boolean checker = true;
 
             for (Seat checkSeat: seatsArr) {
-              if (checkSeat.getColumn()==(seatsArr.get(j).getColumn()+1)) 
+              if (checkSeat.getColumn()==(seatsArr.get(i).getColumn()+1)) 
                 checker = false;
               }
 
@@ -70,6 +70,12 @@ public class BookingManager {
                 throw new Exception("Error: please do not leave a one-seat gap.");
           }
         }
+      }
+    }
+
+    for (Seat seat: seatsArr) {
+      if (seat.isTaken()) {
+        throw new Exception("Error: seat is already taken.");
       }
     }
   

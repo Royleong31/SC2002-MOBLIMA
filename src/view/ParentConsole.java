@@ -113,7 +113,7 @@ import java.util.Scanner;
     }
 
     for (int i = 0; i < movies.size(); i++) {
-      String rating = movies.get(i).getReviews().size() == 0 ? "NA" : Double.toString(Math.round(movies.get(i).getOverallRating() * 10.0) / 10.0);
+      String rating = movies.get(i).getReviews().size() < 2 ? "NA" : Double.toString(Math.round(movies.get(i).getOverallRating() * 10.0) / 10.0);
       System.out.println(i+1 + ": " + movies.get(i).getTitle() + " Rating: " + rating);
     }
   }
