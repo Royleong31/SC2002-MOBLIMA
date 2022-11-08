@@ -1,6 +1,13 @@
 import enums.LoginStatus;
 import model.Account.AdminAccount;
+import model.Account.MovieGoerAccount;
+import controller.BookingManager;
+import controller.CineplexManager;
 import controller.LoginManager;
+import controller.MovieManager;
+import controller.ReviewManager;
+import controller.ScreeningManager;
+import controller.SystemManager;
 import view.AdminConsole;
 import view.LoginConsole;
 import view.MovieGoerConsole;
@@ -18,10 +25,21 @@ public class App {
      */
     static final private LoginManager loginManager = new LoginManager();
 
+    static final private BookingManager bookingManager = new BookingManager();
+    static final private CineplexManager cineplexManager = new CineplexManager();
+    static final private MovieManager movieManager = new MovieManager();
+    static final private ReviewManager reviewManager = new ReviewManager();
+    static final private ScreeningManager screeningManager = new ScreeningManager();
+    static final private SystemManager systemManager = new SystemManager();
+
     /**
      * Contains the possible consoles that can be selected
      */
-    private final static ParentConsole[] consolesArr = {new LoginConsole(loginManager), new MovieGoerConsole(), new AdminConsole()};
+    private final static ParentConsole[] consolesArr = {
+        new LoginConsole(loginManager), 
+        new MovieGoerConsole(loginManager, bookingManager, cineplexManager, movieManager, reviewManager, screeningManager, systemManager), 
+        new AdminConsole(loginManager, bookingManager, cineplexManager, movieManager, reviewManager, screeningManager, systemManager)
+    };
 
     /**
      * Contains the main method that runs the program
@@ -32,11 +50,11 @@ public class App {
 
         while (true) {
             LoginStatus loginStatus = loginManager.getLoginStatus();
-            System.out.println(loginStatus);
+            System.out.println(loginStatus + " page\n");
             // matches the index of this.consolesArr
             int consolesArrIndex = loginStatus.equals(LoginStatus.LOGIN) ? 0 : loginStatus.equals(LoginStatus.MOVIE_GOER) ? 1 : 2;
-            // consolesArr[consolesArrIndex].display(loginManager.getCurrentAccount());
-            consolesArr[2].display(new AdminAccount("fsdfsd", "fsadkfsad", "1234"));
+            consolesArr[consolesArrIndex].display(loginManager.getCurrentAccount());
+            // consolesArr[1].display(new MovieGoerAccount("fasds", "fsadsdfa", "fsdsfad", "fsadfsad", "fsad;l"));
         }
     }
 }

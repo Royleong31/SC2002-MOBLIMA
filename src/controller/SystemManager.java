@@ -54,11 +54,13 @@ public class SystemManager {
     return this.movieSortingCriteria;
   }
   
-  public void setSortingCriteria(SortCriteria sc) {
+  public void setSortingCriteria(SortCriteria sc) throws Exception {
     // These are the only 2 sorting criteria allowed
     if (sc.equals(SortCriteria.SALES) || sc.equals(SortCriteria.RATING)) {
       this.movieSortingCriteria = sc;
+      return;
     } 
+    throw new Exception("Invalid sorting criteria");
   }
   
   /*
@@ -130,6 +132,13 @@ public class SystemManager {
       throw new Exception("Holiday already exists in database.");
     }
     this.holidaysArr.add(dateString);
+  }
+
+  public void addHoliday(String date) throws Exception {
+    if (this.holidaysArr.contains(date)) {
+      throw new Exception("Holiday already exists in database.");
+    }
+    this.holidaysArr.add(date);
   }
 
   /*

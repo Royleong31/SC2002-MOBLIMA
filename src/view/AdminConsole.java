@@ -2,6 +2,12 @@ package view;
 
 import java.util.ArrayList;
 import enums.*;
+import controller.BookingManager;
+import controller.CineplexManager;
+import controller.LoginManager;
+import controller.MovieManager;
+import controller.ReviewManager;
+import controller.ScreeningManager;
 import controller.SystemManager;
 import model.Movie;
 import model.Account.Account;
@@ -22,6 +28,10 @@ import utils.Utils;
  @since 2022-10-30
 */
 public class AdminConsole extends ParentConsole {
+  public AdminConsole(LoginManager lm, BookingManager bm, CineplexManager cm, MovieManager mm, ReviewManager rm, ScreeningManager sm, SystemManager sysm) {
+    super(lm, bm, cm, mm, rm, sm, sysm);
+  }
+
   /**
    * Displays the current system configuration
    * Asks the user to select a configuration to change
@@ -31,7 +41,8 @@ public class AdminConsole extends ParentConsole {
     SystemManager systemManager = super.getSystemManager();
     Integer userInput = super.getSelectInput(Utils.asArrayList("update cinema price multiplier", 
                                                                "to update seat price multiplier", 
-                                                               "update user movie sorting criteria"), "Select type of configuration to update: ");
+                                                               "update user movie sorting criteria",
+                                                               "add holiday"), "Select type of configuration to update: ");
     
     switch (userInput) {
       case 1: {
@@ -63,6 +74,18 @@ public class AdminConsole extends ParentConsole {
           System.out.println(e.getMessage());
         }
         break;
+      }
+
+      case 4: {
+        try {
+          String holiday = super.getUserInput("Enter the holiday date in yyyy.mm.dd: ");
+          systemManager.addHoliday(holiday);
+          System.out.println("Holidays: " + systemManager.getHolidays().toString());
+          break;
+        } catch (Exception e) {
+          System.out.println("Something went wrong while adding the holiday");
+          System.out.println(e.getMessage());
+        }
       }
       default:
         break;
@@ -153,7 +176,8 @@ public class AdminConsole extends ParentConsole {
     Integer userInput = super.getSelectInput(Utils.asArrayList("for Top 5 by sales", "for top 5 by rating"), "Enter the type of filter");
     SortCriteria sortCriteria = userInput == 1 ? SortCriteria.SALES : SortCriteria.RATING;
     ArrayList<Movie> movies = super.getMovieManager().getMovies(sortCriteria); // get top 5 movies
-    movies = new ArrayList<Movie>(movies.subList(0, 4));
+    movies = movies.size() < 5 ? movies : new ArrayList<Movie>(movies.subList(0, 4));
+
     super.displayMovies(movies);
   }
 
@@ -179,7 +203,7 @@ public class AdminConsole extends ParentConsole {
                                                            "Genre: " + movie.getGenre().toString(),
                                                            "Show Status: " + movie.getShowingStatus().toString(), 
                                                            "Movie Type: " + movie.getMovieType().toString(), 
-                                                           "Exit"), "Select the type of sales report:");
+                                                           "go back to main admin menu"), "Select the type of sales report:");
         
         switch(userInput) {
           case 1:
@@ -327,6 +351,8 @@ public class AdminConsole extends ParentConsole {
                                                                "to update system configurations", 
                                                                "to add cineplex", 
                                                                "to add cinema", 
+                                                               "get movies by rank",
+                                                               "to logout",
                                                                "to quit"), "Select an option"); 
 
 
@@ -373,8 +399,16 @@ public class AdminConsole extends ParentConsole {
         break;
       
       case 10:
-        super.exitProgram();
+        this.getMoviesByRank();
         break;
+
+      case 11:
+        super.logout();
+        return;
+      
+      case 12:
+        super.exitProgram();
+        return;
     
       default:
         // Should never reach here as error checking is done in this.getUserChoice()

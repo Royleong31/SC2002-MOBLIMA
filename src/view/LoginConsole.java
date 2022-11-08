@@ -14,12 +14,14 @@ public class LoginConsole extends ParentConsole {
   private final LoginManager loginManager;
   
   public LoginConsole(LoginManager loginManager) {
+    super();
     this.loginManager = loginManager;
   }
   
   @Override
   public void display(Account account) { // account is unused as it's null
     System.out.println("Inside login console");
+    // TODO: Use standard input to get user input
     Integer userSelection = this.getUserChoiceFromCount("Enter '1' to log in, '2' to register, '3' to exit", 3);
 
     if (userSelection == 1) {
@@ -48,6 +50,7 @@ public class LoginConsole extends ParentConsole {
         System.out.println("Successfully logged in!");
         return;
       } catch (Exception e) {
+        System.out.println("Error in logging in");
         System.out.println(e.getMessage());
         continue;
       }

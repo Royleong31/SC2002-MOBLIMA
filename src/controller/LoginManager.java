@@ -94,7 +94,7 @@ public class LoginManager {
    */
   public Account login(String username, String password) throws Exception{  
     for (Account search : this.usersArr){
-      if (!search.login(username,password).equals(null)){
+      if (search.login(username, password) != null) {
         this.currentAccount = search;
         return this.currentAccount;
       }

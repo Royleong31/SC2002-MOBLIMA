@@ -20,11 +20,19 @@ public class SeatingPlan {
     this.aisle = aisle;
   }
 
-  public int remainingSeats(ArrayList<Seat> takenSeatsArr){
-    return Math.max((rows*cols - takenSeatsArr.size()),0);
+  public int getRows() {
+    return rows;
   }
 
+  public int getColumns() {
+    return cols;
+  }
+  
   public int getAisle() {
     return this.aisle;
+  }
+
+  public int remainingSeats(ArrayList<Seat> takenSeatsArr){
+    return Math.max((rows*cols - takenSeatsArr.size()),0);
   }
 }

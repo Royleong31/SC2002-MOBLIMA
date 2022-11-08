@@ -2,6 +2,9 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Date;
+
+import enums.SeatType;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -17,30 +20,53 @@ public class Screening {
   private Movie movie;
   private Cinema cinema;
   private String showTime;
-  private ArrayList<Seat> seats = new ArrayList<Seat>();
+  private final ArrayList<Seat> seats = new ArrayList<Seat>(); // list of seats can't change after initialisation
 
   public Screening(Movie movie, Cinema cinema, String showTime) {
     this.movie = movie;
     this.cinema = cinema;
     this.showTime = showTime;
-  }
 
-  public void addSeat(Seat seat) {
-    seats.add(seat);
-  }
+    SeatingPlan seatingPlan = cinema.getSeatingPlan();
+    int rows = seatingPlan.getRows();
+    int cols = seatingPlan.getColumns();
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        SeatType seatType = SeatType.NORMAL;
+        // Some arbitrary way to determine seat type
 
-  public boolean isSeatAvailable(Seat targetSeat) {
-    for (Seat seat : this.seats) {
-      if (seat.equals(targetSeat)) {
-        return false;
+        // first row
+        if (i == 0)  
+          seatType = SeatType.GOLD;
+        
+        // second row
+        if (i == 1)
+          seatType = SeatType.PLATINUM;
+        
+        // last row and last column
+        if (j == rows - 1 && j == cols - 1)
+          seatType = SeatType.JUBILEE;
+
+          // row and seat numbers can't start from 0
+        Seat seat = new Seat(i+1, j+1, false, seatType);
+        seats.add(seat);
       }
     }
-    return true;
   }
 
-  public void updateSeat(Seat seat) {
-    seat.setTaken();
-    addSeat(seat);
+  // Allow the user to get info abt seat by id
+  public boolean isSeatAvailableById(String seatId) throws Exception {
+    return !this.getSeatById(seatId).isTaken();
+  }
+
+  public Seat getSeatById(String seatId) throws Exception {
+    for (Seat seat : this.seats) {
+      if (seat.getId().equals(seatId)) {
+        return seat;
+      }
+    }
+
+    throw new Exception("Seat not found");
   }
 
   public String getMovieTitle() {
@@ -70,17 +96,6 @@ public class Screening {
 
   public ArrayList<Seat> getSeats() {
     return this.seats;
-  }
-
-  // TODO: Get seat from seat ID
-  public Seat getSeatFromId(String id) {
-    for (Seat seat: this.seats) {
-      if (seat.getId().equals( id)) {
-        return seat;
-      }
-    }
-    
-    return null;
   }
 
   public Movie getMovie() {

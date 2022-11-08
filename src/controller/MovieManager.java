@@ -1,7 +1,7 @@
 package controller;
 import enums.ShowStatus;
 import enums.SortCriteria;
-
+import utils.Utils;
 import java.util.ArrayList;
 import model.Movie;
 import utils.SalesUtils;
@@ -20,7 +20,9 @@ import enums.MovieType;
 public class MovieManager {
   private ArrayList<Movie> moviesArr = new ArrayList<Movie>();
 
-  public MovieManager() {}
+  public MovieManager() {
+    System.out.println("Movie manager created");
+  }
 
   public void addMovie(Movie movie) {
     this.moviesArr.add(movie);
@@ -81,6 +83,8 @@ public class MovieManager {
       }
     }
 
+    if (movieLst.size() == 0) return movieLst;
+
     // Then sorts the list according to a specified sort criteria if applicable
     if (sortingCriteria.equals(SortCriteria.TITLE)) {
       movieLst.sort((m1, m2) -> m1.getTitle().compareTo(m2.getTitle()));
@@ -104,11 +108,11 @@ public class MovieManager {
   }
 
   public ArrayList<Movie> getMovies(ArrayList<ShowStatus> showStatus){
-    return getMovies(null, showStatus);
+    return getMovies(SortCriteria.TITLE, showStatus);
   }
 
   public ArrayList<Movie> getMovies(SortCriteria sortCriteria){
-    return getMovies(sortCriteria, null);
+    return getMovies(sortCriteria, Utils.asArrayList(ShowStatus.values()));
   }
 
   public Movie getMovieByName(String title) throws Exception {
