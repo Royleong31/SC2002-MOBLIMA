@@ -1,5 +1,6 @@
 package controller;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import model.Cinema;
 import model.Movie;
@@ -37,15 +38,28 @@ public class ScreeningManager {
   }
 
   public ArrayList<Screening> getScreenings(String movieTitle, String cinemaCode, String date) {
-    // TODO: Fix this warning
-    ArrayList<Screening> screenings = (ArrayList<Screening>) screeningsArr.clone();
+    ArrayList<Screening> screenings = new ArrayList<Screening>();
+    for (Screening screening : screeningsArr) {
+      screenings.add(screening);
+    }
 
     screenings.removeIf(screening -> (((!screening.getMovieTitle().equals(movieTitle)) && (movieTitle != null)) ||
                                       ((!screening.getCinemaId().equals(cinemaCode)) && (cinemaCode != null)) ||
                                       ((!screening.getShowtime().equals(date)) && (date != null))
                                       ));
 
-    // TODO: Sort by cinema code and date
+    Comparator<Screening> comparator = (s1, s2) -> {
+      try {
+        return s1.getDateTimeObj().compareTo(s2.getDateTimeObj());
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+      return 0;
+    };
+    
+    comparator.thenComparing(Screening::getCinemaId).thenComparing(Screening::getMovieTitle);
+    screenings.sort(comparator);
+    
     return screenings;
   }
 
