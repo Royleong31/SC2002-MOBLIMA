@@ -1,6 +1,7 @@
 package model;
 
 import model.Account.MovieGoerAccount;
+import java.io.Serializable;
 
 /**
  * Account for a staff member.
@@ -10,7 +11,7 @@ import model.Account.MovieGoerAccount;
  @version 1.0
  @since 2022-10-30
 */
-public class Review {
+public class Review implements Serializable{
   private final Movie movie;
   private String comments;
   private float rating;

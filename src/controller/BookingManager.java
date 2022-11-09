@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import enums.TicketType;
 
+import java.io.Serializable;
 import java.lang.Math;
 
 import model.Booking;
@@ -20,7 +21,7 @@ import utils.DateTimeUtils;
  @version 1.1
  @since 2022-10-30
 */
-public class BookingManager {
+public class BookingManager implements Serializable {
   private ArrayList<Booking> bookingsArr = new ArrayList<Booking>();
   
   /**

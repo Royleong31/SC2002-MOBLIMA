@@ -1,6 +1,7 @@
 package controller;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.io.Serializable;
 
 import model.Cinema;
 import model.Movie;
@@ -14,7 +15,7 @@ import model.Screening;
  @version 1.0
  @since 2022-10-30
 */
-public class ScreeningManager {
+public class ScreeningManager implements Serializable{
   private ArrayList<Screening> screeningsArr = new ArrayList<Screening>();
 
   public Screening addScreening(Movie movie, Cinema cinema, String dateTime) {

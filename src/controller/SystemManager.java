@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.io.Serializable;
 
 import constants.Constants;
 import utils.DateTimeUtils;
@@ -22,7 +23,7 @@ enum SpecialDay {
  @version 1.1
  @since 2022-10-30
 */
-public class SystemManager {
+public class SystemManager implements Serializable{
   private ArrayList<String> holidaysArr = new ArrayList<String>();
   private HashMap<CinemaType, Float> cinemaMultMap = Constants.DEFAULT_CINEMA_PRICE_MAP;
   private HashMap<SeatType, Float> seatMultMap = Constants.DEFAULT_SEAT_PRICE_MAP;

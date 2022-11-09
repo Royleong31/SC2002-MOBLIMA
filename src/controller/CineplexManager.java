@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
 import enums.CinemaType;
 import model.Cinema;
@@ -15,7 +16,7 @@ import model.SeatingPlan;
  @version 1.1
  @since 2022-10-30
 */
-public class CineplexManager {
+public class CineplexManager implements Serializable{
   private ArrayList<Cineplex> cineplexesArr = new ArrayList<Cineplex>();
   private ArrayList<Cinema> cinemasArr = new ArrayList<Cinema>();
 

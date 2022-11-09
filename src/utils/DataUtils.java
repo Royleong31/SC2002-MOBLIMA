@@ -15,7 +15,7 @@ public class DataUtils {
      * @param name the name of the object to be saved/serialized
      * @return the error code of the method
      */
-    public int saveData(Object o, String name){
+    public static int saveData(Object o, String name){
         if(checkFile(name)){
             // System.out.println("File already exists");
             // return 2;
@@ -43,7 +43,7 @@ public class DataUtils {
      * @param name the name of the object to be read
      * @return the object being loaded/deserialized
      */
-    public Object loadData(String name){
+    public static Object loadData(String name){
         if(!checkFile(name)){
             return null;
         }
@@ -69,7 +69,7 @@ public class DataUtils {
      * @param name the file name to be checked
      * @return  the boolean value of the exisitence of the file
      */
-    private boolean checkFile(String name){
+    public static boolean checkFile(String name){
         File directory = new File("Data/");
         if(!directory.exists()){
             directory.mkdir();

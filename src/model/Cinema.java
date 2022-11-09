@@ -2,6 +2,7 @@ package model;
 
 import enums.CinemaType;
 import utils.IdUtils;
+import java.io.Serializable;
 
 /**
  * Contains the seating plan and which cineplex this cinema belongs to.
@@ -10,7 +11,7 @@ import utils.IdUtils;
  * @version 1.1
  * @since 2022-10-30
  */
-public class Cinema {
+public class Cinema implements Serializable{
   private final String id;
   private static int cinemaCounter;
   private SeatingPlan seatingPlan;

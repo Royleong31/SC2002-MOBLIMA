@@ -7,6 +7,7 @@ import enums.SeatType;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.io.Serializable;
 
 /**
  * Account for a staff member.
@@ -16,7 +17,7 @@ import java.text.SimpleDateFormat;
  @version 1.0
  @since 2022-10-30
 */
-public class Screening {
+public class Screening implements Serializable{
   private Movie movie;
   private Cinema cinema;
   private String showTime;

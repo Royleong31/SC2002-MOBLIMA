@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
 /**
  * Cineplex class
@@ -10,7 +11,7 @@ import java.util.ArrayList;
  @version 1.1
  @since 2022-10-30
 */
-public class Cineplex {
+public class Cineplex implements Serializable{
 
   /**
    * All the cinemas in this cineplex
