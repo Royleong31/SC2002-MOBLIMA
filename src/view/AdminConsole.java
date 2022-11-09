@@ -115,7 +115,12 @@ public class AdminConsole extends ParentConsole {
     MovieType movieType = super.selectMovieType();
 
     Movie movie = new Movie(title, showStatus, synopsis, director, cast, advisoryRating, genre, movieType);
-    super.getMovieManager().addMovie(movie);
+
+    try {
+      super.getMovieManager().addMovie(movie);
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+    }
   }
 
   /**
