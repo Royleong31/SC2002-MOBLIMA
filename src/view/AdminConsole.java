@@ -283,7 +283,7 @@ public class AdminConsole extends ParentConsole {
       int minute = super.getUserIntegerInput("Enter the minute");
 
       Screening screening = super.getScreeningManager().addScreening(movie, cinema, year, month, day, hour, minute);
-      System.out.println("Screening of movie " + screening.getMovie().getTitle() + " at " + screening.getCinemaId() + " on " + screening.getShowtime() + " has been added");
+      System.out.println("Screening of movie " + screening.getMovie().getTitle() + " at " + screening.getCinemaId() + " on " + screening.getShowtime().getDateTimeString() + " has been added");
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }

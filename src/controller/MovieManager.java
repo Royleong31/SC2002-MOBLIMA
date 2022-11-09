@@ -24,7 +24,13 @@ public class MovieManager {
     System.out.println("Movie manager created");
   }
 
-  public void addMovie(Movie movie) {
+  public void addMovie(Movie movie) throws Exception {
+    for (Movie cur: this.moviesArr) {
+      if (cur.getTitle().equals(movie.getTitle())) {
+        throw new Exception("Movie already exists");
+      }
+    }
+
     this.moviesArr.add(movie);
   }
 

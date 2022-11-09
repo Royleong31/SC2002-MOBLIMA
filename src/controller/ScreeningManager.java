@@ -2,6 +2,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import enums.ShowStatus;
 import model.Cinema;
 import model.Movie;
 import model.Screening;
@@ -18,9 +19,20 @@ import model.DateTime;
 public class ScreeningManager {
   private ArrayList<Screening> screeningsArr = new ArrayList<Screening>();
 
-  public Screening addScreening(Movie movie, Cinema cinema, int year, int month, int day, int hour, int minute) {
-    DateTime date = new DateTime(year, month, day, hour, minute);
+  public Screening addScreening(Movie movie, Cinema cinema, int year, int month, int day, int hour, int minute) throws Exception {
     Screening screening = new Screening(movie, cinema, date);
+    DateTime date = new DateTime(year, month, day, hour, minute);
+
+    for (Screening cur: this.screeningsArr) {
+      if (cur.equals(screening)) {
+        throw new Exception("Screening already exists.");
+      }
+    }
+    
+    if (movie.getShowingStatus().equals(ShowStatus.END_OF_SHOWING)) {
+      System.out.println("Movie is not showing");
+      throw new Exception("Movie showing has ended");
+    }
     screeningsArr.add(screening);
     return screening;
   }

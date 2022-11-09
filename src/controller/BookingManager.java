@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import enums.TicketType;
 
-import java.lang.Math;
-
 import model.Booking;
 import model.Screening;
 import model.Seat;
@@ -32,8 +30,11 @@ public class BookingManager {
    * @param ticketType
    */
   public void makeBooking(MovieGoerAccount movieGoer, Screening screening, ArrayList<Seat> seatsArr, TicketType ticketType, SystemManager systemManager) throws Exception {
+    if (seatsArr.size() == 0) {
+      throw new Exception("No seats selected.");
+    }
+
     ArrayList<Ticket> ticketsArr = new ArrayList<Ticket>();
-    // TODO: Figure out a way to validate no single unoccupied seat is left between two occupied seats
 
     if(seatsArr.size() > 1) {
       // Assuming the seats in seatsArr are not in order of seat number, need to cycle through every seat and check against other seats

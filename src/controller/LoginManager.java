@@ -76,7 +76,6 @@ public class LoginManager {
    * @return Account The account that matches input username.
    */
   public boolean isUsernameAvailable(String username){
-    System.out.println(this.usersArr.toString());
 	  for (Account check : this.usersArr){
 		  if (username.equals(check.getUsername())) {
         return false;

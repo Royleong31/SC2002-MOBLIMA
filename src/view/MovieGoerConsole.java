@@ -239,8 +239,3 @@ public class MovieGoerConsole extends ParentConsole {
     }
   }
 }
-
-/** TODO:
- * DateTime
- * Reviews average rating
- */
