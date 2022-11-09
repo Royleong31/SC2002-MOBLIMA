@@ -1,8 +1,12 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Date;
 
-import model.Cinema.Cinema;
+import enums.SeatType;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 /**
  * Account for a staff member.
@@ -15,34 +19,87 @@ import model.Cinema.Cinema;
 public class Screening {
   private Movie movie;
   private Cinema cinema;
-  private DateTime dateTime;
- 
+  private String showTime;
+  private final ArrayList<Seat> seats = new ArrayList<Seat>(); // list of seats can't change after initialisation
 
-  private boolean isPH; // TODO: Do we need this? i think we can check the system config if it's a special date
-  private ArrayList<Seat> seats = new ArrayList<Seat>();
-
-  public Screening(Movie movie, Cinema cinema, DateTime dateTime, boolean isPH, float price) {
+  public Screening(Movie movie, Cinema cinema, String showTime) {
     this.movie = movie;
     this.cinema = cinema;
-    this.dateTime = dateTime;
-    this.isPH = isPH;
+    this.showTime = showTime;
+
+    SeatingPlan seatingPlan = cinema.getSeatingPlan();
+    int rows = seatingPlan.getRows();
+    int cols = seatingPlan.getColumns();
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
+        SeatType seatType = SeatType.NORMAL;
+        // Some arbitrary way to determine seat type
+
+        // first row
+        if (i == 0)  
+          seatType = SeatType.GOLD;
+        
+        // second row
+        if (i == 1)
+          seatType = SeatType.PLATINUM;
+        
+        // last row and last column
+        if (j == rows - 1 && j == cols - 1)
+          seatType = SeatType.JUBILEE;
+
+          // row and seat numbers can't start from 0
+        Seat seat = new Seat(i+1, j+1, false, seatType);
+        seats.add(seat);
+      }
+    }
   }
 
-  public void addSeat(Seat seat) {
-    seats.add(seat);
+  // Allow the user to get info abt seat by id
+  public boolean isSeatAvailableById(String seatId) throws Exception {
+    return !this.getSeatById(seatId).isTaken();
   }
 
-  public boolean checkIfSeatIsAvailable() {
-    return false;
+  public Seat getSeatById(String seatId) throws Exception {
+    for (Seat seat : this.seats) {
+      if (seat.getId().equals(seatId)) {
+        return seat;
+      }
+    }
+
+    throw new Exception("Seat not found");
   }
 
-  public void updateSeat(ArrayList<Seat> seats) {}
-
-   public DateTime getDateTime() {
-    return dateTime;
+  public String getMovieTitle() {
+    return this.movie.getTitle();
   }
 
-  public void setDateTime(DateTime dateTime) {
-    this.dateTime = dateTime;
+  public String getCinemaId() {
+    return this.cinema.getId();
   }
+
+  public Cinema getCinema() {
+    return this.cinema;
+  }
+
+   public String getShowtime() {
+    return this.showTime;
+   }
+
+  public void setShowTime(String newShowtime) {
+    this.showTime = newShowtime;
+  }
+
+  public Date getDateTimeObj() throws ParseException {
+    Date DateTime = new SimpleDateFormat("dd.MM.yyyy.HH.mm").parse(showTime);
+    return DateTime;
+  }
+
+  public ArrayList<Seat> getSeats() {
+    return this.seats;
+  }
+
+  public Movie getMovie() {
+    return this.movie;
+  }
+
 }

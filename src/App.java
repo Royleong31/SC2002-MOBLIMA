@@ -1,4 +1,13 @@
+import enums.LoginStatus;
+import model.Account.AdminAccount;
+import model.Account.MovieGoerAccount;
+import controller.BookingManager;
+import controller.CineplexManager;
 import controller.LoginManager;
+import controller.MovieManager;
+import controller.ReviewManager;
+import controller.ScreeningManager;
+import controller.SystemManager;
 import view.AdminConsole;
 import view.LoginConsole;
 import view.MovieGoerConsole;
@@ -16,25 +25,36 @@ public class App {
      */
     static final private LoginManager loginManager = new LoginManager();
 
+    static final private BookingManager bookingManager = new BookingManager();
+    static final private CineplexManager cineplexManager = new CineplexManager();
+    static final private MovieManager movieManager = new MovieManager();
+    static final private ReviewManager reviewManager = new ReviewManager();
+    static final private ScreeningManager screeningManager = new ScreeningManager();
+    static final private SystemManager systemManager = new SystemManager();
+
     /**
      * Contains the possible consoles that can be selected
      */
-    private final ParentConsole[] consolesArr = {new LoginConsole(loginManager), new MovieGoerConsole(), new AdminConsole()};
-
-    /**
-     * Varies based on the user's current log in status
-     * Initially set to the 0(login console)
-     * If the user logs into a movie goer account, it will be set to 1(movie goer console)
-     * If the user logs into an admin account, it will be set to 2(admin console)
-     */
-    static private int currentConsoleIndex = 0; // varies based on the user's log in status
-
+    private final static ParentConsole[] consolesArr = {
+        new LoginConsole(loginManager), 
+        new MovieGoerConsole(loginManager, bookingManager, cineplexManager, movieManager, reviewManager, screeningManager, systemManager), 
+        new AdminConsole(loginManager, bookingManager, cineplexManager, movieManager, reviewManager, screeningManager, systemManager)
+    };
 
     /**
      * Contains the main method that runs the program
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        System.out.println("Welcome to the MOBLIMA app!");
+
+        while (true) {
+            LoginStatus loginStatus = loginManager.getLoginStatus();
+            System.out.println(loginStatus + " page\n");
+            // matches the index of this.consolesArr
+            int consolesArrIndex = loginStatus.equals(LoginStatus.LOGIN) ? 0 : loginStatus.equals(LoginStatus.MOVIE_GOER) ? 1 : 2;
+            consolesArr[consolesArrIndex].display(loginManager.getCurrentAccount());
+            // consolesArr[1].display(new MovieGoerAccount("fasds", "fsadsdfa", "fsdsfad", "fsadfsad", "fsad;l"));
+        }
     }
 }

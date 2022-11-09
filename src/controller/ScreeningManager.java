@@ -1,7 +1,9 @@
 package controller;
 import java.util.ArrayList;
+import java.util.Comparator;
 
-import model.DateTime;
+import model.Cinema;
+import model.Movie;
 import model.Screening;
 
 /**
@@ -13,39 +15,66 @@ import model.Screening;
  @since 2022-10-30
 */
 public class ScreeningManager {
-  private ArrayList<Screening> screeningsArr;
+  private ArrayList<Screening> screeningsArr = new ArrayList<Screening>();
 
-  public void addScreening(Screening screening) {
+  public Screening addScreening(Movie movie, Cinema cinema, String dateTime) {
+    Screening screening = new Screening(movie, cinema, dateTime);
+    screeningsArr.add(screening);
+    return screening;
   }
 
   /**
+   * 
    * Update the showtime of a screening
    * Need to call the setDateTime method on screening object
    * @param screening
    * @param newDateTime
    */
-  public void updateShowtime(Screening screening, DateTime newDateTime) {
+  public Screening updateShowtime(Screening screening, String newShowTime) {
+    screening.setShowTime(newShowTime);
+    return screening;
   }
 
-  /*
-   * Needs to cascade and delete all tickets related to the screening
-   * Do we need this? It's not listed in the brief
-   */
-  public void deleteScreening(Screening screening) {
+  public void deleteScreening(Screening screening, BookingManager bManager) {
+    bManager.deleteBooking(screening);
+    this.screeningsArr.removeIf(s -> s.equals(screening));
   }
 
-  // TODO: Overload this so that it works with diff optional params
   public ArrayList<Screening> getScreenings(String movieTitle, String cinemaCode, String date) {
+    ArrayList<Screening> screenings = new ArrayList<Screening>();
+    for (Screening screening : screeningsArr) {
+      screenings.add(screening);
+    }
+
+    screenings.removeIf(screening -> (((!screening.getMovieTitle().equals(movieTitle)) && (movieTitle != null)) ||
+                                      ((!screening.getCinemaId().equals(cinemaCode)) && (cinemaCode != null)) ||
+                                      ((!screening.getShowtime().equals(date)) && (date != null))
+                                      ));
+
+    Comparator<Screening> comparator = (s1, s2) -> {
+      try {
+        return s1.getDateTimeObj().compareTo(s2.getDateTimeObj());
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+      return 0;
+    };
+    
+    comparator.thenComparing(Screening::getCinemaId).thenComparing(Screening::getMovieTitle);
+    screenings.sort(comparator);
+    
+    return screenings;
   }
 
-  /**
-   * Use the cinema type and the system manager stuff to get the price
-   * Use PriceUtils to calculate the price from the cinema type and date time
-   * @param systemManager
-   * @param screening
-   * @return
-   */
-  public float getPrice(SystemManager systemManager, Screening screening) {
+  public ArrayList<Screening> getScreeningsByMovie(String movieTitle) {
+    return this.getScreenings(movieTitle, null, null);
+  }
 
+  public ArrayList<Screening> getScreeningsByCinemaCode(String cinemaCode) {
+    return this.getScreenings(null, cinemaCode, null);
+  }
+
+  public ArrayList<Screening> getScreeningsByDate(String date) {
+    return this.getScreenings(null, null, date);
   }
 }
