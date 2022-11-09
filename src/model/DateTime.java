@@ -3,6 +3,10 @@ package model;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.text.ParseException;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
+
 
 public class DateTime {
   private int year;
@@ -25,6 +29,13 @@ public class DateTime {
 
   public LocalDateTime getDateTimeObj() throws ParseException {
     LocalDateTime dateTime = LocalDateTime.of(this.year, this.month, this.day, this.hour, this.minute);
+    return dateTime;
+  }
+
+  public static DateTime getDateTime() {
+    LocalDateTime lt = LocalDateTime.now();
+    DateTime dateTime = new DateTime(lt.getYear(), lt.getMonthValue(), lt.getDayOfMonth(), lt.getHour(), lt.getMinute());
+    
     return dateTime;
   }
 
@@ -75,4 +86,26 @@ public class DateTime {
   public void setMinute(int minute) {
     this.minute = hour;
   }
+
+  public int getDayOfWeek() throws ParseException {
+    Date actualDateTime = new SimpleDateFormat("dd.MM.yyyy.HH.mm").parse(this.getDateTimeString());
+    SimpleDateFormat dayForm = new SimpleDateFormat("u");
+    return Integer.parseInt(dayForm.format(actualDateTime));
+  }
+
+  public DateTime getEveOfDate() {
+    LocalDateTime date = LocalDateTime.of(this.year, this.month, this.day, this.hour, this.minute);
+    LocalDateTime eve = date.minusHours(24); //does not edit the original date
+
+    return new DateTime(eve.getYear(), eve.getMonthValue(), eve.getDayOfMonth(), eve.getHour(), eve.getMinute());
+  }
+
+  public boolean isDayEqual(DateTime date) {
+    return this.year == date.getYear() && this.month == date.getMonth() && this.day == date.getDay();
+  }
+
+  public boolean isEqual(DateTime date) {
+    return this.year == date.getYear() && this.month == date.getMonth() && this.day == date.getDay() && this.hour == date.getHour() && this.minute == date.getMinute();
+  }
 }
+ 

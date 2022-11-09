@@ -8,6 +8,7 @@ import utils.DateTimeUtils;
 import enums.CinemaType;
 import enums.SeatType;
 import enums.SortCriteria;
+import model.DateTime;
 
 enum SpecialDay {
   WEEKEND,
@@ -23,12 +24,12 @@ enum SpecialDay {
  @since 2022-10-30
 */
 public class SystemManager {
-  private ArrayList<String> holidaysArr = new ArrayList<String>();
+  private ArrayList<DateTime> holidaysArr = new ArrayList<DateTime>();
   private HashMap<CinemaType, Float> cinemaMultMap = Constants.DEFAULT_CINEMA_PRICE_MAP;
   private HashMap<SeatType, Float> seatMultMap = Constants.DEFAULT_SEAT_PRICE_MAP;
   private SortCriteria movieSortingCriteria = Constants.DEFAULT_SORT_CRITERIA;
 
-  public ArrayList<String> getHolidays() {
+  public ArrayList<DateTime> getHolidays() {
     return holidaysArr;
   }
 
@@ -111,13 +112,14 @@ public class SystemManager {
    * @return void
    */
   // !: Needs to be in 2-digit format
-  public void deleteHoliday(String year, String month, String day) throws Exception {
-    String dateString = day + "." + month + "." + year;
-    if (!this.holidaysArr.contains(dateString)) {
+  public void deleteHoliday(int year, int month, int day) throws Exception {
+    DateTime dt = new DateTime(year, month, day);
+    
+    if (!this.isHoliday(dt)) {
       throw new Exception("Holiday does not exist in database.");
     }
 
-    this.holidaysArr.removeIf(value -> dateString.equals(value));
+    this.holidaysArr.removeIf(value -> dt.isDayEqual(value));
   }
 
   /*
@@ -126,28 +128,24 @@ public class SystemManager {
    * @param Int day
    * @return void
    */
-  public void addHoliday(String year, String month, String day) throws Exception {
-    String dateString = day + "." + month + "." + year;
-    if (this.holidaysArr.contains(dateString)) {
+  public void addHoliday(int year, int month, int day, int hour, int minute) throws Exception {
+    DateTime date = new DateTime(year, month, day, hour, minute);
+    if (this.isHoliday(date)) {
       throw new Exception("Holiday already exists in database.");
     }
-    this.holidaysArr.add(dateString);
-  }
 
-  public void addHoliday(String date) throws Exception {
-    if (this.holidaysArr.contains(date)) {
-      throw new Exception("Holiday already exists in database.");
-    }
     this.holidaysArr.add(date);
   }
 
-  /*
-   * @param String dateString
-   * @return Boolean whether the dateString is in the holidays array
-   */
-  public boolean isHoliday(String dateString) throws Exception {
-    String reconstructedDateString = DateTimeUtils.dateTimeToDate(dateString) + "." + DateTimeUtils.dateTimeToMonth(dateString) + "." + DateTimeUtils.dateTimeToYear(dateString);
-    return this.holidaysArr.contains(reconstructedDateString);
-  }
+  public boolean isHoliday(DateTime date) {
+    boolean containsDate = false;
 
+    for (DateTime holiday : holidaysArr) {
+      if (holiday.isDayEqual(date)) {
+        containsDate = true;
+      }
+    }
+
+    return containsDate;
+  }
 }

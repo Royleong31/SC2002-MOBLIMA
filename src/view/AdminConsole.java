@@ -78,8 +78,13 @@ public class AdminConsole extends ParentConsole {
 
       case 4: {
         try {
-          String holiday = super.getUserInput("Enter the holiday date in yyyy.mm.dd: ");
-          systemManager.addHoliday(holiday);
+          int day = super.getUserIntegerInput("Enter the day");
+          int month = super.getUserIntegerInput("Enter the month");
+          int year = super.getUserIntegerInput("Enter the year");
+          int hour = super.getUserIntegerInput("Enter the hour");
+          int minute = super.getUserIntegerInput("Enter the minute");
+          
+          systemManager.addHoliday(year, month, day, hour, minute);
           System.out.println("Holidays: " + systemManager.getHolidays().toString());
           break;
         } catch (Exception e) {
@@ -269,9 +274,15 @@ public class AdminConsole extends ParentConsole {
       Movie movie = super.getMovieManager().getMovieByName(movieName);
       String cinemaId = super.getUserInput("Enter the cinema ID");
       Cinema cinema = this.getCineplexManager().getCinemaById(cinemaId);
-      // TODO: Add validation
-      String showTime = super.getUserInput("Enter the new showtime details in dd.MM.yyyy.HH.mm format");
-      Screening screening = super.getScreeningManager().addScreening(movie, cinema, showTime);
+
+      System.out.println("Enter the details for the new showtime"); 
+      int day = super.getUserIntegerInput("Enter the day");
+      int month = super.getUserIntegerInput("Enter the month");
+      int year = super.getUserIntegerInput("Enter the year");
+      int hour = super.getUserIntegerInput("Enter the hour");
+      int minute = super.getUserIntegerInput("Enter the minute");
+
+      Screening screening = super.getScreeningManager().addScreening(movie, cinema, year, month, day, hour, minute);
       System.out.println("Screening of movie " + screening.getMovie().getTitle() + " at " + screening.getCinemaId() + " on " + screening.getShowtime() + " has been added");
     } catch (Exception e) {
       System.out.println(e.getMessage());
@@ -286,9 +297,14 @@ public class AdminConsole extends ParentConsole {
       String movieName = super.getUserInput("Enter the movie name");
       Movie movie = super.getMovieManager().getMovieByName(movieName);
       Screening screening = super.getScreening(movie);
-      String newShowTime = super.getUserInput("Enter the new showtime details in dd.MM.yyyy.HH.mm format"); 
+      System.out.println("Enter the details for the updated showtime"); 
+      int day = super.getUserIntegerInput("Enter the day");
+      int month = super.getUserIntegerInput("Enter the month");
+      int year = super.getUserIntegerInput("Enter the year");
+      int hour = super.getUserIntegerInput("Enter the hour");
+      int minute = super.getUserIntegerInput("Enter the minute");
 
-      Screening screeningReturn = super.getScreeningManager().updateShowtime(screening, newShowTime);
+      Screening screeningReturn = super.getScreeningManager().updateShowtime(screening, year, month, day, hour, minute);
       System.out.println("Screening of movie " + screeningReturn.getMovie().getTitle() + " at " + screeningReturn.getCinemaId() + " on " + screeningReturn.getShowtime() + " has been updated");
     } catch (Exception e) {
       System.out.println(e.getMessage());

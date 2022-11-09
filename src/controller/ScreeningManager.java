@@ -18,8 +18,9 @@ import model.DateTime;
 public class ScreeningManager {
   private ArrayList<Screening> screeningsArr = new ArrayList<Screening>();
 
-  public Screening addScreening(Movie movie, Cinema cinema, DateTime dateTime) {
-    Screening screening = new Screening(movie, cinema, dateTime);
+  public Screening addScreening(Movie movie, Cinema cinema, int year, int month, int day, int hour, int minute) {
+    DateTime date = new DateTime(year, month, day, hour, minute);
+    Screening screening = new Screening(movie, cinema, date);
     screeningsArr.add(screening);
     return screening;
   }
@@ -31,8 +32,9 @@ public class ScreeningManager {
    * @param screening
    * @param newDateTime
    */
-  public Screening updateShowtime(Screening screening, DateTime newShowTime) {
-    screening.setShowTime(newShowTime);
+  public Screening updateShowtime(Screening screening, int year, int month, int day, int hour, int minute) {
+    DateTime date = new DateTime(year, month, day, hour, minute);
+    screening.setShowTime(date);
     return screening;
   }
 

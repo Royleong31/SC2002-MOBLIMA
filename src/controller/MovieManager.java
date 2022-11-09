@@ -102,21 +102,26 @@ public class MovieManager {
 
     // Move movies with less than 2 reviews to the end of the list
     ArrayList<Movie> delList = new ArrayList<Movie>();
+
+    // Add movies with less than 2 reviews to the delList
     for (Movie movie : movieLst) {
       if (movie.getReviews().size() < 2) {
-        movieLst.add(movie);
         delList.add(movie);
       }
     }
+    
+    // Removes movies with less than 2 reviews from the list
+    movieLst.removeIf((Movie movie) -> delList.contains(movie));
 
+    // Adds movies with less than 2 reviews to the end of the list
     for (Movie movie : delList) {
-      movieLst.remove(movie);
+      movieLst.add(movie);
     }
 
     return movieLst;
   }
 
-  public ArrayList<Movie> getMovies(){
+  public ArrayList<Movie> getMovies() {
     return moviesArr;
   }
 
