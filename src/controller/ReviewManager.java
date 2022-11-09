@@ -7,7 +7,7 @@ import model.Account.MovieGoerAccount;
 
 public class ReviewManager {
 
-  public void addReview(Movie movie, String comments, Float rating, MovieGoerAccount movieGoer) throws Exception {
+  public void addReview(Movie movie, String comments, int rating, MovieGoerAccount movieGoer) throws Exception {
     if (hasPreviouslySubmittedReview(movieGoer, movie)) 
       throw new Exception("User has already submitted a review for this movie");
 

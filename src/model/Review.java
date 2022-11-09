@@ -13,17 +13,17 @@ import model.Account.MovieGoerAccount;
 public class Review {
   private final Movie movie;
   private String comments;
-  private float rating;
+  private int rating;
   private final MovieGoerAccount movieGoer;
 
-  public Review(Movie movie, String comments, float rating, MovieGoerAccount movieGoer) {
+  public Review(Movie movie, String comments, int rating, MovieGoerAccount movieGoer) {
     this.movie = movie;
     this.comments = comments;
     this.rating = rating;
     this.movieGoer = movieGoer;
   }
 
-  public void setRating(float rating) {
+  public void setRating(int rating) {
     this.rating = rating;
   }
 

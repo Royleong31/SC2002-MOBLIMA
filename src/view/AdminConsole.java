@@ -178,7 +178,7 @@ public class AdminConsole extends ParentConsole {
    * Displays the list of movies
    */
   public void getMoviesByRank() { //display top 5 movie by sales and top 5 by rating, admin can choose which of these or both to display to user
-    Integer userInput = super.getSelectInput(Utils.asArrayList("for Top 5 by sales", "for top 5 by rating"), "Enter the type of filter");
+    Integer userInput = super.getSelectInput(Utils.asArrayList("for Top 5 by sales", "for Top 5 by rating"), "Enter the type of filter");
     SortCriteria sortCriteria = userInput == 1 ? SortCriteria.SALES : SortCriteria.RATING;
     ArrayList<Movie> movies = super.getMovieManager().getMovies(sortCriteria); // get top 5 movies
     movies = movies.size() < 5 ? movies : new ArrayList<Movie>(movies.subList(0, 4));
@@ -305,7 +305,7 @@ public class AdminConsole extends ParentConsole {
       int minute = super.getUserIntegerInput("Enter the minute");
 
       Screening screeningReturn = super.getScreeningManager().updateShowtime(screening, year, month, day, hour, minute);
-      System.out.println("Screening of movie " + screeningReturn.getMovie().getTitle() + " at " + screeningReturn.getCinemaId() + " on " + screeningReturn.getShowtime() + " has been updated");
+      System.out.println("Screening of movie " + screeningReturn.getMovie().getTitle() + " at " + screeningReturn.getCinemaId() + " on " + screeningReturn.getShowtime().getDateTimeString() + " has been updated");
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
@@ -332,7 +332,7 @@ public class AdminConsole extends ParentConsole {
       Cineplex cineplex = super.getCineplexManager().getCineplexByLocation(cineplexLocation);
       int rows = super.getUserIntegerInput("Enter the number of rows");
       int columns = super.getUserIntegerInput("Enter the number of columns");
-      int aisle = super.getUserIntegerInput("Enter the number of aisles");
+      int aisle = super.getUserChoiceFromCount("Enter the number of aisles", 2);
       CinemaType cinemaType = super.selectCinemaType();
       Cinema cinema = super.getCineplexManager().addCinema(cineplex, rows, columns, aisle, cinemaType);
       System.out.println("Cinema " + cinema.getId() + " has been added at " + cineplex.getLocation());

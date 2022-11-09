@@ -56,7 +56,7 @@ public class MovieGoerConsole extends ParentConsole {
       Movie movie = super.getMovie(SortCriteria.TITLE, this.allowedShowStatus);
       String comments = super.getUserInput("Please enter your comments: ");
       // TODO: Add validation
-      Float rating = super.getUserFloatInput("Please enter your rating (1-5): ");
+      int rating = super.getUserChoiceFromCount("Please enter your rating (1-5): ", 5);
       super.getReviewManager().addReview(movie, comments, rating, movieGoerAccount);
       System.out.println("Review submitted successfully!");
     } catch (Exception e) {

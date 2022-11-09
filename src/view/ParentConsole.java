@@ -12,6 +12,7 @@ import controller.SystemManager;
 import model.Movie;
 import model.Screening;
 import model.Account.Account;
+import utils.SalesUtils;
 import controller.MovieManager;
 import controller.ReviewManager;
 import controller.BookingManager;
@@ -114,7 +115,7 @@ import java.util.Scanner;
 
     for (int i = 0; i < movies.size(); i++) {
       String rating = movies.get(i).getReviews().size() < 2 ? "NA" : Double.toString(Math.round(movies.get(i).getOverallRating() * 10.0) / 10.0);
-      System.out.println(i+1 + ": " + movies.get(i).getTitle() + " Rating: " + rating);
+      System.out.println(i+1 + ": " + movies.get(i).getTitle() + " Rating: " + rating + " Sales: " + SalesUtils.getSalesByMovie(this.getBookingManager().getBookings(), movies.get(i).getTitle()));
     }
   }
 
@@ -129,7 +130,7 @@ import java.util.Scanner;
 
     for (int i = 0; i < screenings.size(); i++) {
       Screening screening = screenings.get(i);
-      System.out.println(i+1 + ": Time: " + screening.getShowtime() + " Cinema Code: " + screening.getCinema().getId());
+      System.out.println(i+1 + ": Time: " + screening.getShowtime().getDateTimeString() + " Cinema Code: " + screening.getCinema().getId());
     }
   }
 

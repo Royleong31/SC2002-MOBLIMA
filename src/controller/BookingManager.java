@@ -77,19 +77,19 @@ public class BookingManager {
       if (seat.isTaken()) {
         throw new Exception("Error: seat is already taken.");
       }
-    }
-  
-    
-    for (Seat seat: seatsArr) {
-      seat.setTaken(true);
+
       ticketsArr.add(new Ticket(seat, screening, ticketType));
     }
 
     int amountPaid = 0;
-
     for (Ticket chosenTicket: ticketsArr){
       amountPaid += utils.PriceUtils.getPrice(systemManager, chosenTicket);
     }
+    
+    for (Seat seat: seatsArr) {
+      seat.setTaken(true);
+    }
+
 
     this.bookingsArr.add(new Booking(screening.getCinemaId() + DateTimeUtils.getDateTime(), movieGoer, amountPaid, ticketsArr));
   }
