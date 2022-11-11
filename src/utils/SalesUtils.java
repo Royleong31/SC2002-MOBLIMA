@@ -5,10 +5,17 @@ import model.Booking;
 import model.Ticket;
 
 /**
- * Sort the bookings
- * This class should only contain static methods
+ * Contains static functions to get total sales, sales for a movie and sales by a cineplex
+ * @author Augustine Lee, Roy Leong
+ * @version 1.0
+ * @since 2022-11-02
  */
 public class SalesUtils {
+  /**
+   * Get combined total sales for all cineplexes
+   * @param bookingsArr
+   * @return
+   */
   public static float getTotalSales(ArrayList<Booking> bookingsArr) {
     float totalSales = 0;
     for (Booking booking : bookingsArr) {
@@ -17,6 +24,12 @@ public class SalesUtils {
     return totalSales; /* returns 0 if there is no bookings so no need for exception handling */
   }
 
+  /**
+   * Get total sales of a movie
+   * @param bookingsArr
+   * @param movieTitle
+   * @return
+   */
   public static float getSalesByMovie(ArrayList<Booking> bookingsArr, String movieTitle) {
     float totalSales = 0;
     for (Booking booking : bookingsArr) {
@@ -34,6 +47,12 @@ public class SalesUtils {
     return totalSales; /* returns 0 if there is no bookings so no need for exception handling */
   }
 
+  /**
+   * Get total sales for a particular cineplex
+   * @param bookingsArr
+   * @param cineplexLocation
+   * @return
+   */
   public static float getSalesByCineplex(ArrayList<Booking> bookingsArr, String cineplexLocation) {
     float totalSales = 0;
 

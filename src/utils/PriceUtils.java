@@ -10,14 +10,19 @@ import enums.CinemaType;
 import enums.MovieType;
 
 /**
- * Use this to calculate the price of each ticket at a particular date and time
+ * Contains static function to get the price of a particular ticket
+ * @author Augustine Lee, Roy Leong
+ * @version 1.0
+ * @since 2022-11-02
  */
 public class PriceUtils {
-  // As the SystemsManager stores the list of holidays and DateTime can calculate the time and whether the date is a weekend, we can use these to calculate the price
-  //  so each method requires SystemsManager, DateTime, and screening as parameters
-  // Regarding the different types of Cinemas, we can use an enum instead of multiple classes so we can store different prices for each type of cinema. This gives more flexibility than having a price multiplier
-  // we can also have different prices for different genres of movies, for example 3D, blockbuster
-  // TODO: Extract to constants file and use a mapping
+  /**
+   * Return the price of a ticket
+   * @param sm
+   * @param ticket
+   * @return
+   * @throws Exception if ticket and timing combination is not allowed (e.g. student ticket on night screenings)
+   */
   public static float getPrice(SystemManager sm, Ticket ticket) throws Exception {
     Screening screening = ticket.getScreening();
     SeatType seatType = ticket.getSeat().getSeatType();
