@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.TimeZone;
 import java.lang.Integer;
 
@@ -29,7 +28,7 @@ public class DateTimeUtils {
   
   /**
    * @param String The date and time in dd.MM.yyyy.HH.mm format.
-   *        (eg. 31 Dec 1998 7.30pm == 31.12.1998.19.30)
+   *        (eg. 31 Dec 1998 7.30pm.equals(31.12.1998.19.30)
    * @return Int The integer value of day (1 = Monday, ..., 7 = Sunday).
    */
   public static int dateTimeToDay(String stringDateTime) throws Exception{
@@ -40,7 +39,7 @@ public class DateTimeUtils {
   
   /**
    * @param String The date and time in dd.MM.yyyy.HH.mm format.
-   *        (eg. 31 Dec 1998 7.30pm == 31.12.1998.19.30)
+   *        (eg. 31 Dec 1998 7.30pm.equals(31.12.1998.19.30)
    * @return Int The integer value of date.
    *        (eg. Input: 05.01.1999.18.30 >> Output:5)
    */
@@ -52,7 +51,7 @@ public class DateTimeUtils {
   
   /**
    * @param String The date and time in dd.MM.yyyy.HH.mm format.
-   *        (eg. 31 Dec 1998 7.30pm == 31.12.1998.19.30)
+   *        (eg. 31 Dec 1998 7.30pm.equals(31.12.1998.19.30)
    * @return Int The integer value of month. 
    *        (eg. Input: 31.01.1999.18.30 >> Output:1)
    */
@@ -64,7 +63,7 @@ public class DateTimeUtils {
   
   /**
    * @param String The date and time in dd.MM.yyyy.HH.mm format.
-   *        (eg. 31 Dec 1998 7.30pm == 31.12.1998.19.30)
+   *        (eg. 31 Dec 1998 7.30pm.equals(31.12.1998.19.30)
    * @return Int The integer value of year (yyyy)
    */
   public static int dateTimeToYear(String stringDateTime) throws Exception{
@@ -75,7 +74,7 @@ public class DateTimeUtils {
 
   /**
    * @param String The date and time in dd.MM.yyyy.HH.mm format 
-   *        (eg. 31 Dec 1998 7.30pm == 31.12.1998.19.30)
+   *        (eg. 31 Dec 1998 7.30pm.equals(31.12.1998.19.30)
    * @return Int The integer value of hour in day (0-23).
    *        (eg. Input: 31.12.1998.09.30 >> Output: 9)
    */
@@ -87,7 +86,7 @@ public class DateTimeUtils {
   
   /**
    * @param String The date and time in dd.MM.yyyy.HH.mm format 
-   *        (eg. 31 Dec 1998 7.30pm == 31.12.1998.19.30)
+   *        (eg. 31 Dec 1998 7.30pm.equals(31.12.1998.19.30)
    * @return Int The integer value of minute (0-60).
    *        (eg. Input: 31.12.1998.09.05 >> Output: 5)
    */
@@ -99,9 +98,9 @@ public class DateTimeUtils {
 
   /**
    * @param String The date and time in dd.MM.yyyy.HH.mm format 
-   *        (eg. 31 Dec 1998 7.30pm == 31.12.1998.19.30)
+   *        (eg. 31 Dec 1998 7.30pm.equals(31.12.1998.19.30)
    * @return String The date and time in dd.MM.yyyy.HH.mm format for the preceding day
-   *        (eg. 31 Dec 1998 7.30pm == 31.12.1998.19.30)
+   *        (eg. 31 Dec 1998 7.30pm.equals(31.12.1998.19.30)
    */
   public static String getEveOfDate(String stringDateTime) throws Exception{
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy.HH.mm");
@@ -110,6 +109,9 @@ public class DateTimeUtils {
     return formatter.format(eve);
     }
   
+  public static String getDateStringFromDate(String day, String month, String year, String hour, String minute) {
+    return day + "." + month + "." + year + "." + hour + "." + minute;
+  }
   
   
 }

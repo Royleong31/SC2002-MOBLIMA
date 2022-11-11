@@ -2,7 +2,6 @@ package model;
 
 import enums.CinemaType;
 import utils.IdUtils;
-import utils.CinemaPremiumUtils;
 
 /**
  * Contains the seating plan and which cineplex this cinema belongs to.
@@ -23,9 +22,8 @@ public class Cinema {
     this.seatingPlan = seatingPlan;
     this.cineplex = cineplex;
     this.cinemaType = cinemaType;
-    this.cinemaCounter++; /* increment cinemaCounter by 1 to denote an increase in cinemas */
+    Cinema.cinemaCounter++; /* increment cinemaCounter by 1 to denote an increase in cinemas */
   }
-
 
   public String getId() {
     return id;
@@ -38,13 +36,6 @@ public class Cinema {
   public Cineplex getCineplex() {
     return cineplex;
   }
-  
-  /**
-   * @return priceModifier, defaults to 1
-   */
-  public Number getPriceModifier() {
-    return CinemaPremiumUtils.getPremium(cinemaType);
-  }
 
   /**
    *
@@ -53,6 +44,4 @@ public class Cinema {
   public SeatingPlan getSeatingPlan() {
     return seatingPlan;
   }
-
-
 }

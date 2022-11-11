@@ -68,5 +68,4 @@ public class MovieGoerAccount extends Account {
   public String getEmail() {
     return email;
   }
-  
 }

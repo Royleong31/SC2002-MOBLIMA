@@ -7,24 +7,19 @@ import model.Account.MovieGoerAccount;
 
 public class ReviewManager {
 
-  public void addReview(Review review) throws Exception {
-    Movie movie = review.getMovie();
-    ArrayList<Review> reviews = movie.getReviews();
-    if (!hasPreviouslySubmittedReview(review.getMovieGoer(), movie)) {
-      movie.addReview(review);
-    }
-    else {
+  public void addReview(Movie movie, String comments, int rating, MovieGoerAccount movieGoer) throws Exception {
+    if (hasPreviouslySubmittedReview(movieGoer, movie)) 
       throw new Exception("User has already submitted a review for this movie");
-    }
+
+    Review review = new Review(movie, comments, rating, movieGoer);
+    movie.addReview(review);
   }
 
   public boolean hasPreviouslySubmittedReview(MovieGoerAccount movieGoer, Movie movie) {
     ArrayList<Review> reviews = movie.getReviews();
-    Review review;
 
-    for(int i = 0; i < reviews.size(); i++) {
-      review = reviews.get(i);
-      if(review.getMovieGoer().equals(movieGoer) && review.getMovie().equals(movie)) {
+    for(Review cur: reviews) {
+      if(cur.getMovieGoer().equals(movieGoer) && cur.getMovie().equals(movie)) {
         return true;
       }
     }

@@ -60,7 +60,7 @@ public class Booking {
    * 
    * @return all the tickets booked in this booking
    */
-  public ArrayList<Ticket> getTicketsArr() {
+  public ArrayList<Ticket> getTickets() {
     return ticketsArr;
   }
 
@@ -70,6 +70,10 @@ public class Booking {
    */
   public float getAmountPaid() {
     return amountPaid;
+  }
+
+  public String getCinemaId() {
+    return ticketsArr.get(0).getScreening().getCinemaId();
   }
 
 }

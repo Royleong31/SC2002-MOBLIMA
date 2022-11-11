@@ -1,5 +1,5 @@
 package enums;
 
 public enum SeatType {
-    GOLD, PLATINUM, JUBILEE
+    NORMAL, GOLD, PLATINUM, JUBILEE
 }

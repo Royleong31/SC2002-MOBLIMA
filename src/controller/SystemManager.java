@@ -3,10 +3,12 @@ package controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import constants.Constants;
 import utils.DateTimeUtils;
 import enums.CinemaType;
 import enums.SeatType;
-import enums.FilterType;
+import enums.SortCriteria;
+import model.DateTime;
 
 enum SpecialDay {
   WEEKEND,
@@ -22,20 +24,12 @@ enum SpecialDay {
  @since 2022-10-30
 */
 public class SystemManager {
-  private ArrayList<String> holidaysArr;
-  private HashMap<Enum, Float> cinemaMultMap;
-  private HashMap<Enum, Float> seatMultMap;
-  private ArrayList<FilterType> filtersApplied;
+  private ArrayList<DateTime> holidaysArr = new ArrayList<DateTime>();
+  private HashMap<CinemaType, Float> cinemaMultMap = Constants.DEFAULT_CINEMA_PRICE_MAP;
+  private HashMap<SeatType, Float> seatMultMap = Constants.DEFAULT_SEAT_PRICE_MAP;
+  private SortCriteria movieSortingCriteria = Constants.DEFAULT_SORT_CRITERIA;
 
-  public SystemManager(HashMap<Enum, Float> cinemaMultMap, HashMap<Enum, Float> seatMultMap) {
-    this.cinemaMultMap = cinemaMultMap;
-    this.seatMultMap = seatMultMap;
-    this.filtersApplied = new ArrayList<FilterType>();
-    filtersApplied.add(FilterType.SALES);
-    filtersApplied.add(FilterType.RATING);
-  }
-
-  public ArrayList<String> getHolidays() {
+  public ArrayList<DateTime> getHolidays() {
     return holidaysArr;
   }
 
@@ -43,27 +37,39 @@ public class SystemManager {
    * @param CinemaType
    * @return Float The multiplier for the cinema type
    */
-  public float getCinemaMultiplier(CinemaType ct) throws Exception {
-    if (!cinemaMultMap.containsKey(ct)) {
-      throw new Exception("Cinema type do not exists.");
-    }
-    return cinemaMultMap.get(ct);
+  public float getCinemaMultiplier(CinemaType ct) {
+    return this.cinemaMultMap.get(ct);
   }
 
+  // TODO: Add authorisation decorators for all admin methods. Do the same for other methods in other managers
   /*
    * @param CinemaType
    * @param Float The multiplier to set for the cinema type
    * @return void
    */
   public void setCinemaMultiplier(CinemaType ct, float mult) {
-    cinemaMultMap.put(ct, mult);
+    this.cinemaMultMap.put(ct, mult);
   }
-
+  
+  public SortCriteria getSortingCriteria() {
+    return this.movieSortingCriteria;
+  }
+  
+  public void setSortingCriteria(SortCriteria sc) throws Exception {
+    // These are the only 2 sorting criteria allowed
+    if (sc.equals(SortCriteria.SALES) || sc.equals(SortCriteria.RATING)) {
+      this.movieSortingCriteria = sc;
+      return;
+    } 
+    throw new Exception("Invalid sorting criteria");
+  }
+  
   /*
-   * @param CinemaType
-   * @return void
-   */
-  public void deleteCinemaMultipler(CinemaType ct) throws Exception {
+  * @param CinemaType
+  * @return void
+  */
+  // TODO: Can't we set it to 1 instead? Why do we need to remove it?
+  public void deleteCinemaMultiplier(CinemaType ct) throws Exception {
     if (cinemaMultMap.containsKey(ct)) {
       cinemaMultMap.remove(ct);
     }
@@ -74,10 +80,7 @@ public class SystemManager {
    * @param SeatType
    * @return Float The multiplier for the seat type
    */
-  public float getSeatMultiplier(SeatType st) throws Exception {
-    if (!seatMultMap.containsKey(st)) {
-      throw new Exception("Seat type do not exists.");
-    }
+  public float getSeatMultiplier(SeatType st) {
     return seatMultMap.get(st);
   }
 
@@ -89,38 +92,17 @@ public class SystemManager {
   public void setSeatMultiplier(SeatType st, float multiplier) {
     seatMultMap.put(st, multiplier);
   }
-
+  
   /*
-   * @param SeatType
-   * @return void
-   */
+  * @param SeatType
+  * @return void
+  */
+  // TODO: Can't we set it to 1 instead? Why do we need to remove it?
   public void deleteSeatMultiplier(SeatType st) throws Exception {
     if (seatMultMap.containsKey(st)) {
       seatMultMap.remove(st);
     }
-    throw new Exception("Seat type do not exists.");
-  }
-
-  /*
-   * @param FilterType
-   * @return void
-   */
-  public void addFilter(FilterType ft) throws Exception {
-    if (filtersApplied.contains(ft)) {
-      throw new Exception("Filter is already applied");
-    }
-    filtersApplied.add(ft);
-  }
-
-  /*
-   * @param FilterType
-   * @return void
-   */
-  public void deleteFilter(FilterType ft) throws Exception {
-    if (filtersApplied.contains(ft)) {
-      filtersApplied.remove(ft);
-    }
-    throw new Exception("Filter is not applied");
+    throw new Exception("Seat type does not exists.");
   }
 
   /*
@@ -129,12 +111,15 @@ public class SystemManager {
    * @param Int day
    * @return void
    */
+  // !: Needs to be in 2-digit format
   public void deleteHoliday(int year, int month, int day) throws Exception {
-    String dateString = day + "." + month + "." + year;
-    if (!holidaysArr.contains(dateString)) {
-      throw new Exception("Holiday do not exist in database.");
+    DateTime dt = new DateTime(year, month, day);
+    
+    if (!this.isHoliday(dt)) {
+      throw new Exception("Holiday does not exist in database.");
     }
-    holidaysArr.removeIf(value -> dateString.equals(value));
+
+    this.holidaysArr.removeIf(value -> dt.isDayEqual(value));
   }
 
   /*
@@ -143,21 +128,24 @@ public class SystemManager {
    * @param Int day
    * @return void
    */
-  public void addHoliday(int year, int month, int day) throws Exception {
-    String dateString = day + "." + month + "." + year;
-    if (holidaysArr.contains(dateString)) {
+  public void addHoliday(int year, int month, int day, int hour, int minute) throws Exception {
+    DateTime date = new DateTime(year, month, day, hour, minute);
+    if (this.isHoliday(date)) {
       throw new Exception("Holiday already exists in database.");
     }
-    holidaysArr.add(dateString);
+
+    this.holidaysArr.add(date);
   }
 
-  /*
-   * @param String dateString
-   * @return Boolean whether the dateString is in the holidays array
-   */
-  public boolean isHoliday(String dateString) throws Exception {
-    String reconstructedDateString = DateTimeUtils.dateTimeToDate(dateString) + "." + DateTimeUtils.dateTimeToMonth(dateString) + "." + DateTimeUtils.dateTimeToYear(dateString);
-    return holidaysArr.contains(reconstructedDateString);
-  }
+  public boolean isHoliday(DateTime date) {
+    boolean containsDate = false;
 
+    for (DateTime holiday : holidaysArr) {
+      if (holiday.isDayEqual(date)) {
+        containsDate = true;
+      }
+    }
+
+    return containsDate;
+  }
 }

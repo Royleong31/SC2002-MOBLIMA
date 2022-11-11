@@ -36,7 +36,7 @@ public class Account {
    * @param password This Account's password.
    */
   public Account(String username, String password) {
-    try{
+    try {
       this.username = username;
       this.password = getHexString(passwordToSHA(password));
     }
@@ -92,9 +92,10 @@ public class Account {
     BigInteger num = new BigInteger(1, hash);
     StringBuilder hexString = new StringBuilder(num.toString(16));
 	
-	   while(hexString.length() < 64){
-	     hexString.insert(0, '0');
+    while (hexString.length() < 64) {
+      hexString.insert(0, '0');
     }
-	   return hexString.toString();
+
+	  return hexString.toString();
   }	
 }

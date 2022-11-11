@@ -2,8 +2,11 @@ package controller;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import model.DateTime;
+import enums.ShowStatus;
+import model.Cinema;
+import model.Movie;
 import model.Screening;
+import model.DateTime;
 
 /**
  * Account for a staff member.
@@ -16,8 +19,22 @@ import model.Screening;
 public class ScreeningManager {
   private ArrayList<Screening> screeningsArr = new ArrayList<Screening>();
 
-  public void addScreening(Screening screening) {
+  public Screening addScreening(Movie movie, Cinema cinema, int year, int month, int day, int hour, int minute) throws Exception {
+    DateTime date = new DateTime(year, month, day, hour, minute);
+    Screening screening = new Screening(movie, cinema, date);
+
+    for (Screening cur: this.screeningsArr) {
+      if (cur.equals(screening)) {
+        throw new Exception("Screening already exists.");
+      }
+    }
+    
+    if (movie.getShowingStatus().equals(ShowStatus.END_OF_SHOWING)) {
+      System.out.println("Movie is not showing");
+      throw new Exception("Movie showing has ended");
+    }
     screeningsArr.add(screening);
+    return screening;
   }
 
   /**
@@ -27,15 +44,18 @@ public class ScreeningManager {
    * @param screening
    * @param newDateTime
    */
-  public void updateShowtime(Screening screening, DateTime newDateTime) {
-    screening.setDateTime(newDateTime);
+  public Screening updateShowtime(Screening screening, int year, int month, int day, int hour, int minute) {
+    DateTime date = new DateTime(year, month, day, hour, minute);
+    screening.setShowTime(date);
+    return screening;
   }
 
   public void deleteScreening(Screening screening, BookingManager bManager) {
-    bManager.deleteTicketsFromBookings(screening);
+    bManager.deleteBooking(screening);
+    this.screeningsArr.removeIf(s -> s.equals(screening));
   }
 
-  public ArrayList<Screening> getScreenings(String movieTitle, String cinemaCode, String date) {
+  public ArrayList<Screening> getScreenings(String movieTitle, String cinemaCode, DateTime date) {
     ArrayList<Screening> screenings = new ArrayList<Screening>();
     for (Screening screening : screeningsArr) {
       screenings.add(screening);
@@ -43,12 +63,12 @@ public class ScreeningManager {
 
     screenings.removeIf(screening -> (((!screening.getMovieTitle().equals(movieTitle)) && (movieTitle != null)) ||
                                       ((!screening.getCinemaId().equals(cinemaCode)) && (cinemaCode != null)) ||
-                                      ((!screening.getDateTime().equals(date)) && (date != null))
+                                      ((!screening.getShowtime().equals(date)) && (date != null))
                                       ));
 
     Comparator<Screening> comparator = (s1, s2) -> {
       try {
-        return s1.getDateTimeObj().compareTo(s2.getDateTimeObj());
+        return s1.getShowtime().getDateTimeObj().compareTo(s2.getShowtime().getDateTimeObj());
       } catch (Exception e) {
         e.printStackTrace();
       }
@@ -61,4 +81,19 @@ public class ScreeningManager {
     return screenings;
   }
 
+  public ArrayList<Screening> getScreenings() {
+    return screeningsArr;
+  }
+
+  public ArrayList<Screening> getScreeningsByMovie(String movieTitle) {
+    return this.getScreenings(movieTitle, null, null);
+  }
+
+  public ArrayList<Screening> getScreeningsByCinemaCode(String cinemaCode) {
+    return this.getScreenings(null, cinemaCode, null);
+  }
+
+  public ArrayList<Screening> getScreeningsByDate(DateTime date) {
+    return this.getScreenings(null, null, date);
+  }
 }

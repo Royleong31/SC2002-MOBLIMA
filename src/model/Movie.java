@@ -1,5 +1,6 @@
 package model;
 import enums.*;
+
 import java.util.ArrayList;
 
 /**
@@ -19,11 +20,9 @@ public class Movie {
   private ArrayList<Review> reviews = new ArrayList<Review>();
   private Advisory advisoryRating;
   private Genre genre;
-  private boolean isBlockbuster;
-  private boolean is3D;
   private MovieType type;
 
-  public Movie(String title, ShowStatus showingStatus, String synopsis, String director, ArrayList<String> cast, Advisory advisoryRating, Genre genre, boolean isBlockbuster, boolean is3D) {
+  public Movie(String title, ShowStatus showingStatus, String synopsis, String director, ArrayList<String> cast, Advisory advisoryRating, Genre genre, MovieType type) {
     this.title = title;
     this.showingStatus = showingStatus;
     this.synopsis = synopsis;
@@ -31,8 +30,7 @@ public class Movie {
     this.cast = cast;
     this.advisoryRating = advisoryRating;
     this.genre = genre;
-    this.isBlockbuster = isBlockbuster;
-    this.is3D = is3D;
+    this.type = type;
   }
   
   public void addReview(Review review) {
@@ -71,14 +69,10 @@ public class Movie {
     this.genre = genre;
   }
 
-  public void setBlockbuster(boolean isBlockbuster) {
-    this.isBlockbuster = isBlockbuster;
+  public void setMovieType(MovieType type) {
+    this.type = type;
   }
   
-   public void set3D(boolean is3D) {
-    this.is3D = is3D;
-  }
-
   public String getTitle() {
     return this.title;
   }
@@ -118,7 +112,7 @@ public class Movie {
   /*
    * Gets the overall rating from all the reviews of this movie
    */
-  public float getOverallRating() {
+  public Float getOverallRating() {
     // loop through the list of reviews and get the average rating
     float total = 0;
     for (Review review : reviews) {
@@ -126,19 +120,5 @@ public class Movie {
     }
     total /= reviews.size();
     return total;
-  }
-
-  /*
-   * Gets isBlockbuster value of this movie
-   */
-  public boolean isBlockbuster() {
-    return this.isBlockbuster;
-  }
-
-  /*
-   * Gets is3D value of this movie
-   */
-  public boolean is3D() {
-    return this.is3D;
   }
 }

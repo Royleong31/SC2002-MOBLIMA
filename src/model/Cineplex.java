@@ -15,12 +15,12 @@ public class Cineplex {
   /**
    * All the cinemas in this cineplex
    */
-  private ArrayList<Cinema> cinemasArr;
+  private ArrayList<Cinema> cinemasArr = new ArrayList<Cinema>();
 
   /**
    * All the movies showing in this cineplex
    */
-  private ArrayList<Movie> movieCollection;
+  private ArrayList<Movie> movieCollection = new ArrayList<Movie>();
 
   /**
    * Location of this cineplex
@@ -33,38 +33,35 @@ public class Cineplex {
    */
   public Cineplex(String location) {
     this.location = location;
-    cinemasArr = new ArrayList<Cinema>();
-    movieCollection = new ArrayList<Movie>();
   }
   
   /*
    * returns all the cinemas in this cineplex
    */
   public ArrayList<Cinema> getCinemas() {
-    return cinemasArr;
+    return this.cinemasArr;
   }
 
   /**
    * @return all the movies shown in this cinema
    */
-  public ArrayList<Movie> getMovies() {
-    return movieCollection;
+  public ArrayList<Movie> getAllMovies() {
+    return this.movieCollection;
   }
 
   /**
    * @param movie
    */
-
   public void addMovie(Movie movie) throws Exception {
     // add in a movie to the moviesArr
     // check that a movie of the same name doesn't alr exist
-    for (int i = 0; i < movieCollection.size(); i++) {
-      if (movieCollection.get(i).getTitle() == movie.getTitle()) {
-        // throw exception
+    for (Movie cur: this.movieCollection) {
+      if (cur.getTitle().equals(movie.getTitle())) {
         throw new Exception("Movie already exists in cineplex's movie collection.");
       }
     }
-    movieCollection.add(movie);
+
+    this.movieCollection.add(movie);
   }
 
   /**
@@ -73,10 +70,12 @@ public class Cineplex {
    */
   public void addCinema(Cinema cinema) throws Exception {
     // throw exception if cinema already exist
-    if (cinemasArr.contains(cinema)) {
-      throw new Exception("Cinema already exist in cineplex.");
+    for (Cinema cur: this.cinemasArr) {
+      if (cur.getId().equals(cinema.getId()))
+        throw new Exception("Cinema already exist in cineplex.");
     }
-    cinemasArr.add(cinema);
+
+    this.cinemasArr.add(cinema);
   }
 
   /**
@@ -90,19 +89,21 @@ public class Cineplex {
     if (!cinemasArr.contains(cinema)) {
       throw new Exception("Cinema do not exist in cineplex.");
     }
-    cinemasArr.removeIf(value -> cinema.equals(value));
+    
+    this.cinemasArr.removeIf(value -> cinema.equals(value));
   }
 
   /**
    * Delete a movie from this cineplex
    * @param movie
    */
-  public void deleteMovie(Movie movie) throws Exception {
+  public void removeMovie(Movie movie) throws Exception {
     // throw exception if movie do not exist
      if (!movieCollection.contains(movie)) {
       throw new Exception("Movie do not exist in cineplex's movie collection.");
     }
-    movieCollection.removeIf(value -> movie.equals(value));
+    
+    this.movieCollection.removeIf(value -> movie.equals(value));
   }
   
   /**
