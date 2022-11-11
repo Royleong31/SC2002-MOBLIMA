@@ -22,14 +22,16 @@ public class LoginConsole extends ParentConsole {
   public void display(Account account) { // account is unused as it's null
     System.out.println("Inside login console");
     // TODO: Use standard input to get user input
-    Integer userSelection = this.getUserChoiceFromCount("Enter '1' to log in, '2' to register, '3' to exit", 3);
+    Integer userSelection = this.getUserChoiceFromCount("Enter '1' to log in, '2' to register, '3' to return to home page", 3);
 
     if (userSelection == 1) {
       this.login();
     } else if (userSelection == 2) {
       this.register();
     } else if (userSelection == 3) {
-      this.exitProgram();
+      //this.exitProgram();
+      loginManager.returnToMainMenu();
+      return;
     } else {
       // Should never reach here as error checking is done in this.getUserChoice()
       System.out.println("An unexpected error occured");
