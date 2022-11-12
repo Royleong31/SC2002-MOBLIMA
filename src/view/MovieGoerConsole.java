@@ -186,12 +186,11 @@ public class MovieGoerConsole extends ParentConsole {
   }
 
   @Override
-  public boolean display(Account account) {
+  public void display(Account account) {
     // should never trigger as it can only reach MovieGoerConsole if the logged in user is a MovieGoerAccount
     if (!(account instanceof MovieGoerAccount)) {
       System.out.println("Something went wrong in the login process");
-      this.exitProgram();
-      return true;
+      return;
     }
     
     Integer userSelection = super.getSelectInput(Utils.asArrayList("to submit review", 
@@ -233,9 +232,8 @@ public class MovieGoerConsole extends ParentConsole {
       default:
         // Should never reach here as error checking is done in this.getUserChoice()
         System.out.println("An unexpected error occured");
-        this.exitProgram();
-        return true;
+        return;
     }
-    return false;
+    return;
   }
 }

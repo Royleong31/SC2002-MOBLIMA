@@ -58,8 +58,8 @@ public class SystemManager implements Serializable{
    * Sets all holiday dates in the system
    * 
    */
-  public void setHolidays(ArrayList<String> holidaysArr) {
-    this.holidaysArr = new ArrayList<String>(holidaysArr);
+  public void setHolidays(ArrayList<DateTime> holidaysArr) {
+    this.holidaysArr = new ArrayList<DateTime>(holidaysArr);
   }
 
    /**

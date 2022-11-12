@@ -313,18 +313,6 @@ import java.io.Serializable;
     }
   }
 
-  // TODO:
-  protected void startProgram() {
-  }
-
-  /**
-   * This is the function that is called whenever the program exits, for e.g. when the user chooses to quit the program
-   */
-  protected void exitProgram() {
-    ParentConsole.scannerObj.close();
-    return;    
-  }
-
   protected BookingManager getBookingManager() {
     return this.bookingManager;
   }
@@ -337,5 +325,5 @@ import java.io.Serializable;
    * Displays the content for each console.
    * This is basically the 'main' method for each console
    */
-  public abstract boolean display(Account account);
+  public abstract void display(Account account);
 }

@@ -62,8 +62,7 @@ public class App {
 
         loadAppData();
 
-        boolean exitStatus = false;
-        while (exitStatus == false) {
+        while (true) {
             System.out.println("Select your choice : \n 1. Just Browsing \n 2. Login to make booking/staff \n 3. Quit");
             Integer choice = Integer.parseInt(sc.nextLine());
             if (choice != 1 && choice != 2 && choice != 3) {
@@ -71,7 +70,7 @@ public class App {
                 continue;
             }
             if (choice == 1) {
-                exitStatus = consolesArr[3].display(new GuestAccount());
+                consolesArr[3].display(new GuestAccount());
             }
             else if (choice == 2) {
                 while (true) {
@@ -82,7 +81,7 @@ public class App {
                     if (consolesArrIndex == 3) {
                         break;
                     }
-                    exitStatus = consolesArr[consolesArrIndex].display(loginManager.getCurrentAccount());
+                    consolesArr[consolesArrIndex].display(loginManager.getCurrentAccount());
                 }
             }
             else {

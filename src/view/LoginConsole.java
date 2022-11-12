@@ -19,7 +19,7 @@ public class LoginConsole extends ParentConsole {
   }
   
   @Override
-  public boolean display(Account account) { // account is unused as it's null
+  public void display(Account account) { // account is unused as it's null
     System.out.println("Inside login console");
     // TODO: Use standard input to get user input
     Integer userSelection = this.getUserChoiceFromCount("Enter '1' to log in, '2' to register, '3' to return to main menu", 3);
@@ -30,18 +30,16 @@ public class LoginConsole extends ParentConsole {
       this.register();
     } else if (userSelection == 3) {
 
-      this.exitProgram();
       loginManager.returnToMainMenu();
-      return true;
+      return;
 
     } else {
       // Should never reach here as error checking is done in this.getUserChoice()
       System.out.println("An unexpected error occured");
-      this.exitProgram();
-      return true;
+      return;
     }
 
-    return false;
+    return;
   }
 
   /**
