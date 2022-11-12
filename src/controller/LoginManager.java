@@ -13,8 +13,8 @@ import model.Account.*;
  * Aggregation relationship with Account class
  * Accounts are part of LoginManager
  *
- @author Roy Leong, Ryan Ng
- @version 1.1
+ @author Roy Leong, Ryan Ng, Augustine Lee
+ @version 1.2
  @since 2022-10-30
 */
 public class LoginManager implements Serializable{
@@ -110,6 +110,9 @@ public class LoginManager implements Serializable{
     this.currentAccount = null;
   }
 
+  /**
+   * Return to the main menu by changing current account to guest account
+   */
   public void returnToMainMenu() {
     this.currentAccount = new GuestAccount();
   }

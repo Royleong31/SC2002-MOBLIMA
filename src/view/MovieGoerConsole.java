@@ -9,18 +9,11 @@ import controller.MovieManager;
 import controller.ReviewManager;
 import controller.ScreeningManager;
 import controller.SystemManager;
-import enums.Advisory;
-import enums.CinemaType;
-import enums.Genre;
-import enums.MovieType;
 import enums.ShowStatus;
 import enums.SortCriteria;
 import enums.TicketType;
 import model.Booking;
-import model.Cinema;
-import model.Cineplex;
 import model.Movie;
-import model.Review;
 import model.Screening;
 import model.Seat;
 import model.SeatingPlan;
@@ -58,7 +51,7 @@ public class MovieGoerConsole extends ParentConsole {
 
   /**
    * Displays all reviews that have been made by this user
-   * @param movieGoerAccount
+   * @param movieGoerAccount the movie goer account that is submitting the review
    */
   private void submitReview(MovieGoerAccount movieGoerAccount) {
     // get the movie from super.getMovie()
@@ -66,7 +59,6 @@ public class MovieGoerConsole extends ParentConsole {
     try {
       Movie movie = super.getMovie(SortCriteria.TITLE, this.allowedShowStatus);
       String comments = super.getUserInput("Please enter your comments: ");
-      // TODO: Add validation
       int rating = super.getUserChoiceFromCount("Please enter your rating (1-5): ", 5);
       super.getReviewManager().addReview(movie, comments, rating, movieGoerAccount);
       System.out.println("Review submitted successfully!");
@@ -81,7 +73,7 @@ public class MovieGoerConsole extends ParentConsole {
    * Uses super.getMovie() to get the movie that the user wants to review
    * Uses selectSeats() to get the seats that the user wants to review
    * which is then passed to BookingManager to make the booking
-   * @param movieGoerAccount
+   * @param movieGoerAccount the movie goer account that is making the booking
    */
   private void makeBooking(MovieGoerAccount movieGoerAccount) {
     try {
@@ -114,24 +106,24 @@ public class MovieGoerConsole extends ParentConsole {
     for (int i=1; i<=columns; i++) {
         System.out.print(((aisle > 0 && i > 1 && (i-1) % divs == 0 && aisleCount++ < aisle) ? "      " : " ") + (i<10 ? " " : "") + Integer.toString(i) + "  ");
     }
-    
+
     int aisleForThisRowCount = 0;
     for (int i=0; i<screening.getSeats().size(); i++) {
       Seat seat = screening.getSeats().get(i);
       if (seat.getColumn() == 1) {
         System.out.print("\n" + this.getCharForNumber(seat.getRow()) + " ");
       }
-      
+
       if (seat.getColumn() > 1 && (seat.getColumn()-1) % divs == 0 && aisleForThisRowCount < aisle) {
         System.out.print("  |  ");
         aisleForThisRowCount++;
-      } 
+      }
 
       if (i > 1 && seat.getRow() != screening.getSeats().get(i-1).getRow()) {
         aisleForThisRowCount = 0;
       }
 
-      if (seat.isTaken()) 
+      if (seat.isTaken())
         System.out.print(" [X] ");
       else
         System.out.print(" [ ] ");
@@ -172,7 +164,7 @@ public class MovieGoerConsole extends ParentConsole {
 
   /**
    * Displays all bookings that have been made by this user
-   * @param movieGoerAccount
+   * @param movieGoerAccount the movie goer account whose booking history will be checked
    */
   private void viewBookingHistory(MovieGoerAccount movieGoerAccount) {
     try {
@@ -216,7 +208,7 @@ public class MovieGoerConsole extends ParentConsole {
       System.out.println("Something went wrong in the login process");
       return;
     }
-    
+
     Integer userSelection = super.getSelectInput(Utils.asArrayList("to submit review", 
                                                                     "to make booking", 
                                                                     "to view booking history", 
@@ -230,11 +222,11 @@ public class MovieGoerConsole extends ParentConsole {
       case 1:
         this.submitReview(movieGoerAccount);
         break;
-    
+
       case 2:
         this.makeBooking(movieGoerAccount);
         break;
-    
+
       case 3:
         this.viewBookingHistory(movieGoerAccount);
         break;
@@ -250,9 +242,7 @@ public class MovieGoerConsole extends ParentConsole {
       case 6:
         super.logout();
         break;
-   
 
-    
       default:
         // Should never reach here as error checking is done in this.getUserChoice()
         System.out.println("An unexpected error occured");

@@ -27,7 +27,6 @@ public class LoginConsole extends ParentConsole {
 
   /**
    * Asks the user for login details and logs them in
-   * @return
    */
   private void login() {
     while (true) {
@@ -47,7 +46,6 @@ public class LoginConsole extends ParentConsole {
 
   /**
    * Asks the user for registration details and registers them
-   * @return
    */
   private void register() {
     while (true) {
@@ -99,7 +97,6 @@ public class LoginConsole extends ParentConsole {
     } else {
       // Should never reach here as error checking is done in this.getUserChoice()
       System.out.println("An unexpected error occured");
-      this.exitProgram();
     }
   }
 }

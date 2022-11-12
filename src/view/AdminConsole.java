@@ -102,7 +102,6 @@ public class AdminConsole extends ParentConsole {
    * call the addMovie method in the MovieManager class to add it
    * Catches and displays exceptions
    * 
-   * @param movie
    */
   public void addMovie() { 
     String title = super.getUserInput("Enter the title of the movie");
@@ -387,10 +386,6 @@ public class AdminConsole extends ParentConsole {
                                                                "get movies by rank",
                                                                "to logout"), "Select an option"); 
 
-
-    // TODO: Use this for authorisation checks
-
-    // TODO: Add setters for cinema and cineplex
     AdminAccount adminAccount = (AdminAccount) account;
 
     switch (userInput) {

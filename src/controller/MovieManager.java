@@ -26,7 +26,6 @@ public class MovieManager implements Serializable {
    * Constructor for MovieManager object
    */
   public MovieManager() {
-    System.out.println("Movie manager created");
   }
 
   /**

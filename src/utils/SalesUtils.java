@@ -13,8 +13,8 @@ import model.Ticket;
 public class SalesUtils {
   /**
    * Get combined total sales for all cineplexes
-   * @param bookingsArr
-   * @return
+   * @param bookingsArr the arraylist of all bookings
+   * @return the combined total sales for all cineplexes
    */
   public static float getTotalSales(ArrayList<Booking> bookingsArr) {
     float totalSales = 0;
@@ -26,9 +26,9 @@ public class SalesUtils {
 
   /**
    * Get total sales of a movie
-   * @param bookingsArr
-   * @param movieTitle
-   * @return
+   * @param bookingsArr the arraylist of all bookings
+   * @param movieTitle the selected movie title
+   * @return the total sales of the movie
    */
   public static float getSalesByMovie(ArrayList<Booking> bookingsArr, String movieTitle) {
     float totalSales = 0;
@@ -49,9 +49,9 @@ public class SalesUtils {
 
   /**
    * Get total sales for a particular cineplex
-   * @param bookingsArr
-   * @param cineplexLocation
-   * @return
+   * @param bookingsArr the arraylist of all bookings
+   * @param cineplexLocation the selected cineplex location
+   * @return the total sales for the cineplex
    */
   public static float getSalesByCineplex(ArrayList<Booking> bookingsArr, String cineplexLocation) {
     float totalSales = 0;
