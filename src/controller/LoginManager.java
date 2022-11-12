@@ -137,6 +137,7 @@ public class LoginManager {
 		  return LoginStatus.GUEST;
     }
     else {
+      this.currentAccount = null;
       return LoginStatus.LOGIN;
     }
   }
