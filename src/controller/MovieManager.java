@@ -21,7 +21,6 @@ public class MovieManager {
   private ArrayList<Movie> moviesArr = new ArrayList<Movie>();
 
   public MovieManager() {
-    System.out.println("Movie manager created");
   }
 
   public void addMovie(Movie movie) throws Exception {

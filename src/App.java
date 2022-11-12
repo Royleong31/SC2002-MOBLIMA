@@ -49,32 +49,47 @@ public class App {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println("Welcome to the MOBLIMA app!");
+        System.out.println("\nWelcome to the MOBLIMA app!");
         Scanner sc = new Scanner(System.in);
+        Integer choice;
 
         while (true) {
+            System.out.println("\n------------------------------");
+            System.out.println("Main Menu");
+            System.out.println("------------------------------");
             System.out.println("Select your choice : \n 1. Just Browsing \n 2. Login to make booking/staff \n 3. Quit");
-            Integer choice = Integer.parseInt(sc.nextLine());
+            try {
+              choice = Integer.parseInt(sc.nextLine());
+            } catch (Exception e) {
+              System.out.println("Invalid input! Please try again.");
+              continue;
+            }
             if (choice != 1 && choice != 2 && choice != 3) {
                 System.out.println("Invalid input. Please try again.");
                 continue;
             }
             if (choice == 1) {
-                consolesArr[3].display(new GuestAccount());
+              System.out.println("\n------------------------------");
+              System.out.println("GUEST page");
+              System.out.println("------------------------------");
+              consolesArr[3].display(new GuestAccount());
             }
             else if (choice == 2) {
                 while (true) {
                     LoginStatus loginStatus = loginManager.getLoginStatus();
-                    System.out.println(loginStatus + " page\n");
                     // matches the index of this.consolesArr
                     int consolesArrIndex = loginStatus.equals(LoginStatus.LOGIN) ? 0 : loginStatus.equals(LoginStatus.MOVIE_GOER) ? 1 : loginStatus.equals(LoginStatus.ADMIN) ? 2 : 3;
                     if (consolesArrIndex == 3) {
                         break;
                     }
+                    System.out.println("\n------------------------------");
+                    System.out.println(loginStatus + " page\n");
+                    System.out.println("------------------------------");
                     consolesArr[consolesArrIndex].display(loginManager.getCurrentAccount());
                 }
             }
             else {
+                System.out.println("Goodbye and have a nice day!");
                 sc.close();
                 System.exit(0);
             }
