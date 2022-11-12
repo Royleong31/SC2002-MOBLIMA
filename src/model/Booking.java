@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.io.Serializable;
 
 import model.Account.MovieGoerAccount;
 
@@ -13,7 +12,8 @@ import model.Account.MovieGoerAccount;
  @version 1.1
  @since 2022-11-02
 */
-public class Booking  implements Serializable{
+public class Booking {
+ 
   /**
    * Booking ID following this format : <cinemaCode>YYYYMMDDhhmm
    */

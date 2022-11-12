@@ -4,11 +4,6 @@ import java.util.ArrayList;
 
 import enums.ShowStatus;
 import enums.SortCriteria;
-import utils.Utils;
-import java.util.ArrayList;
-import java.io.Serializable;
-import model.Movie;
-import utils.SalesUtils;
 import enums.Advisory;
 import enums.Genre;
 import enums.MovieType;

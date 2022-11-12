@@ -1,6 +1,4 @@
 import enums.LoginStatus;
-import model.Account.AdminAccount;
-import model.Account.MovieGoerAccount;
 import model.Account.GuestAccount;
 
 import java.util.ArrayList;
@@ -19,6 +17,8 @@ import view.LoginConsole;
 import view.MovieGoerConsole;
 import view.GuestConsole;
 import view.ParentConsole;
+import java.util.Scanner;
+
 import utils.DataUtils;
 import model.Account.*;
 import model.*;
@@ -26,7 +26,7 @@ import utils.Utils;
 import enums.*;
 
 /**
- * @author Roy Leong, Kish Choy
+ * @author Roy Leong, Kish Choy, Augustine Lee
  * @version 1.0
  * @since 2022-10-30
  */
@@ -59,34 +59,49 @@ public class App {
      * @param args
      */
     public static void main(String[] args) {
-        System.out.println("Welcome to the MOBLIMA app!");
+        System.out.println("\nWelcome to the MOBLIMA app!");
         Scanner sc = new Scanner(System.in);
+        Integer choice;
 
         loadAppData();
 
         while (true) {
+            System.out.println("\n------------------------------");
+            System.out.println("Main Menu");
+            System.out.println("------------------------------");
             System.out.println("Select your choice : \n 1. Just Browsing \n 2. Login to make booking/staff \n 3. Quit");
-            Integer choice = Integer.parseInt(sc.nextLine());
+            try {
+              choice = Integer.parseInt(sc.nextLine());
+            } catch (Exception e) {
+              System.out.println("Invalid input! Please try again.");
+              continue;
+            }
             if (choice != 1 && choice != 2 && choice != 3) {
                 System.out.println("Invalid input. Please try again.");
                 continue;
             }
             if (choice == 1) {
-                consolesArr[3].display(new GuestAccount());
+              System.out.println("\n------------------------------");
+              System.out.println("GUEST page");
+              System.out.println("------------------------------");
+              consolesArr[3].display(new GuestAccount());
             }
             else if (choice == 2) {
                 while (true) {
                     LoginStatus loginStatus = loginManager.getLoginStatus();
-                    System.out.println(loginStatus + " page\n");
                     // matches the index of this.consolesArr
                     int consolesArrIndex = loginStatus.equals(LoginStatus.LOGIN) ? 0 : loginStatus.equals(LoginStatus.MOVIE_GOER) ? 1 : loginStatus.equals(LoginStatus.ADMIN) ? 2 : 3;
                     if (consolesArrIndex == 3) {
                         break;
                     }
+                    System.out.println("\n------------------------------");
+                    System.out.println(loginStatus + " page\n");
+                    System.out.println("------------------------------");
                     consolesArr[consolesArrIndex].display(loginManager.getCurrentAccount());
                 }
             }
             else {
+                System.out.println("Goodbye and have a nice day!");
                 sc.close();
                 break;
             }
@@ -101,62 +116,62 @@ public class App {
      */
     private static void loadAppData(){
         //LoginManager Data
-        if(DataUtils.checkFile("LoginManager-Accounts") == true){
+        if(DataUtils.checkFile("LoginManager-Accounts")) {
             ArrayList<Account> temp = (ArrayList<Account>)DataUtils.loadData("LoginManager-Accounts");
             loginManager.setUsers(temp);
         };
 
-        if(DataUtils.checkFile("LoginManager-StaffIds") == true){
+        if(DataUtils.checkFile("LoginManager-StaffIds")) {
             ArrayList<String> temp = (ArrayList<String>)DataUtils.loadData("LoginManager-StaffIds");
             loginManager.setUsedStaffIds(temp);
         };
 
         //BookingManager
-        if(DataUtils.checkFile("BookingManager-Bookings") == true){
+        if(DataUtils.checkFile("BookingManager-Bookings")) {
             ArrayList<Booking> temp = (ArrayList<Booking>)DataUtils.loadData("BookingManager-Bookings");
             bookingManager.setBookingsArr(temp);
         };
 
         //CineplexManager
-        if(DataUtils.checkFile("CineplexManager-Cineplexes") == true){
+        if(DataUtils.checkFile("CineplexManager-Cineplexes")) {
             ArrayList<Cineplex> temp = (ArrayList<Cineplex>)DataUtils.loadData("CineplexManager-Cineplexes");   
             cineplexManager.setCineplexes(temp);
         };
 
-        if(DataUtils.checkFile("CineplexManager-Cinemas") == true){
+        if(DataUtils.checkFile("CineplexManager-Cinemas")) {
             ArrayList<Cinema> temp = (ArrayList<Cinema>)DataUtils.loadData("CineplexManager-Cinemas");    
             cineplexManager.setCinemas(temp);
         };
 
         //MovieManager
-        if(DataUtils.checkFile("MovieManager-Movies") == true){
+        if(DataUtils.checkFile("MovieManager-Movies")) {
             ArrayList<Movie> temp = (ArrayList<Movie>)DataUtils.loadData("MovieManager-Movies");       
             movieManager.setMovies(temp);
         };
 
         //ScreeningManager
-        if(DataUtils.checkFile("ScreeningManager-Screenings") == true){
+        if(DataUtils.checkFile("ScreeningManager-Screenings")) {
             ArrayList<Screening> temp = (ArrayList<Screening>)DataUtils.loadData("ScreeningManager-Screenings");   
             screeningManager.setScreenings(temp);
         };
 
         //SystemManager
-        if(DataUtils.checkFile("SystemManager-Holidays") == true){
+        if(DataUtils.checkFile("SystemManager-Holidays")) {
             ArrayList<DateTime> temp = (ArrayList<DateTime>)DataUtils.loadData("SystemManager-Holidays");     
             systemManager.setHolidays(temp);
         };
 
-        if(DataUtils.checkFile("SystemManager-CinemaPrice") == true){
+        if(DataUtils.checkFile("SystemManager-CinemaPrice")) {
             HashMap<CinemaType, Float> temp = (HashMap<CinemaType, Float>)DataUtils.loadData("SystemManager-CinemaPrice");     
             systemManager.setCinemaMultiplierHashmap(temp);
         };
 
-        if(DataUtils.checkFile("SystemManager-SeatPrice") == true){
+        if(DataUtils.checkFile("SystemManager-SeatPrice")) {
             HashMap<SeatType, Float> temp = (HashMap<SeatType, Float>)DataUtils.loadData("SystemManager-SeatPrice");     
             systemManager.setSeatMultiplierHashmap(temp);
         };
 
-        if(DataUtils.checkFile("SystemManager-MovieSortingCriteria") == true){
+        if(DataUtils.checkFile("SystemManager-MovieSortingCriteria")) {
             SortCriteria temp = (SortCriteria)DataUtils.loadData("SystemManager-MovieSortingCriteria");
             try{
                 systemManager.setSortingCriteria(temp);

@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.io.Serializable;
 
 /**
  * Seating Plan generated for the cinemas
@@ -10,7 +9,11 @@ import java.io.Serializable;
  @version 1.1
  @since 2022-10-30
 */
-public class SeatingPlan implements Serializable{
+public class SeatingPlan {
+  
+  /**
+   * The number of rows of seats in the cinema's seating plan
+   */
   private int rows;
  
   /**

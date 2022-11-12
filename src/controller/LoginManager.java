@@ -1,7 +1,6 @@
 package controller;
 
 import java.util.ArrayList;
-import java.io.Serializable;
 
 import constants.Constants;
 import enums.LoginStatus;
@@ -10,14 +9,14 @@ import model.Account.*;
 
 /**
  * Manager for login process
- * * Aggregation relationship with Account class
+ * Aggregation relationship with Account class
  * Accounts are part of LoginManager
  *
  @author Roy Leong, Ryan Ng
  @version 1.1
  @since 2022-10-30
 */
-public class LoginManager implements Serializable{
+public class LoginManager {
   /**
    * The current user and his/her status.
    * There will be no mutator for this.
@@ -130,36 +129,12 @@ public class LoginManager implements Serializable{
    * @return LogInStatus The current state of the log in.
    */
   public LoginStatus getLoginStatus() {
-	  if (this.currentAccount instanceof AdminAccount) {
-      return LoginStatus.ADMIN;
-    }
-	  else if (this.currentAccount instanceof MovieGoerAccount) {
-      return LoginStatus.MOVIE_GOER;
-    }
-    else if (this.currentAccount instanceof GuestAccount) {
-      this.currentAccount = null; //set it back to null so the user can access the login console next time
-		  return LoginStatus.GUEST;
-    }
-    else {
-      this.currentAccount = null;
-      return LoginStatus.LOGIN;
-    }
+	  if (this.currentAccount instanceof AdminAccount)
+		  return LoginStatus.ADMIN;
+	  
+	  else if (this.currentAccount instanceof MovieGoerAccount)
+		  return LoginStatus.MOVIE_GOER;
+	  
+	  return LoginStatus.LOGIN;
   }
-
-  public ArrayList<Account> getUsers() {
-    return new ArrayList<Account>(this.usersArr);
-  }
-
-  public void setUsers(ArrayList<Account> usersArr) {
-    this.usersArr = new ArrayList<Account>(usersArr);
-  }
-
-  public ArrayList<String> getUsedStaffIds() {
-    return new ArrayList<String>(this.usedStaffIds);
-  }
-
-  public void setUsedStaffIds(ArrayList<String> usedStaffIds) {
-    this.usedStaffIds = new ArrayList<String>(usedStaffIds);
-  }
-
 }
