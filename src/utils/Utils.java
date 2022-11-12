@@ -3,6 +3,12 @@ package utils;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Contains static function to create an ArrayList from an array
+ * @author Roy Leong
+ * @version 1.0
+ * @since 2022-10-30
+ */
 public class Utils {
   /*
    * Creates a new ArrayList from the given array
