@@ -20,8 +20,8 @@ import utils.SalesUtils;
 import utils.Utils;
 
 /**
- * Account for a staff member.
- * Contains the staff id
+ * Console for the admin.
+ * Contains admin-only functions that other users like guest and movie goers can't access
  *
  @author Roy Leong
  @version 1.0
@@ -331,6 +331,9 @@ public class AdminConsole extends ParentConsole {
     }
   }
 
+  /**
+   * Allows the admin to add a cinema to a cineplex
+   */
   public void addCinema() {
     try {
       String cineplexLocation = super.getUserInput("Enter the cineplex location");
@@ -346,6 +349,9 @@ public class AdminConsole extends ParentConsole {
     }
   }
 
+  /**
+   * Allows the admin to add a new cineplex
+   */
   public void addCineplex() {
     try {
       String location = super.getUserInput("Enter the cineplex location");
@@ -355,6 +361,12 @@ public class AdminConsole extends ParentConsole {
     }
   }
 
+  /**
+   * Allows the user to choose which option they want to do
+   * Takes in the account object and ensures that it's an admin account as only 
+   * admin accounts can access this menu
+   * @param account
+   */
   @Override
   public void display(Account account) {
     // should never trigger as it can only reach AdminConsole if the logged in user is a AdminAccount
