@@ -4,6 +4,8 @@ import model.Account.MovieGoerAccount;
 import model.Account.GuestAccount;
 
 import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.HashMap;
 
 import controller.BookingManager;
 import controller.CineplexManager;
@@ -21,7 +23,7 @@ import utils.DataUtils;
 import model.Account.*;
 import model.*;
 import utils.Utils;
-import java.util.Scanner;
+import enums.*;
 
 /**
  * @author Roy Leong, Kish Choy
@@ -143,6 +145,25 @@ public class App {
             ArrayList<DateTime> temp = (ArrayList<DateTime>)DataUtils.loadData("SystemManager-Holidays");     
             systemManager.setHolidays(temp);
         };
+
+        if(DataUtils.checkFile("SystemManager-CinemaPrice") == true){
+            HashMap<CinemaType, Float> temp = (HashMap<CinemaType, Float>)DataUtils.loadData("SystemManager-CinemaPrice");     
+            systemManager.setCinemaMultiplierHashmap(temp);
+        };
+
+        if(DataUtils.checkFile("SystemManager-SeatPrice") == true){
+            HashMap<SeatType, Float> temp = (HashMap<SeatType, Float>)DataUtils.loadData("SystemManager-SeatPrice");     
+            systemManager.setSeatMultiplierHashmap(temp);
+        };
+
+        if(DataUtils.checkFile("SystemManager-MovieSortingCriteria") == true){
+            SortCriteria temp = (SortCriteria)DataUtils.loadData("SystemManager-MovieSortingCriteria");
+            try{
+                systemManager.setSortingCriteria(temp);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        };
         
         System.out.println("Data Load Done...");
     }
@@ -182,6 +203,15 @@ public class App {
         //SystemManager
         ArrayList<DateTime> holidaysArr = systemManager.getHolidays();
         int holidaysArrErr = DataUtils.saveData(holidaysArr, "SystemManager-Holidays");
+
+        HashMap<CinemaType, Float> cinemaMultMap = systemManager.getCinemaMultiplierHashmap();
+        int cinemaMultMapErr = DataUtils.saveData(cinemaMultMap, "SystemManager-CinemaPrice");
+
+        HashMap<SeatType, Float> seatMultMap = systemManager.getSeatMultiplierHashmap();
+        int seatMultMapErr = DataUtils.saveData(seatMultMap, "SystemManager-SeatPrice");
+
+        SortCriteria movieSortingCriteria = systemManager.getSortingCriteria();
+        int movieSortingCriteriaErr = DataUtils.saveData(movieSortingCriteria, "SystemManager-MovieSortingCriteria");
         
     }
 }

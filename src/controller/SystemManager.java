@@ -81,6 +81,23 @@ public class SystemManager implements Serializable{
   public void setCinemaMultiplier(CinemaType ct, float mult) {
     this.cinemaMultMap.put(ct, mult);
   }
+
+  /**
+   * Gets the cinema price multiplier hashmap
+   * @return cinema multiplier hashmap
+   */
+  public HashMap<CinemaType, Float> getCinemaMultiplierHashmap(){
+    return this.cinemaMultMap;
+  }
+
+   /**
+   * Sets the cinema price multiplier hashmap
+   * 
+   * @param cm cinema price multiplier hashmap
+   */
+  public void setCinemaMultiplierHashmap(HashMap<CinemaType, Float> cm){
+    this.cinemaMultMap = new HashMap<CinemaType, Float>(cm);
+  }
   
   /**
    * Get the current sorting criteria setting
@@ -137,6 +154,23 @@ public class SystemManager implements Serializable{
    */
   public void setSeatMultiplier(SeatType st, float multiplier) {
     seatMultMap.put(st, multiplier);
+  }
+
+  /**
+   * Gets the seat price multiplier hashmap
+   * @return cinema multiplier hashmap
+   */
+  public HashMap<SeatType, Float> getSeatMultiplierHashmap(){
+    return this.seatMultMap;
+  }
+
+   /**
+   * Sets the seat price multiplier hashmap
+   * 
+   * @param sm seat price multiplier hashmap
+   */
+  public void setSeatMultiplierHashmap(HashMap<SeatType, Float> sm){
+    this.seatMultMap = new HashMap<SeatType, Float>(sm);
   }
   
   /**
