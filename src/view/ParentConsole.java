@@ -18,18 +18,20 @@ import controller.ReviewManager;
 import controller.BookingManager;
 import controller.CineplexManager;
 import controller.LoginManager;
+import utils.DataUtils;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.Serializable;
 
 /**
  * Contains methods that are shared among different console classes
  *
- @author Roy Leong
+ @author Roy Leong, Kish Choy
  @version 1.0
  @since 2022-10-30
 */
- public abstract class ParentConsole {
+ public abstract class ParentConsole implements Serializable{
   private final static Scanner scannerObj = new Scanner(System.in);
 
   private final LoginManager loginManager;

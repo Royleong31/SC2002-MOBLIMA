@@ -1,6 +1,7 @@
 package controller;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.io.Serializable;
 
 import enums.ShowStatus;
 import model.Cinema;
@@ -16,7 +17,7 @@ import model.DateTime;
  @version 1.0
  @since 2022-10-30
 */
-public class ScreeningManager {
+public class ScreeningManager implements Serializable{
   private ArrayList<Screening> screeningsArr = new ArrayList<Screening>();
 
   public Screening addScreening(Movie movie, Cinema cinema, int year, int month, int day, int hour, int minute) throws Exception {
@@ -96,4 +97,9 @@ public class ScreeningManager {
   public ArrayList<Screening> getScreeningsByDate(DateTime date) {
     return this.getScreenings(null, null, date);
   }
+
+  public void setScreenings(ArrayList<Screening> screeningsArr) {
+    this.screeningsArr = new ArrayList<Screening>(screeningsArr);
+  }
+
 }

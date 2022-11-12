@@ -2,6 +2,7 @@ package model;
 import enums.*;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
 /**
  * Movie class
@@ -11,7 +12,7 @@ import java.util.ArrayList;
  @version 1.1
  @since 2022-10-30
 */
-public class Movie {
+public class Movie implements Serializable{
   private String title;
   private ShowStatus showingStatus;
   private String synopsis;

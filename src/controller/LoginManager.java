@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
 import constants.Constants;
 import enums.LoginStatus;
@@ -16,7 +17,7 @@ import model.Account.*;
  @version 1.1
  @since 2022-10-30
 */
-public class LoginManager {
+public class LoginManager implements Serializable{
   /**
    * The current user and his/her status.
    * There will be no mutator for this.
@@ -141,4 +142,21 @@ public class LoginManager {
       return LoginStatus.LOGIN;
     }
   }
+
+  public ArrayList<Account> getUsers() {
+    return new ArrayList<Account>(this.usersArr);
+  }
+
+  public void setUsers(ArrayList<Account> usersArr) {
+    this.usersArr = new ArrayList<Account>(usersArr);
+  }
+
+  public ArrayList<String> getUsedStaffIds() {
+    return new ArrayList<String>(this.usedStaffIds);
+  }
+
+  public void setUsedStaffIds(ArrayList<String> usedStaffIds) {
+    this.usedStaffIds = new ArrayList<String>(usedStaffIds);
+  }
+
 }

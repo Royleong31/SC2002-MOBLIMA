@@ -1,6 +1,7 @@
 package model;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
 /**
  * Seating Plan
@@ -9,7 +10,7 @@ import java.util.ArrayList;
  @version 1.1
  @since 2022-10-30
 */
-public class SeatingPlan {
+public class SeatingPlan implements Serializable{
   private int rows;
   private int cols;
   private int aisle;

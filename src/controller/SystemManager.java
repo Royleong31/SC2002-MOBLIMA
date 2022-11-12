@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.io.Serializable;
 
 import constants.Constants;
 import utils.DateTimeUtils;
@@ -23,7 +24,7 @@ enum SpecialDay {
  @version 1.1
  @since 2022-10-30
 */
-public class SystemManager {
+public class SystemManager implements Serializable{
   /**
    * Collection of holidays in the system
    */
@@ -52,6 +53,14 @@ public class SystemManager {
   public ArrayList<DateTime> getHolidays() {
     return holidaysArr;
   }
+  
+  /**
+   * Sets all holiday dates in the system
+   * 
+   */
+  public void setHolidays(ArrayList<DateTime> holidaysArr) {
+    this.holidaysArr = new ArrayList<DateTime>(holidaysArr);
+  }
 
    /**
     * Get the price multiplier for a particular cinema type
@@ -71,6 +80,23 @@ public class SystemManager {
    */
   public void setCinemaMultiplier(CinemaType ct, float mult) {
     this.cinemaMultMap.put(ct, mult);
+  }
+
+  /**
+   * Gets the cinema price multiplier hashmap
+   * @return cinema multiplier hashmap
+   */
+  public HashMap<CinemaType, Float> getCinemaMultiplierHashmap(){
+    return this.cinemaMultMap;
+  }
+
+   /**
+   * Sets the cinema price multiplier hashmap
+   * 
+   * @param cm cinema price multiplier hashmap
+   */
+  public void setCinemaMultiplierHashmap(HashMap<CinemaType, Float> cm){
+    this.cinemaMultMap = new HashMap<CinemaType, Float>(cm);
   }
   
   /**
@@ -128,6 +154,23 @@ public class SystemManager {
    */
   public void setSeatMultiplier(SeatType st, float multiplier) {
     seatMultMap.put(st, multiplier);
+  }
+
+  /**
+   * Gets the seat price multiplier hashmap
+   * @return cinema multiplier hashmap
+   */
+  public HashMap<SeatType, Float> getSeatMultiplierHashmap(){
+    return this.seatMultMap;
+  }
+
+   /**
+   * Sets the seat price multiplier hashmap
+   * 
+   * @param sm seat price multiplier hashmap
+   */
+  public void setSeatMultiplierHashmap(HashMap<SeatType, Float> sm){
+    this.seatMultMap = new HashMap<SeatType, Float>(sm);
   }
   
   /**

@@ -32,7 +32,7 @@ import utils.Utils;
 /**
  * Account for a movie goers.
  *
- @author Roy Leong
+ @author Roy Leong, Kish Choy
  @version 1.0
  @since 2022-10-30
 */
@@ -214,7 +214,7 @@ public class MovieGoerConsole extends ParentConsole {
     // should never trigger as it can only reach MovieGoerConsole if the logged in user is a MovieGoerAccount
     if (!(account instanceof MovieGoerAccount)) {
       System.out.println("Something went wrong in the login process");
-      this.exitProgram();
+      return;
     }
     
     Integer userSelection = super.getSelectInput(Utils.asArrayList("to submit review", 
@@ -249,16 +249,15 @@ public class MovieGoerConsole extends ParentConsole {
 
       case 6:
         super.logout();
-        return;
-    
-      //case 7:
-        //this.exitProgram();
-        //return;
+        break;
+   
+
     
       default:
         // Should never reach here as error checking is done in this.getUserChoice()
         System.out.println("An unexpected error occured");
-        this.exitProgram();
+        return;
     }
+    return;
   }
 }
