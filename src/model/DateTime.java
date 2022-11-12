@@ -6,9 +6,10 @@ import java.text.ParseException;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
+import java.io.Serializable;
 
 
-public class DateTime {
+public class DateTime implements Serializable{
   private int year;
   private int month;
   private int day;

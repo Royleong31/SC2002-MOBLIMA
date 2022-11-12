@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
 import enums.CinemaType;
 import model.Cinema;
@@ -15,7 +16,7 @@ import model.SeatingPlan;
  @version 1.1
  @since 2022-10-30
 */
-public class CineplexManager {
+public class CineplexManager implements Serializable{
   /**
    * Collection of all cineplexes the company owns
    */
@@ -111,6 +112,13 @@ public class CineplexManager {
   }
 
   /**
+   * Sets arraylist of all cineplexes
+   */
+  public void setCineplexes(ArrayList<Cineplex> cineplexesArr) {
+    this.cineplexesArr = new ArrayList<Cineplex>(cineplexesArr);
+  }
+
+  /**
    * Get all cinema halls of a cineplex
    * @param cineplex the selected cineplex
    * @return arraylist of cinemas in the cineplex
@@ -126,4 +134,13 @@ public class CineplexManager {
     }
     throw new Exception("Cineplex does not exists");
   }
+
+  public ArrayList<Cinema> getCinemasList(){
+    return new ArrayList<Cinema>(cinemasArr);
+  }
+
+  public void setCinemas(ArrayList<Cinema> cinemasArr) {
+    this.cinemasArr = cinemasArr;
+  }
+
 }

@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import enums.SeatType;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.io.Serializable;
+
 /**
  * Account for a staff member.
  * Contains the staff id
@@ -12,7 +16,7 @@ import enums.SeatType;
  @version 1.0
  @since 2022-10-30
 */
-public class Screening {
+public class Screening implements Serializable{
   private Movie movie;
   private Cinema cinema;
   private DateTime showTime;

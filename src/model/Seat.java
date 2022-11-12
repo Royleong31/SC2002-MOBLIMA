@@ -1,6 +1,7 @@
 package model;
 
 import enums.SeatType;
+import java.io.Serializable;
 
 /**
  * Account for a staff member.
@@ -10,10 +11,12 @@ import enums.SeatType;
  @version 1.1
  @since 2022-10-30
 */
-public class Seat {
+
+public class Seat implements Serializable{
   /**
    * Row number of seat
    */
+
   private final int row;
 
   /**

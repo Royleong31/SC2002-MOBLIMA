@@ -1,6 +1,10 @@
 import enums.LoginStatus;
 import model.Account.GuestAccount;
 
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.HashMap;
+
 import controller.BookingManager;
 import controller.CineplexManager;
 import controller.LoginManager;
@@ -15,9 +19,15 @@ import view.GuestConsole;
 import view.ParentConsole;
 import java.util.Scanner;
 
+import utils.DataUtils;
+import model.Account.*;
+import model.*;
+import utils.Utils;
+import enums.*;
+
 /**
- * @author Roy Leong, Augustine Lee
- * @version 1.1
+ * @author Roy Leong, Kish Choy, Augustine Lee
+ * @version 1.0
  * @since 2022-10-30
  */
 public class App {
@@ -52,6 +62,8 @@ public class App {
         System.out.println("\nWelcome to the MOBLIMA app!");
         Scanner sc = new Scanner(System.in);
         Integer choice;
+
+        loadAppData();
 
         while (true) {
             System.out.println("\n------------------------------");
@@ -91,8 +103,130 @@ public class App {
             else {
                 System.out.println("Goodbye and have a nice day!");
                 sc.close();
-                System.exit(0);
+                break;
             }
         }
+
+        saveAppData();
+
+    }
+
+    /**
+     * Deserialize and load all persistent application data
+     */
+    private static void loadAppData(){
+        //LoginManager Data
+        if(DataUtils.checkFile("LoginManager-Accounts") == true){
+            ArrayList<Account> temp = (ArrayList<Account>)DataUtils.loadData("LoginManager-Accounts");
+            loginManager.setUsers(temp);
+        };
+
+        if(DataUtils.checkFile("LoginManager-StaffIds") == true){
+            ArrayList<String> temp = (ArrayList<String>)DataUtils.loadData("LoginManager-StaffIds");
+            loginManager.setUsedStaffIds(temp);
+        };
+
+        //BookingManager
+        if(DataUtils.checkFile("BookingManager-Bookings") == true){
+            ArrayList<Booking> temp = (ArrayList<Booking>)DataUtils.loadData("BookingManager-Bookings");
+            bookingManager.setBookingsArr(temp);
+        };
+
+        //CineplexManager
+        if(DataUtils.checkFile("CineplexManager-Cineplexes") == true){
+            ArrayList<Cineplex> temp = (ArrayList<Cineplex>)DataUtils.loadData("CineplexManager-Cineplexes");   
+            cineplexManager.setCineplexes(temp);
+        };
+
+        if(DataUtils.checkFile("CineplexManager-Cinemas") == true){
+            ArrayList<Cinema> temp = (ArrayList<Cinema>)DataUtils.loadData("CineplexManager-Cinemas");    
+            cineplexManager.setCinemas(temp);
+        };
+
+        //MovieManager
+        if(DataUtils.checkFile("MovieManager-Movies") == true){
+            ArrayList<Movie> temp = (ArrayList<Movie>)DataUtils.loadData("MovieManager-Movies");       
+            movieManager.setMovies(temp);
+        };
+
+        //ScreeningManager
+        if(DataUtils.checkFile("ScreeningManager-Screenings") == true){
+            ArrayList<Screening> temp = (ArrayList<Screening>)DataUtils.loadData("ScreeningManager-Screenings");   
+            screeningManager.setScreenings(temp);
+        };
+
+        //SystemManager
+        if(DataUtils.checkFile("SystemManager-Holidays") == true){
+            ArrayList<DateTime> temp = (ArrayList<DateTime>)DataUtils.loadData("SystemManager-Holidays");     
+            systemManager.setHolidays(temp);
+        };
+
+        if(DataUtils.checkFile("SystemManager-CinemaPrice") == true){
+            HashMap<CinemaType, Float> temp = (HashMap<CinemaType, Float>)DataUtils.loadData("SystemManager-CinemaPrice");     
+            systemManager.setCinemaMultiplierHashmap(temp);
+        };
+
+        if(DataUtils.checkFile("SystemManager-SeatPrice") == true){
+            HashMap<SeatType, Float> temp = (HashMap<SeatType, Float>)DataUtils.loadData("SystemManager-SeatPrice");     
+            systemManager.setSeatMultiplierHashmap(temp);
+        };
+
+        if(DataUtils.checkFile("SystemManager-MovieSortingCriteria") == true){
+            SortCriteria temp = (SortCriteria)DataUtils.loadData("SystemManager-MovieSortingCriteria");
+            try{
+                systemManager.setSortingCriteria(temp);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
+        };
+        
+        System.out.println("Data Load Done...");
+    }
+
+    /**
+     * Serialize and save all persistent application data
+     */
+    private static void saveAppData(){
+        System.out.println("Saving data...");
+        
+        //LoginManager
+        ArrayList<Account> usersArr = loginManager.getUsers();
+        int usersArrErr = DataUtils.saveData(usersArr, "LoginManager-Accounts");
+
+        ArrayList<String> usedStaffIds = loginManager.getUsedStaffIds();
+        int usedStaffIdsErr = DataUtils.saveData(usedStaffIds, "LoginManager-StaffIds");
+        
+        //BookingManager
+        ArrayList<Booking> bookingsArr = bookingManager.getBookings();
+        int bookingsArrErr = DataUtils.saveData(bookingsArr, "BookingManager-Bookings");
+        
+        //BookingManager
+        ArrayList<Cineplex> cineplexesArr = cineplexManager.getCineplexes();
+        int cineplexesArrErr = DataUtils.saveData(cineplexesArr, "CineplexManager-Cineplexes");
+        
+        ArrayList<Cinema> cinemasArr = cineplexManager.getCinemasList();
+        int cinemasArrErr = DataUtils.saveData(cinemasArr, "CineplexManager-Cinemas");
+
+        //MovieManager
+        ArrayList<Movie> moviesArr = movieManager.getMovies();
+        int moviesArrErr = DataUtils.saveData(moviesArr, "MovieManager-Movies");
+
+        //ScreeningManager
+        ArrayList<Screening> screeningsArr = screeningManager.getScreenings(null, null, null);
+        int screeningsArrErr = DataUtils.saveData(screeningsArr, "ScreeningManager-Screenings");
+        
+        //SystemManager
+        ArrayList<DateTime> holidaysArr = systemManager.getHolidays();
+        int holidaysArrErr = DataUtils.saveData(holidaysArr, "SystemManager-Holidays");
+
+        HashMap<CinemaType, Float> cinemaMultMap = systemManager.getCinemaMultiplierHashmap();
+        int cinemaMultMapErr = DataUtils.saveData(cinemaMultMap, "SystemManager-CinemaPrice");
+
+        HashMap<SeatType, Float> seatMultMap = systemManager.getSeatMultiplierHashmap();
+        int seatMultMapErr = DataUtils.saveData(seatMultMap, "SystemManager-SeatPrice");
+
+        SortCriteria movieSortingCriteria = systemManager.getSortingCriteria();
+        int movieSortingCriteriaErr = DataUtils.saveData(movieSortingCriteria, "SystemManager-MovieSortingCriteria");
+        
     }
 }
