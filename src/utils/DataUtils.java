@@ -2,9 +2,11 @@ package utils;
 
 import java.io.*;
 
-
 /**
  * Data Utility for the storage and persistence of objects and other associated material.
+ * @author Kish Choy
+ * @version 1.1
+ * @since 2022-10-30
  */
 public class DataUtils {
 

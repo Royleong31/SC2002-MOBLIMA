@@ -26,7 +26,7 @@ import java.io.Serializable;
 /**
  * All methods here do not require authentication
  *
- @author Roy Leong
+ @author Roy Leong, Kish Choy
  @version 1.0
  @since 2022-10-30
 */
