@@ -198,8 +198,7 @@ public class MovieGoerConsole extends ParentConsole {
                                                                     "to view booking history", 
                                                                     "to display all available movies", 
                                                                     "to display top movies", 
-                                                                    "to logout",
-                                                                    "to quit program"), "Enter your choice: ");
+                                                                    "to logout"), "Enter your choice: ");
 
     MovieGoerAccount movieGoerAccount = (MovieGoerAccount) account;
 
@@ -228,9 +227,9 @@ public class MovieGoerConsole extends ParentConsole {
         super.logout();
         return;
     
-      case 7:
-        this.exitProgram();
-        return;
+      //case 7:
+        //this.exitProgram();
+        //return;
     
       default:
         // Should never reach here as error checking is done in this.getUserChoice()

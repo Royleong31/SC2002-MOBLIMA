@@ -373,8 +373,7 @@ public class AdminConsole extends ParentConsole {
                                                                "to add cineplex", 
                                                                "to add cinema", 
                                                                "get movies by rank",
-                                                               "to logout",
-                                                               "to quit"), "Select an option"); 
+                                                               "to logout"), "Select an option"); 
 
 
     // TODO: Use this for authorisation checks
@@ -427,9 +426,9 @@ public class AdminConsole extends ParentConsole {
         super.logout();
         return;
       
-      case 12:
-        super.exitProgram();
-        return;
+      //case 12:
+        //super.exitProgram();
+        //return;
     
       default:
         // Should never reach here as error checking is done in this.getUserChoice()
