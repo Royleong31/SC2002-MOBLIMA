@@ -11,7 +11,6 @@ import utils.Utils;
 public final class Constants {
     private Constants() {}
 
-    // TODO: Place all constants here
     public static final float DEFAULT_PRICE = 10.0f;
 
     // Default cinema price multipliers
