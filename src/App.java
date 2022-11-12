@@ -52,7 +52,23 @@ public class App {
     public static void main(String[] args) {
         System.out.println("Welcome to the MOBLIMA app!");
 
+        loadAppData();
 
+        boolean exitStatus = false;
+        while (exitStatus == false) {
+            LoginStatus loginStatus = loginManager.getLoginStatus();
+            System.out.println(loginStatus + " page\n");
+            // matches the index of this.consolesArr
+            int consolesArrIndex = loginStatus.equals(LoginStatus.LOGIN) ? 0 : loginStatus.equals(LoginStatus.MOVIE_GOER) ? 1 : 2;
+            exitStatus = consolesArr[consolesArrIndex].display(loginManager.getCurrentAccount());
+            // consolesArr[1].display(new MovieGoerAccount("fasds", "fsadsdfa", "fsdsfad", "fsadfsad", "fsad;l"));
+        }
+
+        saveAppData();
+
+    }
+
+    private static void loadAppData(){
         //LoginManager Data
         if(DataUtils.checkFile("LoginManager-Accounts") == true){
             ArrayList<Account> temp = (ArrayList<Account>)DataUtils.loadData("LoginManager-Accounts");
@@ -100,20 +116,9 @@ public class App {
         };
         
         System.out.println("Data Load Done...");
+    }
 
-
-
-        boolean exitStatus = false;
-        while (exitStatus == false) {
-            LoginStatus loginStatus = loginManager.getLoginStatus();
-            System.out.println(loginStatus + " page\n");
-            // matches the index of this.consolesArr
-            int consolesArrIndex = loginStatus.equals(LoginStatus.LOGIN) ? 0 : loginStatus.equals(LoginStatus.MOVIE_GOER) ? 1 : 2;
-            exitStatus = consolesArr[consolesArrIndex].display(loginManager.getCurrentAccount());
-            // consolesArr[1].display(new MovieGoerAccount("fasds", "fsadsdfa", "fsdsfad", "fsadfsad", "fsad;l"));
-        }
-
-
+    private static void saveAppData(){
         System.out.println("Saving data...");
         
         //LoginManager
