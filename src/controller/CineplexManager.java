@@ -68,6 +68,11 @@ public class CineplexManager implements Serializable{
     return this.cineplexesArr;
   }
 
+  
+  public void setCineplexes(ArrayList<Cineplex> cineplexesArr) {
+    this.cineplexesArr = new ArrayList<Cineplex>(cineplexesArr);
+  }
+
   public ArrayList<Cinema> getCinemas(Cineplex cineplex) throws Exception {
     /* Check if cineplex exists */
     for (Cineplex cur: this.cineplexesArr) {
@@ -78,4 +83,13 @@ public class CineplexManager implements Serializable{
     }
     throw new Exception("Cineplex does not exists");
   }
+
+  public ArrayList<Cinema> getCinemasList(){
+    return new ArrayList<Cinema>(cinemasArr);
+  }
+
+  public void setCinemas(ArrayList<Cinema> cinemasArr) {
+    this.cinemasArr = cinemasArr;
+  }
+
 }

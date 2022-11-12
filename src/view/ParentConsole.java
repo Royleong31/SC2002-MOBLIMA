@@ -17,9 +17,11 @@ import controller.ReviewManager;
 import controller.BookingManager;
 import controller.CineplexManager;
 import controller.LoginManager;
+import utils.DataUtils;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.Serializable;
 
 /**
  * All methods here do not require authentication
@@ -28,7 +30,7 @@ import java.util.Scanner;
  @version 1.0
  @since 2022-10-30
 */
- public abstract class ParentConsole {
+ public abstract class ParentConsole implements Serializable{
   private final static Scanner scannerObj = new Scanner(System.in);
 
   private final LoginManager loginManager;
@@ -311,15 +313,52 @@ import java.util.Scanner;
   }
 
   // TODO:
-  protected void startProgram() {}
+  protected void startProgram() {
+    // this.bookingManager = (BookingManager)DataUtils.loadData("BookingManager");
+    // this.cineplexManager = (CineplexManager)DataUtils.loadData("CineplexManager");
+    // this.loginManager = (LoginManager)DataUtils.loadData("LoginManager");
+    // this.movieManager = (MovieManager)DataUtils.loadData("MovieManager");
+    // this.reviewManager = (ReviewManager)DataUtils.loadData("ReviewManager");
+    // this.screeningManager = (ScreeningManager)DataUtils.loadData("ScreeningManager");
+    // this.systemManager = (SystemManager)DataUtils.loadData("SystemManager");
+    // System.out.println("Load Done...");
+
+  }
 
   /**
    * This is the function that is called whenever the program exits, for e.g. when the user chooses to quit the program
    */
   protected void exitProgram() {
     // TODO: save all state into storage
-    ParentConsole.scannerObj.close();
-    System.exit(0);
+
+
+    // System.out.println("Saving data...");
+    // int bookingManagerErr = DataUtils.saveData(this.bookingManager, "BookingManager");
+    // int cineplexManagerErr = DataUtils.saveData(this.cineplexManager, "CineplexManager");
+    // int loginManagerErr = DataUtils.saveData(this.loginManager, "LoginManager");
+    // int movieManagerErr = DataUtils.saveData(this.movieManager, "MovieManager");
+    // int reviewManagerErr = DataUtils.saveData(this.reviewManager, "ReviewManager");
+    // int screeningManagerErr = DataUtils.saveData(this.screeningManager, "ScreeningManager");
+    // int systemManagerErr = DataUtils.saveData(this.systemManager, "SystemManager");
+    
+    // System.out.println("Error Codes: ");
+    // System.out.println("BookingManager: " + bookingManagerErr);
+    // System.out.println("CineplexManager: " + cineplexManagerErr);
+    // System.out.println("LoginManager: " + loginManagerErr);
+    // System.out.println("MovieManager: " + movieManagerErr);
+    // System.out.println("ReviewManager: " + reviewManagerErr);
+    // System.out.println("ScreeningManager: " + screeningManagerErr);
+    // System.out.println("SystemManager: " + systemManagerErr);
+
+    // if(bookingManagerErr == 0 && cineplexManagerErr == 0 && loginManagerErr == 0 && movieManagerErr == 0 && reviewManagerErr == 0 && screeningManagerErr == 0 && systemManagerErr == 0){
+    //   System.out.println("All is good, Save Successful!");
+    // } else {
+    //   System.out.println("Save Failed!");
+    // }
+    return;
+
+    // ParentConsole.scannerObj.close();
+    // System.exit(0);
   }
 
   protected BookingManager getBookingManager() {
@@ -334,5 +373,5 @@ import java.util.Scanner;
    * Displays the content for each console.
    * This is basically the 'main' method for each console
    */
-  public abstract void display(Account account);
+  public abstract boolean display(Account account);
 }

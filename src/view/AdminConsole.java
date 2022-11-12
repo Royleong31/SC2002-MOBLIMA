@@ -335,11 +335,12 @@ public class AdminConsole extends ParentConsole {
   }
 
   @Override
-  public void display(Account account) {
+  public boolean display(Account account) {
     // should never trigger as it can only reach AdminConsole if the logged in user is a AdminAccount
     if (!(account instanceof AdminAccount)) {
       System.out.println("Something went wrong in the login process");
       this.exitProgram();
+      return true;
     }
 
     Integer userInput = super.getSelectInput(Utils.asArrayList("to add movie", 
@@ -404,18 +405,20 @@ public class AdminConsole extends ParentConsole {
 
       case 11:
         super.logout();
-        return;
+        return false;
       
       case 12:
         super.exitProgram();
-        return;
+        return true;
     
       default:
         // Should never reach here as error checking is done in this.getUserChoice()
          // Should never reach here as error checking is done in this.getUserChoice()
         System.out.println("An unexpected error occured");
         this.exitProgram();
+        return true;
     }
+    return false;
   }
 
 }

@@ -132,4 +132,21 @@ public class LoginManager implements Serializable{
 	  
 	  return LoginStatus.LOGIN;
   }
+
+  public ArrayList<Account> getUsers() {
+    return new ArrayList<Account>(this.usersArr);
+  }
+
+  public void setUsers(ArrayList<Account> usersArr) {
+    this.usersArr = new ArrayList<Account>(usersArr);
+  }
+
+  public ArrayList<String> getUsedStaffIds() {
+    return new ArrayList<String>(this.usedStaffIds);
+  }
+
+  public void setUsedStaffIds(ArrayList<String> usedStaffIds) {
+    this.usedStaffIds = new ArrayList<String>(usedStaffIds);
+  }
+
 }

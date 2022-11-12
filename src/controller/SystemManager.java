@@ -33,6 +33,10 @@ public class SystemManager implements Serializable{
     return holidaysArr;
   }
 
+  public void setHolidays(ArrayList<String> holidaysArr) {
+    this.holidaysArr = new ArrayList<String>(holidaysArr);
+  }
+
   /*
    * @param CinemaType
    * @return Float The multiplier for the cinema type

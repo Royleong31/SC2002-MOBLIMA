@@ -108,6 +108,10 @@ public class MovieManager implements Serializable{
     return moviesArr;
   }
 
+  public void setMovies(ArrayList<Movie> moviesArr) {
+    this.moviesArr = new ArrayList<Movie>(moviesArr);
+  }
+
   public ArrayList<Movie> getMovies(ArrayList<ShowStatus> showStatus){
     return getMovies(SortCriteria.TITLE, showStatus);
   }

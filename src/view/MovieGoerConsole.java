@@ -186,7 +186,7 @@ public class MovieGoerConsole extends ParentConsole {
   }
 
   @Override
-  public void display(Account account) {
+  public boolean display(Account account) {
     // should never trigger as it can only reach MovieGoerConsole if the logged in user is a MovieGoerAccount
     if (!(account instanceof MovieGoerAccount)) {
       System.out.println("Something went wrong in the login process");
@@ -213,6 +213,24 @@ public class MovieGoerConsole extends ParentConsole {
         break;
     
       case 3:
+        // ArrayList<Booking> bar = new ArrayList<Booking>(super.getBookingManager().getBookings());
+        // System.out.println("Current Account Details:");
+        // System.out.println(movieGoerAccount.getUsername() + "|" + movieGoerAccount.getEmail() + "|" + movieGoerAccount.getName() + "|" + movieGoerAccount.getPhoneNumber());
+        // MovieGoerAccount tMAC = bar.get(1).getMovieGoer();
+        // System.out.println("That Account Details:");
+        // System.out.println(tMAC.getUsername() + "|" + tMAC.getEmail() + "|" + tMAC.getName() + "|" + tMAC.getPhoneNumber());
+        // MovieGoerAccount tMAC2 = bar.get(2).getMovieGoer();
+        // System.out.println("That Account Details:");
+        // System.out.println(tMAC2.getUsername() + "|" + tMAC2.getEmail() + "|" + tMAC2.getName() + "|" + tMAC2.getPhoneNumber());
+        
+
+        // System.out.println("my printing start");
+        
+        // for(Booking b : bar){
+        //   System.out.println(b.getId() + " | " + b.getClass() + " | " + b.getMovieGoer() + " | " + b.getTickets() + " | ");
+        // }
+        
+        // System.out.println("my printing end");
         this.viewBookingHistory(movieGoerAccount);
         break;
 
@@ -226,17 +244,25 @@ public class MovieGoerConsole extends ParentConsole {
 
       case 6:
         super.logout();
-        return;
+        break;
     
       case 7:
+        BookingManager bkm = super.getBookingManager();
+        if(bkm != null){
+          System.out.println("this NOT NULL");
+        } else {
+          System.out.println("this is NULL");
+        }
         this.exitProgram();
-        return;
+        return true;
     
       default:
         // Should never reach here as error checking is done in this.getUserChoice()
         System.out.println("An unexpected error occured");
         this.exitProgram();
+        return true;
     }
+    return false;
   }
 }
 

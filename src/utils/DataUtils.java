@@ -19,7 +19,7 @@ public class DataUtils {
         if(checkFile(name)){
             // System.out.println("File already exists");
             // return 2;
-            System.out.println("File exists, overwriting file.");
+            System.out.println("File exists, overwriting file '" + name +"'.");
         }
 
 
@@ -28,11 +28,11 @@ public class DataUtils {
             ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
             objOut.writeObject(o);
             objOut.close();
-            System.out.println("Data saved successully.");
+            System.out.println("Data saved successully '" + name + "'.");
             return 0;
         } catch (IOException iex) {
             iex.printStackTrace();
-            System.out.println("Data save failed.");
+            System.out.println("Data save failed '" + name + "'.");
             return 1;
         }
     }

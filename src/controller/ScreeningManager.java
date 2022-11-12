@@ -78,4 +78,9 @@ public class ScreeningManager implements Serializable{
   public ArrayList<Screening> getScreeningsByDate(String date) {
     return this.getScreenings(null, null, date);
   }
+
+  public void setScreenings(ArrayList<Screening> screeningsArr) {
+    this.screeningsArr = new ArrayList<Screening>(screeningsArr);
+  }
+
 }

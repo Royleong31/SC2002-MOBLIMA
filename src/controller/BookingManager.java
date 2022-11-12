@@ -122,6 +122,10 @@ public class BookingManager implements Serializable {
     return this.bookingsArr;
   }
 
+  public void setBookingsArr(ArrayList<Booking> bookingsArr) {
+    this.bookingsArr = new ArrayList<Booking>(bookingsArr);
+  }
+
   /**
    * Returns all bookings that have been made by a movie goer
    * @param movieGoer
@@ -131,7 +135,9 @@ public class BookingManager implements Serializable {
     ArrayList<Booking> checkArr = new ArrayList<Booking>();
 	
     for(Booking findBooking: bookingsArr){
-      if(findBooking.getMovieGoer().equals(movieGoer))
+      // if(findBooking.getMovieGoer().equals(movieGoer))
+      // System.out.println("User: " + findBooking.getMovieGoer().getUsername() + " -> " + movieGoer.getUsername());
+      if(findBooking.getMovieGoer().getUsername().equals(movieGoer.getUsername()))
         checkArr.add(findBooking);
     }
     return checkArr;
