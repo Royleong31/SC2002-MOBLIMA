@@ -30,9 +30,8 @@ public class Account implements Serializable{
   private String password;
 
   /**
-   * Constructor for the Account class.
-   * Register method for new Account.
-   * Input password to be encrypted, only storing password hash 
+   * Constructor for the Account class, used to register new accounts.
+   * Input password to be encrypted, only storing password hash. 
    * @param username This Account's username.
    * @param password This Account's password.
    */

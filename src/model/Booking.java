@@ -20,7 +20,7 @@ public class Booking  implements Serializable{
   private final String id;
 
   /**
-   * movieGoer who made the booking
+   * movieGoer account that made the booking
    */
   private final MovieGoerAccount movieGoer;
 
@@ -33,6 +33,14 @@ public class Booking  implements Serializable{
    * All tickets booked in this booking
    */
   private final ArrayList<Ticket> ticketsArr;
+ 
+  /**
+   * Constructor for the Booking class, used to create new bookings.
+   * @param id is the Booking ID
+   * @param movieGoer is the movie goer account making the booking
+   * @param amountPaid is the amount paid overall for the booking.
+   * @param ticketsArr is the ArrayList of tickets under this booking
+   */
 
   public Booking(String id, MovieGoerAccount movieGoer, float amountPaid, ArrayList<Ticket> ticketsArr) {
     this.id = id;
@@ -42,37 +50,41 @@ public class Booking  implements Serializable{
   }
 
   /**
-   * 
-   * @return booking id
+   * Gets the Booking ID
+   * @return id of the booking
    */
   public String getId() {
     return id;
   }
   
   /**
-   * 
-   * @return movie goer who made the booking
+   * Gets the movie goer account that made a specific booking
+   * @return movieGoer that made the booking
    */
   public MovieGoerAccount getMovieGoer() {
     return movieGoer;
   }
 
   /**
-   * 
-   * @return all the tickets booked in this booking
+   * Gets the ArrayList of tickets under this booking
+   * @return ticketsArr is the tickets under this booking
    */
   public ArrayList<Ticket> getTickets() {
     return ticketsArr;
   }
 
   /**
-   * 
-   * @return the amount that the movie goer paid for this booking
+   * Gets amount paid for this booking
+   * @return amountPaid by the movie goer for this booking
    */
   public float getAmountPaid() {
     return amountPaid;
   }
-
+ 
+ /**
+  * Gets the ID of the cinema for the screening linked to the tickets in the booking.
+  * @return ticketsArr.get(0).getScreening().getCinemaId() is the ID of the cinema for the screening linked to the tickets in the booking.
+  */
   public String getCinemaId() {
     return ticketsArr.get(0).getScreening().getCinemaId();
   }

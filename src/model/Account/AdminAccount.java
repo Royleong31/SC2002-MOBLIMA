@@ -10,19 +10,16 @@ package model.Account;
 */
 public class AdminAccount extends Account {
   /**
-   * The identifcation of the staff.
+   * The identification of the staff.
    * There will be no mutator for this.
    */
   private String staffId;
   
   /**
-   * Constructor for the AdminAccount class.
-   * This is the register method.
-   * @param username This staff's username.
-   *				 Inherited from Account superclass.
-   * @param password This staff's password.
-   * 				 Inherited from Account superclass.
-   * @param staffId This staff's identifcation.
+   * Constructor for the AdminAccount class, used to register new admin accounts.
+   * @param username new staff's username, inherited from Account superclass.
+   * @param password new staff's password, inherited from Account superclass.
+   * @param staffId new staff's identification.
    */
   public AdminAccount(String username, String password, String staffId){
     super(username, password);

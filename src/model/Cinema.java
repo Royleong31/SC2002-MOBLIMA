@@ -40,9 +40,9 @@ public class Cinema implements Serializable{
 
   /**
    * Constructor for Cinema class
-   * @param seatingPlan
-   * @param cineplex
-   * @param cinemaType
+   * @param seatingPlan seating plan of the cinema
+   * @param cineplex cineplex that the cinema is located at
+   * @param cinemaType the type of cinema
    */
   public Cinema(SeatingPlan seatingPlan, Cineplex cineplex, CinemaType cinemaType) {
     this.id = IdUtils.generateCinemaID(cinemaCounter); /* generate ID for the cinema */
@@ -54,7 +54,7 @@ public class Cinema implements Serializable{
 
   /**
    * Return the ID of the cinema
-   * @return
+   * @return ID of the cinema
    */
   public String getId() {
     return id;
@@ -62,7 +62,7 @@ public class Cinema implements Serializable{
 
   /**
    * Return the cinema type of the cinema
-   * @return
+   * @return Type of the cinema
    */
   public CinemaType getCinemaType() {
     return cinemaType;
@@ -70,7 +70,7 @@ public class Cinema implements Serializable{
 
   /**
    * Return the corresponding cineplex of the cinema
-   * @return
+   * @return the cineplex the cinema is located at
    */
   public Cineplex getCineplex() {
     return cineplex;
@@ -78,7 +78,7 @@ public class Cinema implements Serializable{
 
   /**
    * Return the seating plan of the cinema
-   * @return seatingPlan
+   * @return seatingPlan of the cinema
    */
   public SeatingPlan getSeatingPlan() {
     return seatingPlan;
