@@ -30,7 +30,7 @@ public class Cineplex implements Serializable{
 
   /**
    * Constructor for Cineplex
-   * @param location
+   * @param location location of the cineplex
    */
   public Cineplex(String location) {
     this.location = location;
@@ -38,7 +38,7 @@ public class Cineplex implements Serializable{
   
   /**
    * Return all the cinemas in this cineplex
-   * @return
+   * @return arraylist of cinemas in the cineplex
    */
   public ArrayList<Cinema> getCinemas() {
     return this.cinemasArr;
@@ -46,7 +46,7 @@ public class Cineplex implements Serializable{
 
   /**
    * Return all the cinemas in this cineplex
-   * @return
+   * @return arraylist of movies the cineplex is showing
    */
   public ArrayList<Movie> getAllMovies() {
     return this.movieCollection;
@@ -54,7 +54,7 @@ public class Cineplex implements Serializable{
 
   /**
    * Add a new movie to the cineplex's movie collection
-   * @param movie
+   * @param movie the new movie to be added
    * @throws Exception if movie already exists in cineplex's movie collection
    */
   public void addMovie(Movie movie) throws Exception {

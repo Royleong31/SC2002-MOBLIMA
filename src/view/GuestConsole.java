@@ -1,7 +1,8 @@
 package view;
 
 import java.util.ArrayList;
-import enums.*;
+import enums.ShowStatus;
+import enums.SortCriteria;
 import controller.BookingManager;
 import controller.CineplexManager;
 import controller.LoginManager;
@@ -11,12 +12,7 @@ import controller.ScreeningManager;
 import controller.SystemManager;
 import model.Movie;
 import model.Account.Account;
-import model.Account.AdminAccount;
-import model.Booking;
-import model.Cinema;
-import model.Cineplex;
 import model.Screening;
-import utils.SalesUtils;
 import utils.Utils;
 
 

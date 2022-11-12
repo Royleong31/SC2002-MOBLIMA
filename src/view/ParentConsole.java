@@ -27,13 +27,16 @@ import java.io.Serializable;
 /**
  * Contains methods that are shared among different console classes
  *
- @author Roy Leong, Kish Choy
+ @author Roy Leong, Kish Choy, Augustine Lee
  @version 1.0
  @since 2022-10-30
 */
  public abstract class ParentConsole implements Serializable{
   private final static Scanner scannerObj = new Scanner(System.in);
 
+  /**
+   * Handles state and methods related to login
+   */
   private final LoginManager loginManager;
   /**
    * Handles state and methods related to bookings
@@ -112,19 +115,33 @@ import java.io.Serializable;
     return this.movieManager;
   }
 
+  /**
+   * Retrieve review manager
+   * @return review manager object
+   */
   protected ReviewManager getReviewManager() {
     return this.reviewManager;
   }
 
+  /**
+   * Retrieve screening manager
+   * @return screening manager object
+   */
   protected ScreeningManager getScreeningManager() {
     return this.screeningManager;
   }
 
+  /**
+   * Retrieve system manager
+   * @return system manager object
+   */
   protected SystemManager getSystemManager() {
     return this.systemManager;
   }
+
   /**
    * Displays all movies in the system
+   * @param movies arraylist of movies to be displayed
    */
   protected void displayMovies(ArrayList<Movie> movies) {
     System.out.println("Movies");
@@ -135,12 +152,14 @@ import java.io.Serializable;
 
     for (int i = 0; i < movies.size(); i++) {
       String rating = movies.get(i).getReviews().size() < 2 ? "NA" : Double.toString(Math.round(movies.get(i).getOverallRating() * 10.0) / 10.0);
-      System.out.println(i+1 + ": " + movies.get(i).getTitle() + " Rating: " + rating + " Sales: " + SalesUtils.getSalesByMovie(this.getBookingManager().getBookings(), movies.get(i).getTitle()));
+      //System.out.println(i+1 + ": " + movies.get(i).getTitle() + " Rating: " + rating + " Sales: " + SalesUtils.getSalesByMovie(this.getBookingManager().getBookings(), movies.get(i).getTitle()));
+      System.out.println(i+1 + ": " + movies.get(i).getTitle() + " Rating: " + rating);
     }
   }
 
   /**
-   * Displays all movies in the system
+   * Displays all screenings for a movie
+   * @param screenings arraylist of screenings to be displayed
    */
   protected void displayScreenings(ArrayList<Screening> screenings) {
     if (screenings.size() == 0) {
@@ -150,7 +169,8 @@ import java.io.Serializable;
 
     for (int i = 0; i < screenings.size(); i++) {
       Screening screening = screenings.get(i);
-      System.out.println(i+1 + ": Time: " + screening.getShowtime().getDateTimeString() + " Cinema Code: " + screening.getCinema().getId());
+      System.out.println(i+1 + ": Time: " + screening.getShowtime().getDateTimeString() + "|| Cinema Code: " + screening.getCinema().getId() + 
+                          "|| Cinema Type: " + screening.getCinema().getCinemaType().toString() + "|| Cineplex Location: " + screening.getCinema().getCineplex().getLocation());
     }
   }
 
@@ -158,6 +178,8 @@ import java.io.Serializable;
    * Helper method that can be used for child classes to get movies to do other things like submitting reviews
    * Displays all movies in the system
    * Allows the user to pick a movie
+   * @param sortCriterias 
+   * @param showStatuses
    * @return the movie that the user picked
    */
   protected Movie getMovie(SortCriteria sortCriterias, ArrayList<ShowStatus> showStatuses) throws Exception {
@@ -400,6 +422,12 @@ import java.io.Serializable;
       }
     }
   }
+  
+  /** 
+   * @param exitProgram(
+   */
+  // TODO:
+  protected void startProgram() {}
 
   /**
    * @return the booking manager
@@ -418,6 +446,7 @@ import java.io.Serializable;
   /**
    * Displays the content for each console.
    * This is basically the 'main' method for each console
+   * @param account
    */
   public abstract void display(Account account);
 }

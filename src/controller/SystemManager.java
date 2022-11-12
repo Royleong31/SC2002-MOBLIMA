@@ -189,9 +189,9 @@ public class SystemManager implements Serializable{
   /**
    * Delete a holiday date from system's collection of holidays
    * 
-   * @param year
-   * @param month
-   * @param day
+   * @param year year of holiday
+   * @param month month of holiday
+   * @param day day of holiday
    * @throws Exception if holiday does not exist in the system collection
    */
   public void deleteHoliday(int year, int month, int day) throws Exception {
@@ -207,11 +207,11 @@ public class SystemManager implements Serializable{
   /**
    * Add new holiday to the system's collection of holiday
    * 
-   * @param year
-   * @param month
-   * @param day
-   * @param hour
-   * @param minute
+   * @param year year of holiday
+   * @param month month of holiday
+   * @param day day of holiday
+   * @param hour hour of holiday
+   * @param minute minute of holiday
    * @throws Exception if holiday already exists in the system's collection
    */
   public void addHoliday(int year, int month, int day, int hour, int minute) throws Exception {
@@ -226,7 +226,7 @@ public class SystemManager implements Serializable{
   /**
    * Check if a particular date is a holiday
    * 
-   * @param date
+   * @param date date to be checked if it is a holiday
    * @return
    */
   public boolean isHoliday(DateTime date) {

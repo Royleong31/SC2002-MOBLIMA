@@ -18,9 +18,9 @@ import enums.MovieType;
 public class PriceUtils {
   /**
    * Return the price of a ticket
-   * @param sm
-   * @param ticket
-   * @return
+   * @param sm the system manager object to be passed in
+   * @param ticket the ticket to check the price of
+   * @return the price of the ticket
    * @throws Exception if ticket and timing combination is not allowed (e.g. student ticket on night screenings)
    */
   public static float getPrice(SystemManager sm, Ticket ticket) throws Exception {
