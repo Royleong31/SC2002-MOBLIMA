@@ -25,15 +25,18 @@ import java.util.Scanner;
 import java.io.Serializable;
 
 /**
- * All methods here do not require authentication
+ * Contains methods that are shared among different console classes
  *
- @author Roy Leong, Kish Choy
+ @author Roy Leong, Kish Choy, Augustine Lee
  @version 1.0
  @since 2022-10-30
 */
  public abstract class ParentConsole implements Serializable{
   private final static Scanner scannerObj = new Scanner(System.in);
 
+  /**
+   * Handles state and methods related to login
+   */
   private final LoginManager loginManager;
   /**
    * Handles state and methods related to bookings
@@ -65,6 +68,16 @@ import java.io.Serializable;
    */
   private final SystemManager systemManager;
 
+  /**
+   * Parent console constructor for most consoles
+   * @param lm
+   * @param bm
+   * @param cm
+   * @param mm
+   * @param rm
+   * @param sm
+   * @param sysm
+   */
   ParentConsole(LoginManager lm, BookingManager bm, CineplexManager cm, MovieManager mm, ReviewManager rm, ScreeningManager sm, SystemManager sysm) {
     this.loginManager = lm;
     this.bookingManager = bm;
@@ -75,6 +88,9 @@ import java.io.Serializable;
     this.systemManager = sysm;
   }
 
+  /**
+   * Overloaded constructor for LoginConsole
+   */
   ParentConsole() {
     this.loginManager = null;
     this.bookingManager = null;
@@ -85,28 +101,47 @@ import java.io.Serializable;
     this.systemManager = null;
   }
 
-  // TODO: Authorisation check? So that only admins can access admin only stuff
+  /**
+   * @return cineplexManager
+   */
   protected CineplexManager getCineplexManager() {
     return this.cineplexManager;
   }
 
+  /**
+   * @return movieManager
+   */
   protected MovieManager getMovieManager() {
     return this.movieManager;
   }
 
+  /**
+   * Retrieve review manager
+   * @return review manager object
+   */
   protected ReviewManager getReviewManager() {
     return this.reviewManager;
   }
 
+  /**
+   * Retrieve screening manager
+   * @return screening manager object
+   */
   protected ScreeningManager getScreeningManager() {
     return this.screeningManager;
   }
 
+  /**
+   * Retrieve system manager
+   * @return system manager object
+   */
   protected SystemManager getSystemManager() {
     return this.systemManager;
   }
+
   /**
    * Displays all movies in the system
+   * @param movies arraylist of movies to be displayed
    */
   protected void displayMovies(ArrayList<Movie> movies) {
     System.out.println("Movies");
@@ -117,12 +152,14 @@ import java.io.Serializable;
 
     for (int i = 0; i < movies.size(); i++) {
       String rating = movies.get(i).getReviews().size() < 2 ? "NA" : Double.toString(Math.round(movies.get(i).getOverallRating() * 10.0) / 10.0);
-      System.out.println(i+1 + ": " + movies.get(i).getTitle() + " Rating: " + rating + " Sales: " + SalesUtils.getSalesByMovie(this.getBookingManager().getBookings(), movies.get(i).getTitle()));
+      //System.out.println(i+1 + ": " + movies.get(i).getTitle() + " Rating: " + rating + " Sales: " + SalesUtils.getSalesByMovie(this.getBookingManager().getBookings(), movies.get(i).getTitle()));
+      System.out.println(i+1 + ": " + movies.get(i).getTitle() + " Rating: " + rating);
     }
   }
 
   /**
-   * Displays all movies in the system
+   * Displays all screenings for a movie
+   * @param screenings arraylist of screenings to be displayed
    */
   protected void displayScreenings(ArrayList<Screening> screenings) {
     if (screenings.size() == 0) {
@@ -132,7 +169,8 @@ import java.io.Serializable;
 
     for (int i = 0; i < screenings.size(); i++) {
       Screening screening = screenings.get(i);
-      System.out.println(i+1 + ": Time: " + screening.getShowtime().getDateTimeString() + " Cinema Code: " + screening.getCinema().getId());
+      System.out.println(i+1 + ": Time: " + screening.getShowtime().getDateTimeString() + "|| Cinema Code: " + screening.getCinema().getId() + 
+                          "|| Cinema Type: " + screening.getCinema().getCinemaType().toString() + "|| Cineplex Location: " + screening.getCinema().getCineplex().getLocation());
     }
   }
 
@@ -140,6 +178,8 @@ import java.io.Serializable;
    * Helper method that can be used for child classes to get movies to do other things like submitting reviews
    * Displays all movies in the system
    * Allows the user to pick a movie
+   * @param sortCriterias 
+   * @param showStatuses
    * @return the movie that the user picked
    */
   protected Movie getMovie(SortCriteria sortCriterias, ArrayList<ShowStatus> showStatuses) throws Exception {
@@ -193,6 +233,14 @@ import java.io.Serializable;
     }
   }
 
+  /**
+   * This is to get the user's choice, for e.g. when the user is selecting a movie
+   * If the user sets count=5, then the user can only enter 1, 2, 3, 4, 5
+   * Prints out the message and gets the user's input
+   * @param message
+   * @param count
+   * @return user input
+   */
   protected Integer getUserChoiceFromCount(String message, int count) {
     ArrayList<String> validInputs = new ArrayList<String>();
     for (int i=1; i<count+1; i++) {
@@ -202,6 +250,11 @@ import java.io.Serializable;
     return Integer.parseInt(this.getUserChoice(message, validInputs));
   }
   
+  /**
+   * Gets the user's input
+   * @param message
+   * @return user input
+   */
   protected String getUserInput(String message) {
     System.out.println(message);
     String userInput = scannerObj.nextLine();
@@ -209,6 +262,12 @@ import java.io.Serializable;
     return userInput;
   }
   
+  /**
+   * Gets the user's input and ensures that it is a valid integer
+   * If not valid, ask until valid
+   * @param message
+   * @return
+   */
   protected Integer getUserIntegerInput(String message) {
     while (true) {
       try { 
@@ -220,6 +279,13 @@ import java.io.Serializable;
     }
   }
 
+  /**
+   * Allows the user to set various select options
+   * Similar to HTML select input
+   * @param options
+   * @param message
+   * @return
+   */
   protected Integer getSelectInput(ArrayList<String> options, String message) {
     System.out.println(message);
     for (int i=1; i<=options.size(); i++) {
@@ -228,6 +294,11 @@ import java.io.Serializable;
     return getUserChoiceFromCount("", options.size());
   }
 
+  /**
+   * Displays all genres and allows the user to select a genre
+   * Get the user's input for a genre
+   * @return the selected genre
+   */
   protected Genre selectGenre() {
     ArrayList<String> options = new ArrayList<String>();
     for (Genre cur : Genre.values()) {
@@ -237,6 +308,11 @@ import java.io.Serializable;
     return Genre.values()[userChoice-1];
   }
 
+  /**
+   * Displays all advisory ratings and allows the user to select a genre
+   * Get the user's input for a advisory rating
+   * @return the selected advisory rating
+   */
   protected Advisory selectAdvisory() {
     ArrayList<String> options = new ArrayList<String>();
     for (Advisory cur : Advisory.values()) {
@@ -246,6 +322,11 @@ import java.io.Serializable;
     return Advisory.values()[userChoice-1];
   }
 
+  /**
+   * Displays all show statuses and allows the user to select a genre
+   * Get the user's input for a show statuses
+   * @return the selected show statuses
+   */
   protected ShowStatus selectShowStatus() {
     ArrayList<String> options = new ArrayList<String>();
     for (ShowStatus cur : ShowStatus.values()) {
@@ -255,6 +336,11 @@ import java.io.Serializable;
     return ShowStatus.values()[userChoice-1];
   }
 
+  /**
+   * Displays all movie types and allows the user to select a genre
+   * Get the user's input for a movie types
+   * @return the selected movie types
+   */
   protected MovieType selectMovieType() {
     ArrayList<String> options = new ArrayList<String>();
     for (MovieType cur : MovieType.values()) {
@@ -264,6 +350,11 @@ import java.io.Serializable;
     return MovieType.values()[userChoice-1];
   }
 
+  /**
+   * Displays all cinema types and allows the user to select a genre
+   * Get the user's input for a cinema types
+   * @return the selected cinema types
+   */
   protected CinemaType selectCinemaType() {
     ArrayList<String> options = new ArrayList<String>();
     for (CinemaType cur : CinemaType.values()) {
@@ -273,6 +364,11 @@ import java.io.Serializable;
     return CinemaType.values()[userChoice-1];
   }
 
+  /**
+   * Displays all seat types and allows the user to select a genre
+   * Get the user's input for a seat types
+   * @return the selected seat types
+   */
   protected SeatType selectSeatType() {
     ArrayList<String> options = new ArrayList<String>();
     for (SeatType cur : SeatType.values()) {
@@ -282,6 +378,11 @@ import java.io.Serializable;
     return SeatType.values()[userChoice-1];
   }
 
+  /**
+   * Displays all ticket types and allows the user to select a genre
+   * Get the user's input for a ticket types
+   * @return the selected ticket types
+   */
   protected TicketType selectTicketType() {
     ArrayList<String> options = new ArrayList<String>();
     for (TicketType cur : TicketType.values()) {
@@ -291,6 +392,11 @@ import java.io.Serializable;
     return TicketType.values()[userChoice-1];
   }
 
+  /**
+   * Displays all cast members and allows the user to select a genre
+   * Get the user's input for a cast members
+   * @return the selected cast members
+   */
   protected ArrayList<String> getCastMembers() {
     ArrayList<String> castArr = new ArrayList<String>();
     Integer castCount = this.getUserIntegerInput("Enter the number of cast members"); 
@@ -302,6 +408,10 @@ import java.io.Serializable;
     return castArr;
   }
   
+  /**
+   * Get a float input from the user
+   * @return the float input
+   */
   protected Float getUserFloatInput(String message) {
     while (true) {
       try { 
@@ -312,11 +422,23 @@ import java.io.Serializable;
       }
     }
   }
+  
+  /** 
+   * @param exitProgram(
+   */
+  // TODO:
+  protected void startProgram() {}
 
+  /**
+   * @return the booking manager
+   */
   protected BookingManager getBookingManager() {
     return this.bookingManager;
   }
 
+  /**
+   * Logs the user out by erasing the current user from the loginManager
+   */
   protected void logout() {
     this.loginManager.logout();
   }
@@ -324,6 +446,7 @@ import java.io.Serializable;
   /**
    * Displays the content for each console.
    * This is basically the 'main' method for each console
+   * @param account
    */
   public abstract void display(Account account);
 }

@@ -9,18 +9,11 @@ import controller.MovieManager;
 import controller.ReviewManager;
 import controller.ScreeningManager;
 import controller.SystemManager;
-import enums.Advisory;
-import enums.CinemaType;
-import enums.Genre;
-import enums.MovieType;
 import enums.ShowStatus;
 import enums.SortCriteria;
 import enums.TicketType;
 import model.Booking;
-import model.Cinema;
-import model.Cineplex;
 import model.Movie;
-import model.Review;
 import model.Screening;
 import model.Seat;
 import model.SeatingPlan;
@@ -30,24 +23,35 @@ import model.Account.MovieGoerAccount;
 import utils.Utils;
 
 /**
- * Account for a staff member.
- * Contains the staff id
+ * Account for a movie goers.
  *
  @author Roy Leong, Kish Choy
  @version 1.0
  @since 2022-10-30
 */
 public class MovieGoerConsole extends ParentConsole {
+  /**
+   * Movie goer console constructor
+   * @param lm
+   * @param bm
+   * @param cm
+   * @param mm
+   * @param rm
+   * @param sm
+   * @param sysm
+   */
   public MovieGoerConsole(LoginManager lm, BookingManager bm, CineplexManager cm, MovieManager mm, ReviewManager rm, ScreeningManager sm, SystemManager sysm) {
     super(lm, bm, cm, mm, rm, sm, sysm);
   }
 
-  // show statuses that the movie goer can view
+  /**
+   * The show statuses that the user can choose from
+   */
   private final ArrayList<ShowStatus> allowedShowStatus = Utils.asArrayList(ShowStatus.PREVIEW, ShowStatus.NOW_SHOWING);
 
   /**
    * Displays all reviews that have been made by this user
-   * @param movieGoerAccount
+   * @param movieGoerAccount the movie goer account that is submitting the review
    */
   private void submitReview(MovieGoerAccount movieGoerAccount) {
     // get the movie from super.getMovie()
@@ -55,7 +59,6 @@ public class MovieGoerConsole extends ParentConsole {
     try {
       Movie movie = super.getMovie(SortCriteria.TITLE, this.allowedShowStatus);
       String comments = super.getUserInput("Please enter your comments: ");
-      // TODO: Add validation
       int rating = super.getUserChoiceFromCount("Please enter your rating (1-5): ", 5);
       super.getReviewManager().addReview(movie, comments, rating, movieGoerAccount);
       System.out.println("Review submitted successfully!");
@@ -70,7 +73,7 @@ public class MovieGoerConsole extends ParentConsole {
    * Uses super.getMovie() to get the movie that the user wants to review
    * Uses selectSeats() to get the seats that the user wants to review
    * which is then passed to BookingManager to make the booking
-   * @param movieGoerAccount
+   * @param movieGoerAccount the movie goer account that is making the booking
    */
   private void makeBooking(MovieGoerAccount movieGoerAccount) {
     try {
@@ -91,7 +94,6 @@ public class MovieGoerConsole extends ParentConsole {
    * Allows the user to select seats for a booking
    * uses super.getScreening() to get the screening that the user wants to book
    */
-  // !: Calculating the aisle is complicated because of the remainder of the division of rolumns by aisle, so this is just an approximation
   private ArrayList<Seat> selectSeats(Screening screening) {
     SeatingPlan seatingPlan = screening.getCinema().getSeatingPlan();
     int columns = seatingPlan.getColumns();
@@ -104,24 +106,24 @@ public class MovieGoerConsole extends ParentConsole {
     for (int i=1; i<=columns; i++) {
         System.out.print(((aisle > 0 && i > 1 && (i-1) % divs == 0 && aisleCount++ < aisle) ? "      " : " ") + (i<10 ? " " : "") + Integer.toString(i) + "  ");
     }
-    
+
     int aisleForThisRowCount = 0;
     for (int i=0; i<screening.getSeats().size(); i++) {
       Seat seat = screening.getSeats().get(i);
       if (seat.getColumn() == 1) {
         System.out.print("\n" + this.getCharForNumber(seat.getRow()) + " ");
       }
-      
+
       if (seat.getColumn() > 1 && (seat.getColumn()-1) % divs == 0 && aisleForThisRowCount < aisle) {
         System.out.print("  |  ");
         aisleForThisRowCount++;
-      } 
+      }
 
       if (i > 1 && seat.getRow() != screening.getSeats().get(i-1).getRow()) {
         aisleForThisRowCount = 0;
       }
 
-      if (seat.isTaken()) 
+      if (seat.isTaken())
         System.out.print(" [X] ");
       else
         System.out.print(" [ ] ");
@@ -145,18 +147,24 @@ public class MovieGoerConsole extends ParentConsole {
     return seats;
   }
 
+  /**
+   * Display all movies that are currently showing or in preview
+   */
   private void displayAllMovies() {
     ArrayList<Movie> movies = super.getMovieManager().getMovies(this.allowedShowStatus);
     super.displayMovies(movies);
   }
 
-    private String getCharForNumber(int i) {
+  /**
+   * Convert number into a capital alphabet
+   */
+  private String getCharForNumber(int i) {
     return i > 0 && i < 27 ? String.valueOf((char)(i + 64)) : null;
   }
 
   /**
    * Displays all bookings that have been made by this user
-   * @param movieGoerAccount
+   * @param movieGoerAccount the movie goer account whose booking history will be checked
    */
   private void viewBookingHistory(MovieGoerAccount movieGoerAccount) {
     try {
@@ -179,12 +187,20 @@ public class MovieGoerConsole extends ParentConsole {
     }
   }
 
+  /**
+   * Display all the movies that are sorted by the sorting criteria set by the admin
+   */
   private void displayTopMovies() {
     ArrayList<Movie> movies = super.getMovieManager().getMovies(super.getSystemManager().getSortingCriteria(), this.allowedShowStatus);
     movies = movies.size() < 5 ? movies : new ArrayList<Movie>(movies.subList(0, 4));
     super.displayMovies(movies);
   }
 
+  /**
+   * Allows the user to choose which option they want to do
+   * Checks that the account is of type MovieGoerAccount
+   * @param account
+   */
   @Override
   public void display(Account account) {
     // should never trigger as it can only reach MovieGoerConsole if the logged in user is a MovieGoerAccount
@@ -192,7 +208,7 @@ public class MovieGoerConsole extends ParentConsole {
       System.out.println("Something went wrong in the login process");
       return;
     }
-    
+
     Integer userSelection = super.getSelectInput(Utils.asArrayList("to submit review", 
                                                                     "to make booking", 
                                                                     "to view booking history", 
@@ -206,11 +222,11 @@ public class MovieGoerConsole extends ParentConsole {
       case 1:
         this.submitReview(movieGoerAccount);
         break;
-    
+
       case 2:
         this.makeBooking(movieGoerAccount);
         break;
-    
+
       case 3:
         this.viewBookingHistory(movieGoerAccount);
         break;
@@ -226,9 +242,7 @@ public class MovieGoerConsole extends ParentConsole {
       case 6:
         super.logout();
         break;
-   
 
-    
       default:
         // Should never reach here as error checking is done in this.getUserChoice()
         System.out.println("An unexpected error occured");
