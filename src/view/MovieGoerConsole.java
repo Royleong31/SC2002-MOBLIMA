@@ -23,8 +23,7 @@ import model.Account.MovieGoerAccount;
 import utils.Utils;
 
 /**
- * Account for a staff member.
- * Contains the staff id
+ * Account for a movie goers.
  *
  @author Roy Leong, Kish Choy
  @version 1.0
@@ -32,20 +31,22 @@ import utils.Utils;
 */
 public class MovieGoerConsole extends ParentConsole {
   /**
-   * Constructor for MovieGoerConsole
-   * @param lm the login manager
-   * @param bm the booking manager
-   * @param cm the cineplex manager
-   * @param mm the movie manager
-   * @param rm the review manager
-   * @param sm the screening manager
-   * @param sysm the system manager
+   * Movie goer console constructor
+   * @param lm
+   * @param bm
+   * @param cm
+   * @param mm
+   * @param rm
+   * @param sm
+   * @param sysm
    */
   public MovieGoerConsole(LoginManager lm, BookingManager bm, CineplexManager cm, MovieManager mm, ReviewManager rm, ScreeningManager sm, SystemManager sysm) {
     super(lm, bm, cm, mm, rm, sm, sysm);
   }
 
-  // show statuses that the movie goer can view
+  /**
+   * The show statuses that the user can choose from
+   */
   private final ArrayList<ShowStatus> allowedShowStatus = Utils.asArrayList(ShowStatus.PREVIEW, ShowStatus.NOW_SHOWING);
 
   /**
@@ -58,7 +59,6 @@ public class MovieGoerConsole extends ParentConsole {
     try {
       Movie movie = super.getMovie(SortCriteria.TITLE, this.allowedShowStatus);
       String comments = super.getUserInput("Please enter your comments: ");
-      // TODO: Add validation
       int rating = super.getUserChoiceFromCount("Please enter your rating (1-5): ", 5);
       super.getReviewManager().addReview(movie, comments, rating, movieGoerAccount);
       System.out.println("Review submitted successfully!");
@@ -94,7 +94,6 @@ public class MovieGoerConsole extends ParentConsole {
    * Allows the user to select seats for a booking
    * uses super.getScreening() to get the screening that the user wants to book
    */
-  // !: Calculating the aisle is complicated because of the remainder of the division of rolumns by aisle, so this is just an approximation
   private ArrayList<Seat> selectSeats(Screening screening) {
     SeatingPlan seatingPlan = screening.getCinema().getSeatingPlan();
     int columns = seatingPlan.getColumns();
@@ -107,24 +106,24 @@ public class MovieGoerConsole extends ParentConsole {
     for (int i=1; i<=columns; i++) {
         System.out.print(((aisle > 0 && i > 1 && (i-1) % divs == 0 && aisleCount++ < aisle) ? "      " : " ") + (i<10 ? " " : "") + Integer.toString(i) + "  ");
     }
-    
+
     int aisleForThisRowCount = 0;
     for (int i=0; i<screening.getSeats().size(); i++) {
       Seat seat = screening.getSeats().get(i);
       if (seat.getColumn() == 1) {
         System.out.print("\n" + this.getCharForNumber(seat.getRow()) + " ");
       }
-      
+
       if (seat.getColumn() > 1 && (seat.getColumn()-1) % divs == 0 && aisleForThisRowCount < aisle) {
         System.out.print("  |  ");
         aisleForThisRowCount++;
-      } 
+      }
 
       if (i > 1 && seat.getRow() != screening.getSeats().get(i-1).getRow()) {
         aisleForThisRowCount = 0;
       }
 
-      if (seat.isTaken()) 
+      if (seat.isTaken())
         System.out.print(" [X] ");
       else
         System.out.print(" [ ] ");
@@ -149,7 +148,7 @@ public class MovieGoerConsole extends ParentConsole {
   }
 
   /**
-   * Display all movies
+   * Display all movies that are currently showing or in preview
    */
   private void displayAllMovies() {
     ArrayList<Movie> movies = super.getMovieManager().getMovies(this.allowedShowStatus);
@@ -157,7 +156,7 @@ public class MovieGoerConsole extends ParentConsole {
   }
 
   /**
-   * Get a corresponding character for an integer between 0 and 27 (exclusive)
+   * Convert number into a capital alphabet
    */
   private String getCharForNumber(int i) {
     return i > 0 && i < 27 ? String.valueOf((char)(i + 64)) : null;
@@ -189,7 +188,7 @@ public class MovieGoerConsole extends ParentConsole {
   }
 
   /**
-   * Display top movies
+   * Display all the movies that are sorted by the sorting criteria set by the admin
    */
   private void displayTopMovies() {
     ArrayList<Movie> movies = super.getMovieManager().getMovies(super.getSystemManager().getSortingCriteria(), this.allowedShowStatus);
@@ -198,8 +197,9 @@ public class MovieGoerConsole extends ParentConsole {
   }
 
   /**
-   * Logic for movie goer user interface
-   * @param account the account that is using the user interface, in this case, it is the movie goer account
+   * Allows the user to choose which option they want to do
+   * Checks that the account is of type MovieGoerAccount
+   * @param account
    */
   @Override
   public void display(Account account) {
@@ -208,7 +208,7 @@ public class MovieGoerConsole extends ParentConsole {
       System.out.println("Something went wrong in the login process");
       return;
     }
-    
+
     Integer userSelection = super.getSelectInput(Utils.asArrayList("to submit review", 
                                                                     "to make booking", 
                                                                     "to view booking history", 
@@ -222,11 +222,11 @@ public class MovieGoerConsole extends ParentConsole {
       case 1:
         this.submitReview(movieGoerAccount);
         break;
-    
+
       case 2:
         this.makeBooking(movieGoerAccount);
         break;
-    
+
       case 3:
         this.viewBookingHistory(movieGoerAccount);
         break;
@@ -242,7 +242,7 @@ public class MovieGoerConsole extends ParentConsole {
       case 6:
         super.logout();
         break;
-    
+
       default:
         // Should never reach here as error checking is done in this.getUserChoice()
         System.out.println("An unexpected error occured");

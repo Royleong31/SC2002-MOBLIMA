@@ -25,7 +25,7 @@ import java.util.Scanner;
 import java.io.Serializable;
 
 /**
- * All methods here do not require authentication
+ * Contains methods that are shared among different console classes
  *
  @author Roy Leong, Kish Choy, Augustine Lee
  @version 1.0
@@ -69,14 +69,14 @@ import java.io.Serializable;
   private final SystemManager systemManager;
 
   /**
-   * Constructor for ParentConsole with parameters
-   * @param lm the login manager
-   * @param bm the booking manager
-   * @param cm the cineplex manager
-   * @param mm the movie manager
-   * @param rm the review manager
-   * @param sm the screening manager
-   * @param sysm the system manager
+   * Parent console constructor for most consoles
+   * @param lm
+   * @param bm
+   * @param cm
+   * @param mm
+   * @param rm
+   * @param sm
+   * @param sysm
    */
   ParentConsole(LoginManager lm, BookingManager bm, CineplexManager cm, MovieManager mm, ReviewManager rm, ScreeningManager sm, SystemManager sysm) {
     this.loginManager = lm;
@@ -89,7 +89,7 @@ import java.io.Serializable;
   }
 
   /**
-   * Constructor for ParentConsole without parameters
+   * Overloaded constructor for LoginConsole
    */
   ParentConsole() {
     this.loginManager = null;
@@ -102,16 +102,14 @@ import java.io.Serializable;
   }
 
   /**
-   * Retrieve cineplex manager
-   * @return cineplex manager object
+   * @return cineplexManager
    */
   protected CineplexManager getCineplexManager() {
     return this.cineplexManager;
   }
 
   /**
-   * Retrieve movie manager
-   * @return movie manager object
+   * @return movieManager
    */
   protected MovieManager getMovieManager() {
     return this.movieManager;
@@ -236,10 +234,12 @@ import java.io.Serializable;
   }
 
   /**
-   * Translate user text input to an integer value
+   * This is to get the user's choice, for e.g. when the user is selecting a movie
+   * If the user sets count=5, then the user can only enter 1, 2, 3, 4, 5
+   * Prints out the message and gets the user's input
    * @param message
    * @param count
-   * @return
+   * @return user input
    */
   protected Integer getUserChoiceFromCount(String message, int count) {
     ArrayList<String> validInputs = new ArrayList<String>();
@@ -251,9 +251,9 @@ import java.io.Serializable;
   }
   
   /**
-   * Print message and get user input
+   * Gets the user's input
    * @param message
-   * @return
+   * @return user input
    */
   protected String getUserInput(String message) {
     System.out.println(message);
@@ -263,7 +263,8 @@ import java.io.Serializable;
   }
   
   /**
-   * Print message and get an integer response from user
+   * Gets the user's input and ensures that it is a valid integer
+   * If not valid, ask until valid
    * @param message
    * @return
    */
@@ -279,7 +280,8 @@ import java.io.Serializable;
   }
 
   /**
-   * Get a user input from a list of string options
+   * Allows the user to set various select options
+   * Similar to HTML select input
    * @param options
    * @param message
    * @return
@@ -293,8 +295,9 @@ import java.io.Serializable;
   }
 
   /**
-   * Get a user to select a genre
-   * @return
+   * Displays all genres and allows the user to select a genre
+   * Get the user's input for a genre
+   * @return the selected genre
    */
   protected Genre selectGenre() {
     ArrayList<String> options = new ArrayList<String>();
@@ -306,8 +309,9 @@ import java.io.Serializable;
   }
 
   /**
-   * Get a user to select an advisory rating
-   * @return
+   * Displays all advisory ratings and allows the user to select a genre
+   * Get the user's input for a advisory rating
+   * @return the selected advisory rating
    */
   protected Advisory selectAdvisory() {
     ArrayList<String> options = new ArrayList<String>();
@@ -319,8 +323,9 @@ import java.io.Serializable;
   }
 
   /**
-   * Get a user to select a show status
-   * @return
+   * Displays all show statuses and allows the user to select a genre
+   * Get the user's input for a show statuses
+   * @return the selected show statuses
    */
   protected ShowStatus selectShowStatus() {
     ArrayList<String> options = new ArrayList<String>();
@@ -332,8 +337,9 @@ import java.io.Serializable;
   }
 
   /**
-   * Get a user to select a movie type (e.g. Blockbuster, 3D)
-   * @return
+   * Displays all movie types and allows the user to select a genre
+   * Get the user's input for a movie types
+   * @return the selected movie types
    */
   protected MovieType selectMovieType() {
     ArrayList<String> options = new ArrayList<String>();
@@ -345,8 +351,9 @@ import java.io.Serializable;
   }
 
   /**
-   * Get a user to select a cinema type
-   * @return
+   * Displays all cinema types and allows the user to select a genre
+   * Get the user's input for a cinema types
+   * @return the selected cinema types
    */
   protected CinemaType selectCinemaType() {
     ArrayList<String> options = new ArrayList<String>();
@@ -358,8 +365,9 @@ import java.io.Serializable;
   }
 
   /**
-   * Get a user to select a seat type
-   * @return
+   * Displays all seat types and allows the user to select a genre
+   * Get the user's input for a seat types
+   * @return the selected seat types
    */
   protected SeatType selectSeatType() {
     ArrayList<String> options = new ArrayList<String>();
@@ -371,8 +379,9 @@ import java.io.Serializable;
   }
 
   /**
-   * Get a user to select a ticket type (e.g. Student, Cards)
-   * @return
+   * Displays all ticket types and allows the user to select a genre
+   * Get the user's input for a ticket types
+   * @return the selected ticket types
    */
   protected TicketType selectTicketType() {
     ArrayList<String> options = new ArrayList<String>();
@@ -384,8 +393,9 @@ import java.io.Serializable;
   }
 
   /**
-   * Get the cast members of a movie
-   * @return
+   * Displays all cast members and allows the user to select a genre
+   * Get the user's input for a cast members
+   * @return the selected cast members
    */
   protected ArrayList<String> getCastMembers() {
     ArrayList<String> castArr = new ArrayList<String>();
@@ -399,9 +409,8 @@ import java.io.Serializable;
   }
   
   /**
-   * Get an user input and ensure it is a float type
-   * @param message
-   * @return
+   * Get a float input from the user
+   * @return the float input
    */
   protected Float getUserFloatInput(String message) {
     while (true) {
@@ -421,24 +430,14 @@ import java.io.Serializable;
   protected void startProgram() {}
 
   /**
-   * This is the function that is called whenever the program exits, for e.g. when the user chooses to quit the program
-   */
-  protected void exitProgram() {
-    // TODO: save all state into storage
-    ParentConsole.scannerObj.close();
-    System.exit(0);
-  }
-
-  /**
-   * Get booking manager
-   * @return booking manager object
+   * @return the booking manager
    */
   protected BookingManager getBookingManager() {
     return this.bookingManager;
   }
 
   /**
-   * logout of account
+   * Logs the user out by erasing the current user from the loginManager
    */
   protected void logout() {
     this.loginManager.logout();

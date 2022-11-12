@@ -20,8 +20,8 @@ import utils.SalesUtils;
 import utils.Utils;
 
 /**
- * Account for a staff member.
- * Contains the staff id
+ * Console for the admin.
+ * Contains admin-only functions that other users like guest and movie goers can't access
  *
  @author Roy Leong, Kish Choy
  @version 1.0
@@ -331,7 +331,7 @@ public class AdminConsole extends ParentConsole {
   }
 
   /**
-   * Add a new cinema
+   * Allows the admin to add a cinema to a cineplex
    */
   public void addCinema() {
     try {
@@ -349,7 +349,7 @@ public class AdminConsole extends ParentConsole {
   }
 
   /**
-   * Add a new cineplex
+   * Allows the admin to add a new cineplex
    */
   public void addCineplex() {
     try {
@@ -361,7 +361,10 @@ public class AdminConsole extends ParentConsole {
   }
 
   /**
-   * Logic for the admin console user interface
+   * Allows the user to choose which option they want to do
+   * Takes in the account object and ensures that it's an admin account as only 
+   * admin accounts can access this menu
+   * @param account
    */
   @Override
   public void display(Account account) {
@@ -383,10 +386,6 @@ public class AdminConsole extends ParentConsole {
                                                                "get movies by rank",
                                                                "to logout"), "Select an option"); 
 
-
-    // TODO: Use this for authorisation checks
-
-    // TODO: Add setters for cinema and cineplex
     AdminAccount adminAccount = (AdminAccount) account;
 
     switch (userInput) {

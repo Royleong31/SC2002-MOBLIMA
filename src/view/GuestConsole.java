@@ -15,29 +15,30 @@ import model.Account.Account;
 import model.Screening;
 import utils.Utils;
 
+
 /**
- * Guest console for guest access
- * Contains the functions a guest is able to perform
- *
- @author Augustine Lee
- @version 1.0
- @since 2022-10-30
-*/
+ * Allows non logged in users to view movies and screenings
+ *  @author Roy Leong
+ *  @version 1.0
+ *  @since 2022-10-30
+ */
 public class GuestConsole extends ParentConsole {
   /**
-   * ArrayList of show status where movies will be visible
+   * List of show status to be displayed
+   * Guests can only see movies that are in preview or in showing
    */
-  private final ArrayList<ShowStatus> allowedShowStatus = Utils.asArrayList(ShowStatus.PREVIEW, ShowStatus.NOW_SHOWING);
+  private final ArrayList<ShowStatus> allowedShowStatus = Utils.asArrayList(ShowStatus.PREVIEW,
+      ShowStatus.NOW_SHOWING);
 
   /**
-   * Constructor for guest console
-   * @param lm the login manager
-   * @param bm the booking manager
-   * @param cm the cineplex manager
-   * @param mm the movie manager
-   * @param rm the review manager
-   * @param sm the screening manager
-   * @param sysm the system manager
+   * Guest console constructor
+   * @param lm
+   * @param bm
+   * @param cm
+   * @param mm
+   * @param rm
+   * @param sm
+   * @param sysm
    */
   public GuestConsole(LoginManager lm, BookingManager bm, CineplexManager cm, MovieManager mm, ReviewManager rm,
       ScreeningManager sm, SystemManager sysm) {
@@ -45,7 +46,7 @@ public class GuestConsole extends ParentConsole {
   }
 
   /**
-   * Display all movies to guest
+   * Displays all the movies that are in preview or in showing
    */
   private void displayAllMovies() {
     ArrayList<Movie> movies = super.getMovieManager().getMovies(this.allowedShowStatus);
@@ -53,7 +54,7 @@ public class GuestConsole extends ParentConsole {
   }
 
   /**
-   * Display top 5 movies to guest
+   * Displays the top movies according to the sorting criteria set by the admin
    */
   private void displayTopMovies() {
     ArrayList<Movie> movies = super.getMovieManager().getMovies(super.getSystemManager().getSortingCriteria(),
@@ -63,7 +64,7 @@ public class GuestConsole extends ParentConsole {
   }
 
   /**
-   * View available screenings for a movie
+   * View the screenings that are currently screening
    */
   private void viewScreenings() {
     try {
@@ -78,8 +79,9 @@ public class GuestConsole extends ParentConsole {
   }
 
   /**
-   * Provides user interface logic for the guest
-   * @param account the account utilising this display, in this case, it is the dummy guest account
+   * Allows the user to choose which option they want to do
+   * account is set to null here as the user isn't logged in
+   * @param account
    */
   @Override
   public void display(Account account) {
