@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
 import enums.ShowStatus;
 import enums.SortCriteria;

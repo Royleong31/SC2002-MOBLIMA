@@ -331,7 +331,7 @@ public class AdminConsole extends ParentConsole {
   }
 
   /**
-   * Allows the admin to add a cinema to a cineplex
+   * Add a new cinema
    */
   public void addCinema() {
     try {
@@ -349,7 +349,7 @@ public class AdminConsole extends ParentConsole {
   }
 
   /**
-   * Allows the admin to add a new cineplex
+   * Add a new cineplex
    */
   public void addCineplex() {
     try {

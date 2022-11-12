@@ -5,6 +5,7 @@ import java.math.BigInteger;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.io.Serializable;
 
 /**
  * Contains the username and password as well as login methods.
@@ -14,7 +15,7 @@ import java.security.NoSuchAlgorithmException;
  @version 1.1
  @since 2022-10-30
 */
-public class Account {
+public class Account implements Serializable{
   /**
    * The username of the account.
    * There will be no mutator for this.

@@ -9,6 +9,7 @@ import model.Account.*;
 
 /**
  * Manager for login process
+ * Aggregation relationship with Account class
  * Accounts are part of LoginManager
  *
  @author Roy Leong, Ryan Ng
@@ -112,6 +113,9 @@ public class LoginManager {
     this.currentAccount = null;
   }
 
+  public void returnToMainMenu() {
+    this.currentAccount = new GuestAccount();
+  }
   /**
    * Gets the current user's account.
    * @return Account This user's account.
@@ -125,12 +129,51 @@ public class LoginManager {
    * @return LogInStatus The current state of the log in.
    */
   public LoginStatus getLoginStatus() {
-	  if (this.currentAccount instanceof AdminAccount)
-		  return LoginStatus.ADMIN;
-	  
-	  else if (this.currentAccount instanceof MovieGoerAccount)
-		  return LoginStatus.MOVIE_GOER;
-	  
-	  return LoginStatus.LOGIN;
+	  if (this.currentAccount instanceof AdminAccount) {
+      return LoginStatus.ADMIN;
+    }
+	  else if (this.currentAccount instanceof MovieGoerAccount) {
+      return LoginStatus.MOVIE_GOER;
+    }
+    else if (this.currentAccount instanceof GuestAccount) {
+      this.currentAccount = null;
+		  return LoginStatus.GUEST;
+    }
+    else {
+      this.currentAccount = null;
+      return LoginStatus.LOGIN;
+    }
+  }
+
+  /**
+   * Get arraylist of user accounts
+   * @return arraylist of user accounts
+   */
+  public ArrayList<Account> getUsers() {
+    return new ArrayList<Account>(this.usersArr);
+  }
+
+  /**
+   * Hydrate the login manager with accounts stored in storage
+   * @param usersArr arraylist of accounts in storage
+   */
+  public void setUsers(ArrayList<Account> usersArr) {
+    this.usersArr = new ArrayList<Account>(usersArr);
+  }
+
+  /**
+   * Get arraylist of used staff IDs
+   * @return arraylist of used staff IDs
+   */
+  public ArrayList<String> getUsedStaffIds() {
+    return new ArrayList<String>(this.usedStaffIds);
+  }
+
+  /**
+   * Hydrate the login manager with staff IDs stored in storage
+   * @param usedStaffIds arraylist of used staff IDs stored in storage
+   */
+  public void setUsedStaffIds(ArrayList<String> usedStaffIds) {
+    this.usedStaffIds = new ArrayList<String>(usedStaffIds);
   }
 }

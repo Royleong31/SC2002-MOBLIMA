@@ -6,7 +6,7 @@ import java.text.ParseException;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
-import java.util.Serializable;
+import java.io.Serializable;
 
 /**
  * DateTime class

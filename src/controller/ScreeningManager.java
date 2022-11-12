@@ -57,7 +57,7 @@ public class ScreeningManager implements Serializable {
 
   /**
    * Update the showtime of a screening
-   * 
+   * Need to call the setDateTime method on screening object
    * @param screening screening object to update
    * @param year year of screening
    * @param month month of screening
