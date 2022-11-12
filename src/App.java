@@ -101,62 +101,62 @@ public class App {
      */
     private static void loadAppData(){
         //LoginManager Data
-        if(DataUtils.checkFile("LoginManager-Accounts") == true){
+        if(DataUtils.checkFile("LoginManager-Accounts")) {
             ArrayList<Account> temp = (ArrayList<Account>)DataUtils.loadData("LoginManager-Accounts");
             loginManager.setUsers(temp);
         };
 
-        if(DataUtils.checkFile("LoginManager-StaffIds") == true){
+        if(DataUtils.checkFile("LoginManager-StaffIds")) {
             ArrayList<String> temp = (ArrayList<String>)DataUtils.loadData("LoginManager-StaffIds");
             loginManager.setUsedStaffIds(temp);
         };
 
         //BookingManager
-        if(DataUtils.checkFile("BookingManager-Bookings") == true){
+        if(DataUtils.checkFile("BookingManager-Bookings")) {
             ArrayList<Booking> temp = (ArrayList<Booking>)DataUtils.loadData("BookingManager-Bookings");
             bookingManager.setBookingsArr(temp);
         };
 
         //CineplexManager
-        if(DataUtils.checkFile("CineplexManager-Cineplexes") == true){
+        if(DataUtils.checkFile("CineplexManager-Cineplexes")) {
             ArrayList<Cineplex> temp = (ArrayList<Cineplex>)DataUtils.loadData("CineplexManager-Cineplexes");   
             cineplexManager.setCineplexes(temp);
         };
 
-        if(DataUtils.checkFile("CineplexManager-Cinemas") == true){
+        if(DataUtils.checkFile("CineplexManager-Cinemas")) {
             ArrayList<Cinema> temp = (ArrayList<Cinema>)DataUtils.loadData("CineplexManager-Cinemas");    
             cineplexManager.setCinemas(temp);
         };
 
         //MovieManager
-        if(DataUtils.checkFile("MovieManager-Movies") == true){
+        if(DataUtils.checkFile("MovieManager-Movies")) {
             ArrayList<Movie> temp = (ArrayList<Movie>)DataUtils.loadData("MovieManager-Movies");       
             movieManager.setMovies(temp);
         };
 
         //ScreeningManager
-        if(DataUtils.checkFile("ScreeningManager-Screenings") == true){
+        if(DataUtils.checkFile("ScreeningManager-Screenings")) {
             ArrayList<Screening> temp = (ArrayList<Screening>)DataUtils.loadData("ScreeningManager-Screenings");   
             screeningManager.setScreenings(temp);
         };
 
         //SystemManager
-        if(DataUtils.checkFile("SystemManager-Holidays") == true){
+        if(DataUtils.checkFile("SystemManager-Holidays")) {
             ArrayList<DateTime> temp = (ArrayList<DateTime>)DataUtils.loadData("SystemManager-Holidays");     
             systemManager.setHolidays(temp);
         };
 
-        if(DataUtils.checkFile("SystemManager-CinemaPrice") == true){
+        if(DataUtils.checkFile("SystemManager-CinemaPrice")) {
             HashMap<CinemaType, Float> temp = (HashMap<CinemaType, Float>)DataUtils.loadData("SystemManager-CinemaPrice");     
             systemManager.setCinemaMultiplierHashmap(temp);
         };
 
-        if(DataUtils.checkFile("SystemManager-SeatPrice") == true){
+        if(DataUtils.checkFile("SystemManager-SeatPrice")) {
             HashMap<SeatType, Float> temp = (HashMap<SeatType, Float>)DataUtils.loadData("SystemManager-SeatPrice");     
             systemManager.setSeatMultiplierHashmap(temp);
         };
 
-        if(DataUtils.checkFile("SystemManager-MovieSortingCriteria") == true){
+        if(DataUtils.checkFile("SystemManager-MovieSortingCriteria")) {
             SortCriteria temp = (SortCriteria)DataUtils.loadData("SystemManager-MovieSortingCriteria");
             try{
                 systemManager.setSortingCriteria(temp);

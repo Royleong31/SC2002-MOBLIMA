@@ -5,41 +5,24 @@ import model.Account.Account;
 import utils.Utils;
 
 /**
- *
- @author Roy Leong, Kish Choy
+ * Allows the non-logged in users to view movies and screenings
+ @author Roy Leong
  @version 1.0
  @since 2022-10-30
 */
 public class LoginConsole extends ParentConsole {
+  /**
+   * Log in status is stored in the login manager
+   */
   private final LoginManager loginManager;
   
+  /**
+   * Constructor for the login manager
+   * @param loginManager
+   */
   public LoginConsole(LoginManager loginManager) {
     super();
     this.loginManager = loginManager;
-  }
-  
-  @Override
-  public void display(Account account) { // account is unused as it's null
-    System.out.println("Inside login console");
-    // TODO: Use standard input to get user input
-    Integer userSelection = this.getUserChoiceFromCount("Enter '1' to log in, '2' to register, '3' to return to main menu", 3);
-
-    if (userSelection == 1) {
-      this.login();
-    } else if (userSelection == 2) {
-      this.register();
-    } else if (userSelection == 3) {
-
-      loginManager.returnToMainMenu();
-      return;
-
-    } else {
-      // Should never reach here as error checking is done in this.getUserChoice()
-      System.out.println("An unexpected error occured");
-      return;
-    }
-
-    return;
   }
 
   /**
@@ -94,13 +77,29 @@ public class LoginConsole extends ParentConsole {
 
     System.out.println("Successfully registered!");
   }
-}
+  /**
+   * Allows the user to choose which option they want to do
+   * account is null here because the user is not logged in
+   * @param account
+   */
+  @Override
+  public void display(Account account) { // account is unused as it's null
+    System.out.println("Inside login console");
+    // TODO: Use standard input to get user input
+    Integer userSelection = this.getUserChoiceFromCount("Enter '1' to log in, '2' to register, '3' to return to main menu", 3);
 
-/**
- * Problem 1: User input checking is repeated multiple times
- * Create a helper function in the parent class that takes in a list of valid inputs and a prompt
- * Will only return the user's input, user can't quit
- * 
- * Problem 2: How to recognise that the user quits the program?
- * Create a function in the ParentConsole that handles quitting of a program that will store all state in storage and then call System.exit(0);
- */
+    if (userSelection == 1) {
+      this.login();
+    } else if (userSelection == 2) {
+      this.register();
+    } else if (userSelection == 3) {
+      //this.exitProgram();
+      loginManager.returnToMainMenu();
+      return;
+    } else {
+      // Should never reach here as error checking is done in this.getUserChoice()
+      System.out.println("An unexpected error occured");
+      this.exitProgram();
+    }
+  }
+}
