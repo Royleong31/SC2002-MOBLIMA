@@ -5,6 +5,8 @@ import java.time.format.DateTimeFormatter;
 import java.text.ParseException;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+import java.util.TimeZone;
+import java.util.Serializable;
 
 /**
  * DateTime class
@@ -14,7 +16,7 @@ import java.text.SimpleDateFormat;
  @version 1.1
  @since 2022-10-30
 */
-public class DateTime {
+public class DateTime implements Serializable {
   /**
    * Year of the date
    */

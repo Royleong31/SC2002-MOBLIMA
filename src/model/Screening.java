@@ -1,6 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.io.Serializable;
 
 import enums.SeatType;
 
@@ -12,7 +15,7 @@ import enums.SeatType;
  @version 1.1
  @since 2022-10-30
 */
-public class Screening {
+public class Screening implements Serializable{
   /**
    * Movie the screening will show
    */

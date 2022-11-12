@@ -30,19 +30,30 @@ import model.Account.MovieGoerAccount;
 import utils.Utils;
 
 /**
- * Account for a staff member.
- * Contains the staff id
+ * Account for a movie goers.
  *
- @author Roy Leong
+ @author Roy Leong, Kish Choy
  @version 1.0
  @since 2022-10-30
 */
 public class MovieGoerConsole extends ParentConsole {
+  /**
+   * Movie goer console constructor
+   * @param lm
+   * @param bm
+   * @param cm
+   * @param mm
+   * @param rm
+   * @param sm
+   * @param sysm
+   */
   public MovieGoerConsole(LoginManager lm, BookingManager bm, CineplexManager cm, MovieManager mm, ReviewManager rm, ScreeningManager sm, SystemManager sysm) {
     super(lm, bm, cm, mm, rm, sm, sysm);
   }
 
-  // show statuses that the movie goer can view
+  /**
+   * The show statuses that the user can choose from
+   */
   private final ArrayList<ShowStatus> allowedShowStatus = Utils.asArrayList(ShowStatus.PREVIEW, ShowStatus.NOW_SHOWING);
 
   /**
@@ -91,7 +102,6 @@ public class MovieGoerConsole extends ParentConsole {
    * Allows the user to select seats for a booking
    * uses super.getScreening() to get the screening that the user wants to book
    */
-  // !: Calculating the aisle is complicated because of the remainder of the division of rolumns by aisle, so this is just an approximation
   private ArrayList<Seat> selectSeats(Screening screening) {
     SeatingPlan seatingPlan = screening.getCinema().getSeatingPlan();
     int columns = seatingPlan.getColumns();
@@ -145,12 +155,18 @@ public class MovieGoerConsole extends ParentConsole {
     return seats;
   }
 
+  /**
+   * Display all movies that are currently showing or in preview
+   */
   private void displayAllMovies() {
     ArrayList<Movie> movies = super.getMovieManager().getMovies(this.allowedShowStatus);
     super.displayMovies(movies);
   }
 
-    private String getCharForNumber(int i) {
+  /**
+   * Convert number into a capital alphabet
+   */
+  private String getCharForNumber(int i) {
     return i > 0 && i < 27 ? String.valueOf((char)(i + 64)) : null;
   }
 
@@ -179,18 +195,26 @@ public class MovieGoerConsole extends ParentConsole {
     }
   }
 
+  /**
+   * Display all the movies that are sorted by the sorting criteria set by the admin
+   */
   private void displayTopMovies() {
     ArrayList<Movie> movies = super.getMovieManager().getMovies(super.getSystemManager().getSortingCriteria(), this.allowedShowStatus);
     movies = movies.size() < 5 ? movies : new ArrayList<Movie>(movies.subList(0, 4));
     super.displayMovies(movies);
   }
 
+  /**
+   * Allows the user to choose which option they want to do
+   * Checks that the account is of type MovieGoerAccount
+   * @param account
+   */
   @Override
   public void display(Account account) {
     // should never trigger as it can only reach MovieGoerConsole if the logged in user is a MovieGoerAccount
     if (!(account instanceof MovieGoerAccount)) {
       System.out.println("Something went wrong in the login process");
-      this.exitProgram();
+      return;
     }
     
     Integer userSelection = super.getSelectInput(Utils.asArrayList("to submit review", 
@@ -198,8 +222,7 @@ public class MovieGoerConsole extends ParentConsole {
                                                                     "to view booking history", 
                                                                     "to display all available movies", 
                                                                     "to display top movies", 
-                                                                    "to logout",
-                                                                    "to quit program"), "Enter your choice: ");
+                                                                    "to logout"), "Enter your choice: ");
 
     MovieGoerAccount movieGoerAccount = (MovieGoerAccount) account;
 
@@ -226,16 +249,15 @@ public class MovieGoerConsole extends ParentConsole {
 
       case 6:
         super.logout();
-        return;
-    
-      case 7:
-        this.exitProgram();
-        return;
+        break;
+   
+
     
       default:
         // Should never reach here as error checking is done in this.getUserChoice()
         System.out.println("An unexpected error occured");
-        this.exitProgram();
+        return;
     }
+    return;
   }
 }

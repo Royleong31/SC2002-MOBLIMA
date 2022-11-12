@@ -1,6 +1,7 @@
 package model;
 
 import enums.TicketType;
+import java.io.Serializable;
 
 /**
  * Ticket issued during booking
@@ -10,7 +11,7 @@ import enums.TicketType;
  @version 1.1
  @since 2022-11-02
 */
-public class Ticket {
+public class Ticket implements Serializable{
   /**
    * The seat that the ticket is associated with.
    * There will be no mutator for this.

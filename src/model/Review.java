@@ -1,6 +1,7 @@
 package model;
 
 import model.Account.MovieGoerAccount;
+import java.io.Serializable;
 
 /**
  * Review class
@@ -10,7 +11,8 @@ import model.Account.MovieGoerAccount;
  @version 1.1
  @since 2022-10-30
 */
-public class Review {
+public class Review implements Serializable{
+    
   /**
    * Movie the review is for
    */

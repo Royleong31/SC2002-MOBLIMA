@@ -19,10 +19,7 @@ import utils.Utils;
  @version 1.1
  @since 2022-10-30
 */
-public class MovieManager {
-  /**
-   * Collection of all movies the company can show
-   */
+public class MovieManager implements Serializable {
   private ArrayList<Movie> moviesArr = new ArrayList<Movie>();
 
   /**
@@ -182,6 +179,15 @@ public class MovieManager {
    */
   public ArrayList<Movie> getMovies() {
     return moviesArr;
+  }
+
+  /**
+  * Load movies into this object's movie arraylist
+  *
+  * @param moviesArr arraylist of movies to load
+  */
+  public void setMovies(ArrayList<Movie> moviesArr) {
+      this.moviesArr = new ArrayList<Movie>(moviesArr);
   }
 
   /**

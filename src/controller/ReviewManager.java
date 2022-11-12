@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 
 import model.Review;
 import model.Movie;
@@ -14,7 +15,7 @@ import model.Account.MovieGoerAccount;
  @version 1.1
  @since 2022-10-30
 */
-public class ReviewManager {
+public class ReviewManager implements Serializable {
   /**
    * Add new review to a movie
    * 
