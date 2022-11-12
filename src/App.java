@@ -18,7 +18,7 @@ import model.Account.*;
 import model.*;
 
 /**
- * @author Roy Leong
+ * @author Roy Leong, Kish Choy
  * @version 1.0
  * @since 2022-10-30
  */
@@ -27,14 +27,14 @@ public class App {
      * Contains stateful details about the user's log in status
      * currentAccount object can be obtained from loginManager and passed to other class methods
      */
-    static private LoginManager loginManager = new LoginManager();
+    static final private LoginManager loginManager = new LoginManager();
 
-    static private BookingManager bookingManager = new BookingManager();
-    static private CineplexManager cineplexManager = new CineplexManager();
-    static private MovieManager movieManager = new MovieManager();
-    static private ReviewManager reviewManager = new ReviewManager();
-    static private ScreeningManager screeningManager = new ScreeningManager();
-    static private SystemManager systemManager = new SystemManager();
+    static final private BookingManager bookingManager = new BookingManager();
+    static final private CineplexManager cineplexManager = new CineplexManager();
+    static final private MovieManager movieManager = new MovieManager();
+    static final private ReviewManager reviewManager = new ReviewManager();
+    static final private ScreeningManager screeningManager = new ScreeningManager();
+    static final private SystemManager systemManager = new SystemManager();
 
     /**
      * Contains the possible consoles that can be selected
@@ -68,6 +68,9 @@ public class App {
 
     }
 
+    /**
+     * Deserialize and load all persistent application data
+     */
     private static void loadAppData(){
         //LoginManager Data
         if(DataUtils.checkFile("LoginManager-Accounts") == true){
@@ -118,6 +121,9 @@ public class App {
         System.out.println("Data Load Done...");
     }
 
+    /**
+     * Serialize and save all persistent application data
+     */
     private static void saveAppData(){
         System.out.println("Saving data...");
         
