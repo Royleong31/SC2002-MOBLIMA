@@ -28,15 +28,12 @@ public class MovieGoerAccount extends Account {
   private String email;
   
   /**
-   * Constructor for the MovieGoerAccount class.
-   * This is the register method.
-   * @param username This is the movie goer's username.
-   *				 Inherited from Account superclass.
-   * @param password This is the movie goer's password.
-   *				 Inherited from the Account superclass.
-   * @param name This is the movie goer's name.
-   * @param phoneNumber This is the movie goer's phone number.
-   * @param email This is the movie goer's email address.
+   * Constructor for the MovieGoerAccount class, used to register new movie goer accounts.
+   * @param username is the new movie goer's username, inherited from Account superclass.
+   * @param password is the new movie goer's password, inherited from the Account superclass.
+   * @param name is the new movie goer's name.
+   * @param phoneNumber is the new movie goer's phone number.
+   * @param email is the new movie goer's email address.
    */
   public MovieGoerAccount(String username, String password, String name, String phoneNumber, String email) {
     super(username, password);
