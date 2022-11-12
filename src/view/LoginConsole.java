@@ -18,7 +18,7 @@ public class LoginConsole extends ParentConsole {
   
   /**
    * Constructor for LoginConsole
-   * @param loginManager
+   * @param loginManager the login manager controller class
    */
   public LoginConsole(LoginManager loginManager) {
     super();
@@ -27,7 +27,7 @@ public class LoginConsole extends ParentConsole {
   
   /**
    * Logic for login user interface
-   * @param account
+   * @param account the account that is using the user interface
    */
   @Override
   public void display(Account account) { // account is unused as it's null
@@ -52,7 +52,6 @@ public class LoginConsole extends ParentConsole {
 
   /**
    * Asks the user for login details and logs them in
-   * @return
    */
   private void login() {
     while (true) {
@@ -72,7 +71,6 @@ public class LoginConsole extends ParentConsole {
 
   /**
    * Asks the user for registration details and registers them
-   * @return
    */
   private void register() {
     while (true) {

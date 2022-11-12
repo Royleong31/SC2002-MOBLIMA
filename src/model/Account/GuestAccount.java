@@ -8,6 +8,9 @@ package model.Account;
  @since 2022-10-30
  */
 public class GuestAccount extends Account {
+    /**
+     * Constructor for guest account
+     */
     public GuestAccount() {
         super("", "");
       }

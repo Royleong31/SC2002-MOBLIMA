@@ -44,11 +44,11 @@ public class CineplexManager {
 
   /**
    * Add new cinema hall in a particular cineplex
-   * @param cineplex
-   * @param rows
-   * @param columns
-   * @param aisle
-   * @param cinemaType
+   * @param cineplex the cineplex where the new cinema is located at
+   * @param rows the number of rows in the cinema
+   * @param columns the number of columns in the cinema
+   * @param aisle the number of aisles in the cinema
+   * @param cinemaType the type of cinema
    * @return new cinema object
    * @throws Exception if cinema already exists
    */
@@ -62,7 +62,7 @@ public class CineplexManager {
 
   /**
    * Get a particular cinema object from its ID
-   * @param cinemaId
+   * @param cinemaId the ID of the cinema
    * @return cinema object
    * @throws Exception if ID does not link to any cinema does not exist
    */
@@ -78,7 +78,7 @@ public class CineplexManager {
 
   /**
    * Get cineplex based on its location
-   * @param cineplexLocation
+   * @param cineplexLocation the location of the cineplex
    * @return cineplex object
    * @throws Exception if there is no cineplex at that location
    */
@@ -94,8 +94,8 @@ public class CineplexManager {
 
   /**
    * Delete a particular cinema hall
-   * @param cineplex
-   * @param cinema
+   * @param cineplex the cineplex that the cinema is located at
+   * @param cinema the cinema object
    * @throws Exception if that cinema does not exist in that cineplex
    */
   public void deleteCinema(Cineplex cineplex, Cinema cinema) throws Exception {
@@ -104,7 +104,7 @@ public class CineplexManager {
 
   /**
    * Get an arraylist of all cineplexes
-   * @return
+   * @return arraylist of cineplexes
    */
   public ArrayList<Cineplex> getCineplexes() {
     return this.cineplexesArr;
@@ -112,8 +112,8 @@ public class CineplexManager {
 
   /**
    * Get all cinema halls of a cineplex
-   * @param cineplex
-   * @return
+   * @param cineplex the selected cineplex
+   * @return arraylist of cinemas in the cineplex
    * @throws Exception if the cineplex does not exist
    */
   public ArrayList<Cinema> getCinemas(Cineplex cineplex) throws Exception {

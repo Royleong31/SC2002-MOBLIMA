@@ -68,13 +68,13 @@ import java.util.Scanner;
 
   /**
    * Constructor for ParentConsole with parameters
-   * @param lm
-   * @param bm
-   * @param cm
-   * @param mm
-   * @param rm
-   * @param sm
-   * @param sysm
+   * @param lm the login manager
+   * @param bm the booking manager
+   * @param cm the cineplex manager
+   * @param mm the movie manager
+   * @param rm the review manager
+   * @param sm the screening manager
+   * @param sysm the system manager
    */
   ParentConsole(LoginManager lm, BookingManager bm, CineplexManager cm, MovieManager mm, ReviewManager rm, ScreeningManager sm, SystemManager sysm) {
     this.loginManager = lm;
@@ -141,7 +141,7 @@ import java.util.Scanner;
 
   /**
    * Displays all movies in the system
-   * @param movies
+   * @param movies arraylist of movies to be displayed
    */
   protected void displayMovies(ArrayList<Movie> movies) {
     System.out.println("Movies");
@@ -159,7 +159,7 @@ import java.util.Scanner;
 
   /**
    * Displays all screenings for a movie
-   * @param screenings
+   * @param screenings arraylist of screenings to be displayed
    */
   protected void displayScreenings(ArrayList<Screening> screenings) {
     if (screenings.size() == 0) {
@@ -178,7 +178,7 @@ import java.util.Scanner;
    * Helper method that can be used for child classes to get movies to do other things like submitting reviews
    * Displays all movies in the system
    * Allows the user to pick a movie
-   * @param sortCriterias
+   * @param sortCriterias 
    * @param showStatuses
    * @return the movie that the user picked
    */
@@ -412,6 +412,10 @@ import java.util.Scanner;
     }
   }
 
+  
+  /** 
+   * @param exitProgram(
+   */
   // TODO:
   protected void startProgram() {}
 

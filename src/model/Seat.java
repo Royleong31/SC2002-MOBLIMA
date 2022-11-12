@@ -33,10 +33,10 @@ public class Seat {
 
   /**
    * Constructor for Seat class
-   * @param row
-   * @param column
-   * @param seatTaken
-   * @param seatType
+   * @param row row number
+   * @param column column number
+   * @param seatTaken whether seat is taken
+   * @param seatType the type of seat
    */
   public Seat(int row, int column, boolean seatTaken, SeatType seatType) {
     this.row = row;
@@ -47,7 +47,7 @@ public class Seat {
 
   /**
    * Get column number of seat
-   * @return
+   * @return the column number of seat
    */
   public int getColumn() {
     return this.column;
@@ -55,7 +55,7 @@ public class Seat {
 
   /**
    * Get row number of seat
-   * @return
+   * @return the row number of seat
    */
   public int getRow() {
     return this.row;
@@ -63,7 +63,7 @@ public class Seat {
 
   /**
    * Get the row character (e.g. A, B) of the seat
-   * @return
+   * @return the row in character
    */
   public String getRowChar() {
     return this.getCharForNumber(this.row);
@@ -71,8 +71,8 @@ public class Seat {
 
   /**
    * Convert the row number into a string, so the seat id can be A1, B2, etc.
-   * @param i
-   * @return
+   * @param i the row number
+   * @return the corresponding character for row
    */
   private String getCharForNumber(int i) {
     return i > 0 && i < 27 ? String.valueOf((char)(i + 64)) : null;
@@ -80,7 +80,7 @@ public class Seat {
 
   /**
    * Get ID of the seat which is combination of row character and column number (e.g. A1, B2)
-   * @return
+   * @return ID of the seat
    */
   public String getId() {
     return this.getCharForNumber(this.row) + Integer.toString(this.column);
@@ -88,7 +88,7 @@ public class Seat {
 
   /**
    * Check if the seat is taken
-   * @return
+   * @return whether the seat is taken
    */
   public boolean isTaken() {
     return this.seatTaken;
@@ -96,7 +96,7 @@ public class Seat {
   
   /**
    * Set the vacancy of the seat
-   * @param isTaken
+   * @param isTaken whether the seat is taken
    */
   public void setTaken(boolean isTaken) {
     this.seatTaken = isTaken;
@@ -104,7 +104,7 @@ public class Seat {
 
   /**
    * Get the seat type of the seat
-   * @return
+   * @return the type of seat
    */
   public SeatType getSeatType() {
     return this.seatType;

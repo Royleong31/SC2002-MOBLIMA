@@ -33,13 +33,13 @@ import utils.Utils;
 public class MovieGoerConsole extends ParentConsole {
   /**
    * Constructor for MovieGoerConsole
-   * @param lm
-   * @param bm
-   * @param cm
-   * @param mm
-   * @param rm
-   * @param sm
-   * @param sysm
+   * @param lm the login manager
+   * @param bm the booking manager
+   * @param cm the cineplex manager
+   * @param mm the movie manager
+   * @param rm the review manager
+   * @param sm the screening manager
+   * @param sysm the system manager
    */
   public MovieGoerConsole(LoginManager lm, BookingManager bm, CineplexManager cm, MovieManager mm, ReviewManager rm, ScreeningManager sm, SystemManager sysm) {
     super(lm, bm, cm, mm, rm, sm, sysm);
@@ -50,7 +50,7 @@ public class MovieGoerConsole extends ParentConsole {
 
   /**
    * Displays all reviews that have been made by this user
-   * @param movieGoerAccount
+   * @param movieGoerAccount the movie goer account that is submitting the review
    */
   private void submitReview(MovieGoerAccount movieGoerAccount) {
     // get the movie from super.getMovie()
@@ -73,7 +73,7 @@ public class MovieGoerConsole extends ParentConsole {
    * Uses super.getMovie() to get the movie that the user wants to review
    * Uses selectSeats() to get the seats that the user wants to review
    * which is then passed to BookingManager to make the booking
-   * @param movieGoerAccount
+   * @param movieGoerAccount the movie goer account that is making the booking
    */
   private void makeBooking(MovieGoerAccount movieGoerAccount) {
     try {
@@ -165,7 +165,7 @@ public class MovieGoerConsole extends ParentConsole {
 
   /**
    * Displays all bookings that have been made by this user
-   * @param movieGoerAccount
+   * @param movieGoerAccount the movie goer account whose booking history will be checked
    */
   private void viewBookingHistory(MovieGoerAccount movieGoerAccount) {
     try {
@@ -199,7 +199,7 @@ public class MovieGoerConsole extends ParentConsole {
 
   /**
    * Logic for movie goer user interface
-   * @param account
+   * @param account the account that is using the user interface, in this case, it is the movie goer account
    */
   @Override
   public void display(Account account) {
@@ -242,10 +242,6 @@ public class MovieGoerConsole extends ParentConsole {
       case 6:
         super.logout();
         return;
-    
-      //case 7:
-        //this.exitProgram();
-        //return;
     
       default:
         // Should never reach here as error checking is done in this.getUserChoice()

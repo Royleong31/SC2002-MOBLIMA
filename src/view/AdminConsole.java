@@ -102,7 +102,6 @@ public class AdminConsole extends ParentConsole {
    * call the addMovie method in the MovieManager class to add it
    * Catches and displays exceptions
    * 
-   * @param movie
    */
   public void addMovie() { 
     String title = super.getUserInput("Enter the title of the movie");

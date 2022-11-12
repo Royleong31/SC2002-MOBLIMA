@@ -31,13 +31,13 @@ public class GuestConsole extends ParentConsole {
 
   /**
    * Constructor for guest console
-   * @param lm
-   * @param bm
-   * @param cm
-   * @param mm
-   * @param rm
-   * @param sm
-   * @param sysm
+   * @param lm the login manager
+   * @param bm the booking manager
+   * @param cm the cineplex manager
+   * @param mm the movie manager
+   * @param rm the review manager
+   * @param sm the screening manager
+   * @param sysm the system manager
    */
   public GuestConsole(LoginManager lm, BookingManager bm, CineplexManager cm, MovieManager mm, ReviewManager rm,
       ScreeningManager sm, SystemManager sysm) {
@@ -79,7 +79,7 @@ public class GuestConsole extends ParentConsole {
 
   /**
    * Provides user interface logic for the guest
-   * @param account
+   * @param account the account utilising this display, in this case, it is the dummy guest account
    */
   @Override
   public void display(Account account) {
