@@ -16,23 +16,15 @@ public class DataUtils {
      * @return the error code of the method
      */
     public static int saveData(Object o, String name){
-        if(checkFile(name)){
-            // System.out.println("File already exists");
-            // return 2;
-            System.out.println("File exists, overwriting file '" + name +"'.");
-        }
-
 
         try{
             FileOutputStream fileOut = new FileOutputStream("Data/" + name, false);
             ObjectOutputStream objOut = new ObjectOutputStream(fileOut);
             objOut.writeObject(o);
             objOut.close();
-            System.out.println("Data saved successully '" + name + "'.");
             return 0;
         } catch (IOException iex) {
             iex.printStackTrace();
-            System.out.println("Data save failed '" + name + "'.");
             return 1;
         }
     }

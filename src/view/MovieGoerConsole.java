@@ -213,24 +213,6 @@ public class MovieGoerConsole extends ParentConsole {
         break;
     
       case 3:
-        // ArrayList<Booking> bar = new ArrayList<Booking>(super.getBookingManager().getBookings());
-        // System.out.println("Current Account Details:");
-        // System.out.println(movieGoerAccount.getUsername() + "|" + movieGoerAccount.getEmail() + "|" + movieGoerAccount.getName() + "|" + movieGoerAccount.getPhoneNumber());
-        // MovieGoerAccount tMAC = bar.get(1).getMovieGoer();
-        // System.out.println("That Account Details:");
-        // System.out.println(tMAC.getUsername() + "|" + tMAC.getEmail() + "|" + tMAC.getName() + "|" + tMAC.getPhoneNumber());
-        // MovieGoerAccount tMAC2 = bar.get(2).getMovieGoer();
-        // System.out.println("That Account Details:");
-        // System.out.println(tMAC2.getUsername() + "|" + tMAC2.getEmail() + "|" + tMAC2.getName() + "|" + tMAC2.getPhoneNumber());
-        
-
-        // System.out.println("my printing start");
-        
-        // for(Booking b : bar){
-        //   System.out.println(b.getId() + " | " + b.getClass() + " | " + b.getMovieGoer() + " | " + b.getTickets() + " | ");
-        // }
-        
-        // System.out.println("my printing end");
         this.viewBookingHistory(movieGoerAccount);
         break;
 

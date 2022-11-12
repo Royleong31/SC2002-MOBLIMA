@@ -314,15 +314,6 @@ import java.io.Serializable;
 
   // TODO:
   protected void startProgram() {
-    // this.bookingManager = (BookingManager)DataUtils.loadData("BookingManager");
-    // this.cineplexManager = (CineplexManager)DataUtils.loadData("CineplexManager");
-    // this.loginManager = (LoginManager)DataUtils.loadData("LoginManager");
-    // this.movieManager = (MovieManager)DataUtils.loadData("MovieManager");
-    // this.reviewManager = (ReviewManager)DataUtils.loadData("ReviewManager");
-    // this.screeningManager = (ScreeningManager)DataUtils.loadData("ScreeningManager");
-    // this.systemManager = (SystemManager)DataUtils.loadData("SystemManager");
-    // System.out.println("Load Done...");
-
   }
 
   /**
@@ -330,31 +321,6 @@ import java.io.Serializable;
    */
   protected void exitProgram() {
     // TODO: save all state into storage
-
-
-    // System.out.println("Saving data...");
-    // int bookingManagerErr = DataUtils.saveData(this.bookingManager, "BookingManager");
-    // int cineplexManagerErr = DataUtils.saveData(this.cineplexManager, "CineplexManager");
-    // int loginManagerErr = DataUtils.saveData(this.loginManager, "LoginManager");
-    // int movieManagerErr = DataUtils.saveData(this.movieManager, "MovieManager");
-    // int reviewManagerErr = DataUtils.saveData(this.reviewManager, "ReviewManager");
-    // int screeningManagerErr = DataUtils.saveData(this.screeningManager, "ScreeningManager");
-    // int systemManagerErr = DataUtils.saveData(this.systemManager, "SystemManager");
-    
-    // System.out.println("Error Codes: ");
-    // System.out.println("BookingManager: " + bookingManagerErr);
-    // System.out.println("CineplexManager: " + cineplexManagerErr);
-    // System.out.println("LoginManager: " + loginManagerErr);
-    // System.out.println("MovieManager: " + movieManagerErr);
-    // System.out.println("ReviewManager: " + reviewManagerErr);
-    // System.out.println("ScreeningManager: " + screeningManagerErr);
-    // System.out.println("SystemManager: " + systemManagerErr);
-
-    // if(bookingManagerErr == 0 && cineplexManagerErr == 0 && loginManagerErr == 0 && movieManagerErr == 0 && reviewManagerErr == 0 && screeningManagerErr == 0 && systemManagerErr == 0){
-    //   System.out.println("All is good, Save Successful!");
-    // } else {
-    //   System.out.println("Save Failed!");
-    // }
     return;
 
     // ParentConsole.scannerObj.close();
