@@ -22,7 +22,7 @@ public class LoginConsole extends ParentConsole {
   public void display(Account account) { // account is unused as it's null
     System.out.println("Inside login console");
     // TODO: Use standard input to get user input
-    Integer userSelection = this.getUserChoiceFromCount("Enter '1' to log in, '2' to register, '3' to return to home page", 3);
+    Integer userSelection = this.getUserChoiceFromCount("Enter '1' to log in, '2' to register, '3' to return to main menu", 3);
 
     if (userSelection == 1) {
       this.login();
