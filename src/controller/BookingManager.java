@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 import enums.TicketType;
 
+
+import java.io.Serializable;
+import java.lang.Math;
 import model.Booking;
 import model.Screening;
 import model.Seat;
@@ -18,7 +21,7 @@ import utils.DateTimeUtils;
  @version 1.1
  @since 2022-10-30
 */
-public class BookingManager {
+public class BookingManager implements Serializable {
   private ArrayList<Booking> bookingsArr = new ArrayList<Booking>();
   
   /**
@@ -122,6 +125,10 @@ public class BookingManager {
     return this.bookingsArr;
   }
 
+  public void setBookingsArr(ArrayList<Booking> bookingsArr) {
+    this.bookingsArr = new ArrayList<Booking>(bookingsArr);
+  }
+
   /**
    * Returns all bookings that have been made by a movie goer
    * @param movieGoer
@@ -131,7 +138,9 @@ public class BookingManager {
     ArrayList<Booking> checkArr = new ArrayList<Booking>();
 	
     for(Booking findBooking: bookingsArr){
-      if(findBooking.getMovieGoer().equals(movieGoer))
+      // if(findBooking.getMovieGoer().equals(movieGoer))
+      // System.out.println("User: " + findBooking.getMovieGoer().getUsername() + " -> " + movieGoer.getUsername());
+      if(findBooking.getMovieGoer().getUsername().equals(movieGoer.getUsername()))
         checkArr.add(findBooking);
     }
     return checkArr;

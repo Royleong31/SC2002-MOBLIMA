@@ -1,11 +1,12 @@
 package controller;
 import java.util.ArrayList;
+import java.io.Serializable;
 
 import model.Review;
 import model.Movie;
 import model.Account.MovieGoerAccount;
 
-public class ReviewManager {
+public class ReviewManager implements Serializable{
 
   public void addReview(Movie movie, String comments, int rating, MovieGoerAccount movieGoer) throws Exception {
     if (hasPreviouslySubmittedReview(movieGoer, movie)) 

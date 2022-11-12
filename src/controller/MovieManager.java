@@ -3,6 +3,7 @@ import enums.ShowStatus;
 import enums.SortCriteria;
 import utils.Utils;
 import java.util.ArrayList;
+import java.io.Serializable;
 import model.Movie;
 import utils.SalesUtils;
 import enums.Advisory;
@@ -17,7 +18,7 @@ import enums.MovieType;
  @version 1.0
  @since 2022-10-30
 */
-public class MovieManager {
+public class MovieManager implements Serializable{
   private ArrayList<Movie> moviesArr = new ArrayList<Movie>();
 
   public MovieManager() {
@@ -129,6 +130,10 @@ public class MovieManager {
 
   public ArrayList<Movie> getMovies() {
     return moviesArr;
+  }
+
+  public void setMovies(ArrayList<Movie> moviesArr) {
+    this.moviesArr = new ArrayList<Movie>(moviesArr);
   }
 
   public ArrayList<Movie> getMovies(ArrayList<ShowStatus> showStatus){

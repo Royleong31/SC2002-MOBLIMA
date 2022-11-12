@@ -6,7 +6,7 @@ import utils.Utils;
 
 /**
  *
- @author Roy Leong
+ @author Roy Leong, Kish Choy
  @version 1.0
  @since 2022-10-30
 */
@@ -29,14 +29,17 @@ public class LoginConsole extends ParentConsole {
     } else if (userSelection == 2) {
       this.register();
     } else if (userSelection == 3) {
-      //this.exitProgram();
+
       loginManager.returnToMainMenu();
       return;
+
     } else {
       // Should never reach here as error checking is done in this.getUserChoice()
       System.out.println("An unexpected error occured");
-      this.exitProgram();
+      return;
     }
+
+    return;
   }
 
   /**

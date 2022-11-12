@@ -80,7 +80,7 @@ public class GuestConsole extends ParentConsole {
           // Should never reach here as error checking is done in this.getUserChoice()
           // Should never reach here as error checking is done in this.getUserChoice()
           System.out.println("An unexpected error occured");
-          this.exitProgram();
+          return;
       }
     }
   }

@@ -23,7 +23,7 @@ import utils.Utils;
  * Account for a staff member.
  * Contains the staff id
  *
- @author Roy Leong
+ @author Roy Leong, Kish Choy
  @version 1.0
  @since 2022-10-30
 */
@@ -360,7 +360,7 @@ public class AdminConsole extends ParentConsole {
     // should never trigger as it can only reach AdminConsole if the logged in user is a AdminAccount
     if (!(account instanceof AdminAccount)) {
       System.out.println("Something went wrong in the login process");
-      this.exitProgram();
+      return;
     }
 
     Integer userInput = super.getSelectInput(Utils.asArrayList("to add movie", 
@@ -425,17 +425,14 @@ public class AdminConsole extends ParentConsole {
       case 11:
         super.logout();
         return;
-      
-      //case 12:
-        //super.exitProgram();
-        //return;
     
       default:
         // Should never reach here as error checking is done in this.getUserChoice()
          // Should never reach here as error checking is done in this.getUserChoice()
         System.out.println("An unexpected error occured");
-        this.exitProgram();
+        return;
     }
+    return;
   }
 
 }

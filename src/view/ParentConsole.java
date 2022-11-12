@@ -18,18 +18,20 @@ import controller.ReviewManager;
 import controller.BookingManager;
 import controller.CineplexManager;
 import controller.LoginManager;
+import utils.DataUtils;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.Serializable;
 
 /**
  * All methods here do not require authentication
  *
- @author Roy Leong
+ @author Roy Leong, Kish Choy
  @version 1.0
  @since 2022-10-30
 */
- public abstract class ParentConsole {
+ public abstract class ParentConsole implements Serializable{
   private final static Scanner scannerObj = new Scanner(System.in);
 
   private final LoginManager loginManager;
@@ -309,18 +311,6 @@ import java.util.Scanner;
         System.out.println("Invalid input. Please try again");
       }
     }
-  }
-
-  // TODO:
-  protected void startProgram() {}
-
-  /**
-   * This is the function that is called whenever the program exits, for e.g. when the user chooses to quit the program
-   */
-  protected void exitProgram() {
-    // TODO: save all state into storage
-    ParentConsole.scannerObj.close();
-    System.exit(0);
   }
 
   protected BookingManager getBookingManager() {

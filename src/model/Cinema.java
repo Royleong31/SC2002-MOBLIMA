@@ -2,6 +2,7 @@ package model;
 
 import enums.CinemaType;
 import utils.IdUtils;
+import java.io.Serializable;
 
 /**
  * Cinema class
@@ -10,7 +11,8 @@ import utils.IdUtils;
  * @version 1.1
  * @since 2022-10-30
  */
-public class Cinema {
+
+public class Cinema implements Serializable{
   /**
    * id of the cinema
    */
