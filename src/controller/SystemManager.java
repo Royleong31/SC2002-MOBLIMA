@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import constants.Constants;
-import utils.DateTimeUtils;
 import enums.CinemaType;
 import enums.SeatType;
 import enums.SortCriteria;

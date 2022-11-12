@@ -1,29 +1,43 @@
 package controller;
+
+import java.util.ArrayList;
+
 import enums.ShowStatus;
 import enums.SortCriteria;
-import utils.Utils;
-import java.util.ArrayList;
-import model.Movie;
-import utils.SalesUtils;
 import enums.Advisory;
 import enums.Genre;
 import enums.MovieType;
+import model.Movie;
+import utils.SalesUtils;
+import utils.Utils;
 
 /**
- * Account for a staff member.
- * Contains the staff id
+ * Movie Manager
+ * Responsible for handling all addition/deletion/update/retrieval of movies
  *
- @author Roy Leong
- @version 1.0
+ @author Roy Leong, Song Chen
+ @version 1.1
  @since 2022-10-30
 */
 public class MovieManager {
+  /**
+   * Collection of all movies the company can show
+   */
   private ArrayList<Movie> moviesArr = new ArrayList<Movie>();
 
+  /**
+   * Constructor for MovieManager object
+   */
   public MovieManager() {
     System.out.println("Movie manager created");
   }
 
+  /**
+   * Add new movie
+   * 
+   * @param movie the movie object to be added
+   * @throws Exception if there already exists a movie with the same name
+   */
   public void addMovie(Movie movie) throws Exception {
     for (Movie cur: this.moviesArr) {
       if (cur.getTitle().equals(movie.getTitle())) {
@@ -34,15 +48,40 @@ public class MovieManager {
     this.moviesArr.add(movie);
   }
 
+  /**
+   * Remove a specified movie by setting its show status as end of showing
+   * 
+   * @param movieTitle title of the movie to be removed
+   * @throws Exception if movie does not exist
+   */
   public void removeMovie(String movieTitle) throws Exception{
     Movie movie = this.getMovieByName(movieTitle);
     this.updateMovieShowingStatus(movie, ShowStatus.END_OF_SHOWING);
   }
 
+  /**
+   * Updates a movie's showing status
+   * 
+   * @param movie movie object to update
+   * @param showStatus show status (enum)
+   */
   public void updateMovieShowingStatus(Movie movie, ShowStatus showStatus) {
     movie.setShowingStatus(showStatus);
   }
 
+  /**
+   * Updates a movie's attribute based on provided parameters, if value of parameter given is null do not update that specific attribute
+   * 
+   * @param movie movie object to update
+   * @param title movie title
+   * @param synopsis movie synopsis
+   * @param director movie director
+   * @param cast movie cast
+   * @param advisoryRating movie advisory rating (enum)
+   * @param genre movie genre (enum)
+   * @param showStatus movie show status (enum)
+   * @param type movie type (enum)
+   */
   public void updateMovie(Movie movie, String title, String synopsis, String director, ArrayList<String> cast, Advisory advisoryRating, Genre genre, ShowStatus showStatus, MovieType type) {
     if (title != null) {
       movie.setTitle(title);
@@ -70,6 +109,14 @@ public class MovieManager {
     }
   }
 
+  /**
+   * Get an arraylist of movies filtered based on their showing statuses and sorted according a a specified sorting criteria
+   * Movies with less than 2 reviews are moved to the end of the sorted list
+   * 
+   * @param sortingCriteria sort criteria (enum)
+   * @param showStatus arraylist of showing statuses (enum) to filter movies by
+   * @return the filtered and sorted movie arraylist
+   */
   public ArrayList<Movie> getMovies(SortCriteria sortingCriteria, ArrayList<ShowStatus> showStatuses) {
     ArrayList<Movie> movieLst = new ArrayList<Movie>();
 
@@ -127,18 +174,47 @@ public class MovieManager {
     return movieLst;
   }
 
+  /**
+   * Get an arraylist of all movies if no sort criteria and show statuses were provided
+   * 
+   * @return arraylist containing all movies
+   * @see MovieManager#getMovies(SortCriteria, ArrayList<ShowStatus>)
+   */
   public ArrayList<Movie> getMovies() {
     return moviesArr;
   }
 
+  /**
+   * Works just like {@link MovieManager#getMovies(SortCriteria, ArrayList<ShowStatus>)} except that the default sort criteria (title)
+   * is used if no sort criteria is provided
+   * 
+   * @param showStatus arraylist of showing statuses (enum) to filter movies by
+   * @return filtered movie arraylist sorted by the default sort criteria (title)
+   * @see MovieManager#getMovies(SortCriteria, ArrayList<ShowStatus>)
+   */
   public ArrayList<Movie> getMovies(ArrayList<ShowStatus> showStatus){
     return getMovies(SortCriteria.TITLE, showStatus);
   }
 
+  /**
+   * Works just like {@link MovieManager#getMovies(SortCriteria, ArrayList<ShowStatus>)} except that all show statuses will be used
+   * as a filter condition i.e list is only sorted by specified sort criteria not filtered
+   * 
+   * @param sortingCriteria sort criteria (enum)
+   * @return sorted movie arraylist
+   * @see MovieManager#getMovies(SortCriteria, ArrayList<ShowStatus>)
+   */
   public ArrayList<Movie> getMovies(SortCriteria sortCriteria){
     return getMovies(sortCriteria, Utils.asArrayList(ShowStatus.values()));
   }
 
+  /**
+   * Get movie object with the specified title
+   * 
+   * @param title title of movie
+   * @return movie object with the specified title
+   * @throws Exception if no movie with the specified title exists
+   */
   public Movie getMovieByName(String title) throws Exception {
     for (Movie movie : moviesArr) {
       if (movie.getTitle().equals(title)) {
