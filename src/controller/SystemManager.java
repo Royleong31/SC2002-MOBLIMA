@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.io.Serializable;
 
 import constants.Constants;
-import utils.DateTimeUtils;
 import enums.CinemaType;
 import enums.SeatType;
 import enums.SortCriteria;
