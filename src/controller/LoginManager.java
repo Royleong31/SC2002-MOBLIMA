@@ -77,7 +77,6 @@ public class LoginManager implements Serializable{
    * @return Account The account that matches input username.
    */
   public boolean isUsernameAvailable(String username){
-    System.out.println(this.usersArr.toString());
 	  for (Account check : this.usersArr){
 		  if (username.equals(check.getUsername())) {
         return false;
@@ -111,6 +110,10 @@ public class LoginManager implements Serializable{
     this.currentAccount = null;
   }
 
+  public void returnToMainMenu() {
+    this.currentAccount = new GuestAccount();
+  }
+
   /**
    * Gets the current user's account.
    * @return Account This user's account.
@@ -124,13 +127,20 @@ public class LoginManager implements Serializable{
    * @return LogInStatus The current state of the log in.
    */
   public LoginStatus getLoginStatus() {
-	  if (this.currentAccount instanceof AdminAccount)
-		  return LoginStatus.ADMIN;
-	  
-	  else if (this.currentAccount instanceof MovieGoerAccount)
-		  return LoginStatus.MOVIE_GOER;
-	  
-	  return LoginStatus.LOGIN;
+	  if (this.currentAccount instanceof AdminAccount) {
+      return LoginStatus.ADMIN;
+    }
+	  else if (this.currentAccount instanceof MovieGoerAccount) {
+      return LoginStatus.MOVIE_GOER;
+    }
+    else if (this.currentAccount instanceof GuestAccount) {
+      this.currentAccount = null; //set it back to null so the user can access the login console next time
+		  return LoginStatus.GUEST;
+    }
+    else {
+      this.currentAccount = null;
+      return LoginStatus.LOGIN;
+    }
   }
 
   public ArrayList<Account> getUsers() {

@@ -1,6 +1,10 @@
 import enums.LoginStatus;
 import model.Account.AdminAccount;
 import model.Account.MovieGoerAccount;
+import model.Account.GuestAccount;
+
+import java.util.ArrayList;
+
 import controller.BookingManager;
 import controller.CineplexManager;
 import controller.LoginManager;
@@ -11,11 +15,13 @@ import controller.SystemManager;
 import view.AdminConsole;
 import view.LoginConsole;
 import view.MovieGoerConsole;
+import view.GuestConsole;
 import view.ParentConsole;
 import utils.DataUtils;
-import java.util.ArrayList;
 import model.Account.*;
 import model.*;
+import utils.Utils;
+import java.util.Scanner;
 
 /**
  * @author Roy Leong, Kish Choy
@@ -42,7 +48,8 @@ public class App {
     private final static ParentConsole[] consolesArr = {
         new LoginConsole(loginManager), 
         new MovieGoerConsole(loginManager, bookingManager, cineplexManager, movieManager, reviewManager, screeningManager, systemManager), 
-        new AdminConsole(loginManager, bookingManager, cineplexManager, movieManager, reviewManager, screeningManager, systemManager)
+        new AdminConsole(loginManager, bookingManager, cineplexManager, movieManager, reviewManager, screeningManager, systemManager),
+        new GuestConsole(loginManager, bookingManager, cineplexManager, movieManager, reviewManager, screeningManager, systemManager)
     };
 
     /**
@@ -51,17 +58,37 @@ public class App {
      */
     public static void main(String[] args) {
         System.out.println("Welcome to the MOBLIMA app!");
+        Scanner sc = new Scanner(System.in);
 
         loadAppData();
 
         boolean exitStatus = false;
         while (exitStatus == false) {
-            LoginStatus loginStatus = loginManager.getLoginStatus();
-            System.out.println(loginStatus + " page\n");
-            // matches the index of this.consolesArr
-            int consolesArrIndex = loginStatus.equals(LoginStatus.LOGIN) ? 0 : loginStatus.equals(LoginStatus.MOVIE_GOER) ? 1 : 2;
-            exitStatus = consolesArr[consolesArrIndex].display(loginManager.getCurrentAccount());
-            // consolesArr[1].display(new MovieGoerAccount("fasds", "fsadsdfa", "fsdsfad", "fsadfsad", "fsad;l"));
+            System.out.println("Select your choice : \n 1. Just Browsing \n 2. Login to make booking/staff \n 3. Quit");
+            Integer choice = Integer.parseInt(sc.nextLine());
+            if (choice != 1 && choice != 2 && choice != 3) {
+                System.out.println("Invalid input. Please try again.");
+                continue;
+            }
+            if (choice == 1) {
+                exitStatus = consolesArr[3].display(new GuestAccount());
+            }
+            else if (choice == 2) {
+                while (true) {
+                    LoginStatus loginStatus = loginManager.getLoginStatus();
+                    System.out.println(loginStatus + " page\n");
+                    // matches the index of this.consolesArr
+                    int consolesArrIndex = loginStatus.equals(LoginStatus.LOGIN) ? 0 : loginStatus.equals(LoginStatus.MOVIE_GOER) ? 1 : loginStatus.equals(LoginStatus.ADMIN) ? 2 : 3;
+                    if (consolesArrIndex == 3) {
+                        break;
+                    }
+                    exitStatus = consolesArr[consolesArrIndex].display(loginManager.getCurrentAccount());
+                }
+            }
+            else {
+                sc.close();
+                break;
+            }
         }
 
         saveAppData();
@@ -114,7 +141,7 @@ public class App {
 
         //SystemManager
         if(DataUtils.checkFile("SystemManager-Holidays") == true){
-            ArrayList<String> temp = (ArrayList<String>)DataUtils.loadData("SystemManager-Holidays");     
+            ArrayList<DateTime> temp = (ArrayList<DateTime>)DataUtils.loadData("SystemManager-Holidays");     
             systemManager.setHolidays(temp);
         };
         
@@ -154,7 +181,7 @@ public class App {
         int screeningsArrErr = DataUtils.saveData(screeningsArr, "ScreeningManager-Screenings");
         
         //SystemManager
-        ArrayList<String> holidaysArr = systemManager.getHolidays();
+        ArrayList<DateTime> holidaysArr = systemManager.getHolidays();
         int holidaysArrErr = DataUtils.saveData(holidaysArr, "SystemManager-Holidays");
         
     }

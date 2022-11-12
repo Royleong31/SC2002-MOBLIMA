@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 import enums.TicketType;
 
+
 import java.io.Serializable;
 import java.lang.Math;
-
 import model.Booking;
 import model.Screening;
 import model.Seat;
@@ -33,8 +33,11 @@ public class BookingManager implements Serializable {
    * @param ticketType
    */
   public void makeBooking(MovieGoerAccount movieGoer, Screening screening, ArrayList<Seat> seatsArr, TicketType ticketType, SystemManager systemManager) throws Exception {
+    if (seatsArr.size() == 0) {
+      throw new Exception("No seats selected.");
+    }
+
     ArrayList<Ticket> ticketsArr = new ArrayList<Ticket>();
-    // TODO: Figure out a way to validate no single unoccupied seat is left between two occupied seats
 
     if(seatsArr.size() > 1) {
       // Assuming the seats in seatsArr are not in order of seat number, need to cycle through every seat and check against other seats
@@ -78,19 +81,19 @@ public class BookingManager implements Serializable {
       if (seat.isTaken()) {
         throw new Exception("Error: seat is already taken.");
       }
-    }
-  
-    
-    for (Seat seat: seatsArr) {
-      seat.setTaken(true);
+
       ticketsArr.add(new Ticket(seat, screening, ticketType));
     }
 
     int amountPaid = 0;
-
     for (Ticket chosenTicket: ticketsArr){
       amountPaid += utils.PriceUtils.getPrice(systemManager, chosenTicket);
     }
+    
+    for (Seat seat: seatsArr) {
+      seat.setTaken(true);
+    }
+
 
     this.bookingsArr.add(new Booking(screening.getCinemaId() + DateTimeUtils.getDateTime(), movieGoer, amountPaid, ticketsArr));
   }

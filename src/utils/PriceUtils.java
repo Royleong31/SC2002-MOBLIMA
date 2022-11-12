@@ -1,6 +1,7 @@
 package utils;
 
 import controller.SystemManager;
+import model.DateTime;
 import model.Screening;
 import model.Ticket;
 import enums.SeatType;
@@ -9,31 +10,36 @@ import enums.CinemaType;
 import enums.MovieType;
 
 /**
- * Use this to calculate the price of each ticket at a particular date and time
+ * Contains static function to get the price of a particular ticket
+ * @author Augustine Lee, Roy Leong
+ * @version 1.0
+ * @since 2022-11-02
  */
 public class PriceUtils {
-  // As the SystemsManager stores the list of holidays and DateTime can calculate the time and whether the date is a weekend, we can use these to calculate the price
-  //  so each method requires SystemsManager, DateTime, and screening as parameters
-  // Regarding the different types of Cinemas, we can use an enum instead of multiple classes so we can store different prices for each type of cinema. This gives more flexibility than having a price multiplier
-  // we can also have different prices for different genres of movies, for example 3D, blockbuster
-  // TODO: Extract to constants file and use a mapping
+  /**
+   * Return the price of a ticket
+   * @param sm
+   * @param ticket
+   * @return
+   * @throws Exception if ticket and timing combination is not allowed (e.g. student ticket on night screenings)
+   */
   public static float getPrice(SystemManager sm, Ticket ticket) throws Exception {
     Screening screening = ticket.getScreening();
     SeatType seatType = ticket.getSeat().getSeatType();
-    String dateString = screening.getShowtime();
+    DateTime date = screening.getShowtime();
     TicketType ticketType = ticket.getTicketType();
     CinemaType cinemaType = screening.getCinema().getCinemaType();
 
     float cinemaMultiplier = sm.getCinemaMultiplier(cinemaType);
     float seatMultiplier = sm.getSeatMultiplier(seatType);
 
-    String eveOfDate = DateTimeUtils.getEveOfDate(dateString);
-    boolean isHoliday = sm.isHoliday(dateString) || sm.isHoliday(eveOfDate);
+    DateTime eveOfDate = date.getEveOfDate();
+    boolean isHoliday = sm.isHoliday(date) || sm.isHoliday(eveOfDate);
     boolean isBlockbuster = screening.getMovie().getMovieType().equals(MovieType.BLOCKBUSTER);
     boolean is3D = screening.getMovie().getMovieType().equals(MovieType.THREE_D);
 
     float price = 0;
-    int dayOfWeek = DateTimeUtils.dateTimeToDay(dateString);
+    int dayOfWeek = date.getDayOfWeek();
 
     if (ticketType.equals(TicketType.CARDS)) { //Preferred Credit & Loyalty Cards
       if (is3D) {
@@ -50,7 +56,7 @@ public class PriceUtils {
       if (is3D) {
         throw new Exception("Senior Citizen ticket not valid for 3D movies");
       }
-      else if (DateTimeUtils.dateTimeToHour(dateString) >= 18) {
+      else if (date.getHour() >= 18) {
         throw new Exception("Senior Citizen ticket only valid for movies before 6pm");
       }
       else {
@@ -58,7 +64,7 @@ public class PriceUtils {
       }
     }
     else if (ticketType.equals(TicketType.STUDENT)) { //Students
-      if (DateTimeUtils.dateTimeToHour(dateString) >= 18) {
+      if (date.getHour() >= 18) {
         throw new Exception("Student ticket only valid for movies before 6pm");
       }
       else {
@@ -66,7 +72,7 @@ public class PriceUtils {
       }
     }
     else if (dayOfWeek == 5) { //Friday
-      if (DateTimeUtils.dateTimeToHour(dateString) >= 18) {
+      if (date.getHour() >= 18) {
         price = is3D ? 15 : 11;
       }
       else {

@@ -3,9 +3,11 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.io.Serializable;
 
+import enums.ShowStatus;
 import model.Cinema;
 import model.Movie;
 import model.Screening;
+import model.DateTime;
 
 /**
  * Account for a staff member.
@@ -18,8 +20,20 @@ import model.Screening;
 public class ScreeningManager implements Serializable{
   private ArrayList<Screening> screeningsArr = new ArrayList<Screening>();
 
-  public Screening addScreening(Movie movie, Cinema cinema, String dateTime) {
-    Screening screening = new Screening(movie, cinema, dateTime);
+  public Screening addScreening(Movie movie, Cinema cinema, int year, int month, int day, int hour, int minute) throws Exception {
+    DateTime date = new DateTime(year, month, day, hour, minute);
+    Screening screening = new Screening(movie, cinema, date);
+
+    for (Screening cur: this.screeningsArr) {
+      if (cur.equals(screening)) {
+        throw new Exception("Screening already exists.");
+      }
+    }
+    
+    if (movie.getShowingStatus().equals(ShowStatus.END_OF_SHOWING)) {
+      System.out.println("Movie is not showing");
+      throw new Exception("Movie showing has ended");
+    }
     screeningsArr.add(screening);
     return screening;
   }
@@ -31,8 +45,9 @@ public class ScreeningManager implements Serializable{
    * @param screening
    * @param newDateTime
    */
-  public Screening updateShowtime(Screening screening, String newShowTime) {
-    screening.setShowTime(newShowTime);
+  public Screening updateShowtime(Screening screening, int year, int month, int day, int hour, int minute) {
+    DateTime date = new DateTime(year, month, day, hour, minute);
+    screening.setShowTime(date);
     return screening;
   }
 
@@ -41,7 +56,7 @@ public class ScreeningManager implements Serializable{
     this.screeningsArr.removeIf(s -> s.equals(screening));
   }
 
-  public ArrayList<Screening> getScreenings(String movieTitle, String cinemaCode, String date) {
+  public ArrayList<Screening> getScreenings(String movieTitle, String cinemaCode, DateTime date) {
     ArrayList<Screening> screenings = new ArrayList<Screening>();
     for (Screening screening : screeningsArr) {
       screenings.add(screening);
@@ -54,7 +69,7 @@ public class ScreeningManager implements Serializable{
 
     Comparator<Screening> comparator = (s1, s2) -> {
       try {
-        return s1.getDateTimeObj().compareTo(s2.getDateTimeObj());
+        return s1.getShowtime().getDateTimeObj().compareTo(s2.getShowtime().getDateTimeObj());
       } catch (Exception e) {
         e.printStackTrace();
       }
@@ -67,6 +82,10 @@ public class ScreeningManager implements Serializable{
     return screenings;
   }
 
+  public ArrayList<Screening> getScreenings() {
+    return screeningsArr;
+  }
+
   public ArrayList<Screening> getScreeningsByMovie(String movieTitle) {
     return this.getScreenings(movieTitle, null, null);
   }
@@ -75,7 +94,7 @@ public class ScreeningManager implements Serializable{
     return this.getScreenings(null, cinemaCode, null);
   }
 
-  public ArrayList<Screening> getScreeningsByDate(String date) {
+  public ArrayList<Screening> getScreeningsByDate(DateTime date) {
     return this.getScreenings(null, null, date);
   }
 

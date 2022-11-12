@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 import enums.SeatType;
 
@@ -20,10 +19,10 @@ import java.io.Serializable;
 public class Screening implements Serializable{
   private Movie movie;
   private Cinema cinema;
-  private String showTime;
+  private DateTime showTime;
   private final ArrayList<Seat> seats = new ArrayList<Seat>(); // list of seats can't change after initialisation
 
-  public Screening(Movie movie, Cinema cinema, String showTime) {
+  public Screening(Movie movie, Cinema cinema, DateTime showTime) {
     this.movie = movie;
     this.cinema = cinema;
     this.showTime = showTime;
@@ -82,17 +81,12 @@ public class Screening implements Serializable{
     return this.cinema;
   }
 
-   public String getShowtime() {
+   public DateTime getShowtime() {
     return this.showTime;
    }
 
-  public void setShowTime(String newShowtime) {
+  public void setShowTime(DateTime newShowtime) {
     this.showTime = newShowtime;
-  }
-
-  public Date getDateTimeObj() throws ParseException {
-    Date DateTime = new SimpleDateFormat("dd.MM.yyyy.HH.mm").parse(showTime);
-    return DateTime;
   }
 
   public ArrayList<Seat> getSeats() {

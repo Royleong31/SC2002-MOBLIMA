@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 /**
  * Cineplex class
- * Contains its constituent cinemas and movies
+ * Contains its location, constituent cinemas and movies
  *
  @author Roy Leong, Augustine Lee
  @version 1.1
@@ -36,22 +36,26 @@ public class Cineplex implements Serializable{
     this.location = location;
   }
   
-  /*
-   * returns all the cinemas in this cineplex
+  /**
+   * Return all the cinemas in this cineplex
+   * @return
    */
   public ArrayList<Cinema> getCinemas() {
     return this.cinemasArr;
   }
 
   /**
-   * @return all the movies shown in this cinema
+   * Return all the cinemas in this cineplex
+   * @return
    */
   public ArrayList<Movie> getAllMovies() {
     return this.movieCollection;
   }
 
   /**
+   * Add a new movie to the cineplex's movie collection
    * @param movie
+   * @throws Exception if movie already exists in cineplex's movie collection
    */
   public void addMovie(Movie movie) throws Exception {
     // add in a movie to the moviesArr
@@ -68,6 +72,7 @@ public class Cineplex implements Serializable{
   /**
    * Add a new cinema to the cineplex
    * @param cinema
+   * @throws Exception if cinema already exists in cineplex
    */
   public void addCinema(Cinema cinema) throws Exception {
     // throw exception if cinema already exist
@@ -83,6 +88,7 @@ public class Cineplex implements Serializable{
    * Remove a cinema from this cineplex
    * @param cineplex
    * @param cinema
+   * @throws Exception if cinema does not exist in cineplex
    */
 
   public void deleteCinema(Cinema cinema) throws Exception {
@@ -97,6 +103,7 @@ public class Cineplex implements Serializable{
   /**
    * Delete a movie from this cineplex
    * @param movie
+   * @throws Exception if movie does not exist in cineplex's movie collection
    */
   public void removeMovie(Movie movie) throws Exception {
     // throw exception if movie do not exist
@@ -117,6 +124,7 @@ public class Cineplex implements Serializable{
 
   /**
    * Set the location of this cineplex
+   * @param location
    */
   public void setLocation(String location) {
     this.location = location;

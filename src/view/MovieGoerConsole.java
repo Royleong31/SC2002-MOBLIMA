@@ -56,7 +56,7 @@ public class MovieGoerConsole extends ParentConsole {
       Movie movie = super.getMovie(SortCriteria.TITLE, this.allowedShowStatus);
       String comments = super.getUserInput("Please enter your comments: ");
       // TODO: Add validation
-      Float rating = super.getUserFloatInput("Please enter your rating (1-5): ");
+      int rating = super.getUserChoiceFromCount("Please enter your rating (1-5): ", 5);
       super.getReviewManager().addReview(movie, comments, rating, movieGoerAccount);
       System.out.println("Review submitted successfully!");
     } catch (Exception e) {
@@ -199,8 +199,7 @@ public class MovieGoerConsole extends ParentConsole {
                                                                     "to view booking history", 
                                                                     "to display all available movies", 
                                                                     "to display top movies", 
-                                                                    "to logout",
-                                                                    "to quit program"), "Enter your choice: ");
+                                                                    "to logout"), "Enter your choice: ");
 
     MovieGoerAccount movieGoerAccount = (MovieGoerAccount) account;
 
@@ -228,11 +227,8 @@ public class MovieGoerConsole extends ParentConsole {
       case 6:
         super.logout();
         break;
-    
-      case 7:
-        BookingManager bkm = super.getBookingManager();
-        this.exitProgram();
-        return true;
+   
+
     
       default:
         // Should never reach here as error checking is done in this.getUserChoice()
@@ -243,8 +239,3 @@ public class MovieGoerConsole extends ParentConsole {
     return false;
   }
 }
-
-/** TODO:
- * DateTime
- * Reviews average rating
- */

@@ -25,7 +25,13 @@ public class MovieManager implements Serializable{
     System.out.println("Movie manager created");
   }
 
-  public void addMovie(Movie movie) {
+  public void addMovie(Movie movie) throws Exception {
+    for (Movie cur: this.moviesArr) {
+      if (cur.getTitle().equals(movie.getTitle())) {
+        throw new Exception("Movie already exists");
+      }
+    }
+
     this.moviesArr.add(movie);
   }
 
@@ -97,14 +103,32 @@ public class MovieManager implements Serializable{
     else if (sortingCriteria.equals(SortCriteria.SALES)) {
       // Sorts movies by overall sales in descending order
       BookingManager bManager = new BookingManager();
-      movieLst.sort((m1, m2) -> ((Float) SalesUtils.getSalesByMovie(bManager.getBookings(), m2.getTitle())).compareTo(
-                                (Float) SalesUtils.getSalesByMovie(bManager.getBookings(), m1.getTitle())));
+      movieLst.sort((m1, m2) -> ((Float) SalesUtils.getSalesByMovie(bManager.getBookings(), m1.getTitle())).compareTo(
+                                (Float) SalesUtils.getSalesByMovie(bManager.getBookings(), m2.getTitle())));
+    }
+
+    // Move movies with less than 2 reviews to the end of the list
+    ArrayList<Movie> delList = new ArrayList<Movie>();
+
+    // Add movies with less than 2 reviews to the delList
+    for (Movie movie : movieLst) {
+      if (movie.getReviews().size() < 2) {
+        delList.add(movie);
+      }
+    }
+    
+    // Removes movies with less than 2 reviews from the list
+    movieLst.removeIf((Movie movie) -> delList.contains(movie));
+
+    // Adds movies with less than 2 reviews to the end of the list
+    for (Movie movie : delList) {
+      movieLst.add(movie);
     }
 
     return movieLst;
   }
 
-  public ArrayList<Movie> getMovies(){
+  public ArrayList<Movie> getMovies() {
     return moviesArr;
   }
 
