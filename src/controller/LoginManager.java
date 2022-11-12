@@ -10,7 +10,7 @@ import model.Account.*;
 
 /**
  * Manager for login process
- * Aggregation relationship with Account class
+ * * Aggregation relationship with Account class
  * Accounts are part of LoginManager
  *
  @author Roy Leong, Ryan Ng
@@ -25,9 +25,13 @@ public class LoginManager implements Serializable{
   private Account currentAccount = null;
   
   /**
-   * The list of user accounts.
+   * The ArrayList of user accounts.
    */
   private ArrayList<Account> usersArr = new ArrayList<Account>();
+  
+  /**
+   * The ArrayList of staff IDs that have already been used
+   */
   private ArrayList<String> usedStaffIds = new ArrayList<String>();
 
   /**
@@ -104,7 +108,7 @@ public class LoginManager implements Serializable{
   }
 
   /**
-   * Logs the user out
+   * Logs the user out by setting the current user account back to default null
    */
   public void logout() {
     this.currentAccount = null;
@@ -113,7 +117,6 @@ public class LoginManager implements Serializable{
   public void returnToMainMenu() {
     this.currentAccount = new GuestAccount();
   }
-
   /**
    * Gets the current user's account.
    * @return Account This user's account.
