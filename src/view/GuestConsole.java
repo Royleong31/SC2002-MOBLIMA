@@ -1,7 +1,8 @@
 package view;
 
 import java.util.ArrayList;
-import enums.*;
+import enums.ShowStatus;
+import enums.SortCriteria;
 import controller.BookingManager;
 import controller.CineplexManager;
 import controller.LoginManager;
@@ -11,28 +12,49 @@ import controller.ScreeningManager;
 import controller.SystemManager;
 import model.Movie;
 import model.Account.Account;
-import model.Account.AdminAccount;
-import model.Booking;
-import model.Cinema;
-import model.Cineplex;
 import model.Screening;
-import utils.SalesUtils;
 import utils.Utils;
 
+/**
+ * Guest console for guest access
+ * Contains the functions a guest is able to perform
+ *
+ @author Augustine Lee
+ @version 1.0
+ @since 2022-10-30
+*/
 public class GuestConsole extends ParentConsole {
-  private final ArrayList<ShowStatus> allowedShowStatus = Utils.asArrayList(ShowStatus.PREVIEW,
-      ShowStatus.NOW_SHOWING);
+  /**
+   * ArrayList of show status where movies will be visible
+   */
+  private final ArrayList<ShowStatus> allowedShowStatus = Utils.asArrayList(ShowStatus.PREVIEW, ShowStatus.NOW_SHOWING);
 
+  /**
+   * Constructor for guest console
+   * @param lm
+   * @param bm
+   * @param cm
+   * @param mm
+   * @param rm
+   * @param sm
+   * @param sysm
+   */
   public GuestConsole(LoginManager lm, BookingManager bm, CineplexManager cm, MovieManager mm, ReviewManager rm,
       ScreeningManager sm, SystemManager sysm) {
     super(lm, bm, cm, mm, rm, sm, sysm);
   }
 
+  /**
+   * Display all movies to guest
+   */
   private void displayAllMovies() {
     ArrayList<Movie> movies = super.getMovieManager().getMovies(this.allowedShowStatus);
     super.displayMovies(movies);
   }
 
+  /**
+   * Display top 5 movies to guest
+   */
   private void displayTopMovies() {
     ArrayList<Movie> movies = super.getMovieManager().getMovies(super.getSystemManager().getSortingCriteria(),
         this.allowedShowStatus);
@@ -40,6 +62,9 @@ public class GuestConsole extends ParentConsole {
     super.displayMovies(movies);
   }
 
+  /**
+   * View available screenings for a movie
+   */
   private void viewScreenings() {
     try {
       Movie movie = super.getMovie(SortCriteria.TITLE, this.allowedShowStatus);
@@ -52,6 +77,10 @@ public class GuestConsole extends ParentConsole {
     }
   }
 
+  /**
+   * Provides user interface logic for the guest
+   * @param account
+   */
   @Override
   public void display(Account account) {
     while (true) {

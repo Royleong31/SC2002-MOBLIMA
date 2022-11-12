@@ -331,6 +331,9 @@ public class AdminConsole extends ParentConsole {
     }
   }
 
+  /**
+   * Add a new cinema
+   */
   public void addCinema() {
     try {
       String cineplexLocation = super.getUserInput("Enter the cineplex location");
@@ -346,6 +349,9 @@ public class AdminConsole extends ParentConsole {
     }
   }
 
+  /**
+   * Add a new cineplex
+   */
   public void addCineplex() {
     try {
       String location = super.getUserInput("Enter the cineplex location");
@@ -355,6 +361,9 @@ public class AdminConsole extends ParentConsole {
     }
   }
 
+  /**
+   * Logic for the admin console user interface
+   */
   @Override
   public void display(Account account) {
     // should never trigger as it can only reach AdminConsole if the logged in user is a AdminAccount
@@ -425,10 +434,6 @@ public class AdminConsole extends ParentConsole {
       case 11:
         super.logout();
         return;
-      
-      //case 12:
-        //super.exitProgram();
-        //return;
     
       default:
         // Should never reach here as error checking is done in this.getUserChoice()

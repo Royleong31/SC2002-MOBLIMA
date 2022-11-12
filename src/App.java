@@ -1,9 +1,5 @@
 import enums.LoginStatus;
-import model.Account.AdminAccount;
-import model.Account.MovieGoerAccount;
 import model.Account.GuestAccount;
-
-import java.util.ArrayList;
 
 import controller.BookingManager;
 import controller.CineplexManager;
@@ -17,12 +13,11 @@ import view.LoginConsole;
 import view.MovieGoerConsole;
 import view.GuestConsole;
 import view.ParentConsole;
-import utils.Utils;
 import java.util.Scanner;
 
 /**
- * @author Roy Leong
- * @version 1.0
+ * @author Roy Leong, Augustine Lee
+ * @version 1.1
  * @since 2022-10-30
  */
 public class App {

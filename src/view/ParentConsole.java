@@ -25,13 +25,16 @@ import java.util.Scanner;
 /**
  * All methods here do not require authentication
  *
- @author Roy Leong
- @version 1.0
+ @author Roy Leong, Augustine Lee
+ @version 1.1
  @since 2022-10-30
 */
  public abstract class ParentConsole {
   private final static Scanner scannerObj = new Scanner(System.in);
 
+  /**
+   * Handles state and methods related to login
+   */
   private final LoginManager loginManager;
   /**
    * Handles state and methods related to bookings
@@ -63,6 +66,16 @@ import java.util.Scanner;
    */
   private final SystemManager systemManager;
 
+  /**
+   * Constructor for ParentConsole with parameters
+   * @param lm
+   * @param bm
+   * @param cm
+   * @param mm
+   * @param rm
+   * @param sm
+   * @param sysm
+   */
   ParentConsole(LoginManager lm, BookingManager bm, CineplexManager cm, MovieManager mm, ReviewManager rm, ScreeningManager sm, SystemManager sysm) {
     this.loginManager = lm;
     this.bookingManager = bm;
@@ -73,6 +86,9 @@ import java.util.Scanner;
     this.systemManager = sysm;
   }
 
+  /**
+   * Constructor for ParentConsole without parameters
+   */
   ParentConsole() {
     this.loginManager = null;
     this.bookingManager = null;
@@ -83,28 +99,49 @@ import java.util.Scanner;
     this.systemManager = null;
   }
 
-  // TODO: Authorisation check? So that only admins can access admin only stuff
+  /**
+   * Retrieve cineplex manager
+   * @return cineplex manager object
+   */
   protected CineplexManager getCineplexManager() {
     return this.cineplexManager;
   }
 
+  /**
+   * Retrieve movie manager
+   * @return movie manager object
+   */
   protected MovieManager getMovieManager() {
     return this.movieManager;
   }
 
+  /**
+   * Retrieve review manager
+   * @return review manager object
+   */
   protected ReviewManager getReviewManager() {
     return this.reviewManager;
   }
 
+  /**
+   * Retrieve screening manager
+   * @return screening manager object
+   */
   protected ScreeningManager getScreeningManager() {
     return this.screeningManager;
   }
 
+  /**
+   * Retrieve system manager
+   * @return system manager object
+   */
   protected SystemManager getSystemManager() {
     return this.systemManager;
   }
+
   /**
    * Displays all movies in the system
+   * @param movies
    */
   protected void displayMovies(ArrayList<Movie> movies) {
     System.out.println("Movies");
@@ -120,7 +157,8 @@ import java.util.Scanner;
   }
 
   /**
-   * Displays all movies in the system
+   * Displays all screenings for a movie
+   * @param screenings
    */
   protected void displayScreenings(ArrayList<Screening> screenings) {
     if (screenings.size() == 0) {
@@ -138,6 +176,8 @@ import java.util.Scanner;
    * Helper method that can be used for child classes to get movies to do other things like submitting reviews
    * Displays all movies in the system
    * Allows the user to pick a movie
+   * @param sortCriterias
+   * @param showStatuses
    * @return the movie that the user picked
    */
   protected Movie getMovie(SortCriteria sortCriterias, ArrayList<ShowStatus> showStatuses) throws Exception {
@@ -191,6 +231,12 @@ import java.util.Scanner;
     }
   }
 
+  /**
+   * Translate user text input to an integer value
+   * @param message
+   * @param count
+   * @return
+   */
   protected Integer getUserChoiceFromCount(String message, int count) {
     ArrayList<String> validInputs = new ArrayList<String>();
     for (int i=1; i<count+1; i++) {
@@ -200,6 +246,11 @@ import java.util.Scanner;
     return Integer.parseInt(this.getUserChoice(message, validInputs));
   }
   
+  /**
+   * Print message and get user input
+   * @param message
+   * @return
+   */
   protected String getUserInput(String message) {
     System.out.println(message);
     String userInput = scannerObj.nextLine();
@@ -207,6 +258,11 @@ import java.util.Scanner;
     return userInput;
   }
   
+  /**
+   * Print message and get an integer response from user
+   * @param message
+   * @return
+   */
   protected Integer getUserIntegerInput(String message) {
     while (true) {
       try { 
@@ -218,6 +274,12 @@ import java.util.Scanner;
     }
   }
 
+  /**
+   * Get a user input from a list of string options
+   * @param options
+   * @param message
+   * @return
+   */
   protected Integer getSelectInput(ArrayList<String> options, String message) {
     System.out.println(message);
     for (int i=1; i<=options.size(); i++) {
@@ -226,6 +288,10 @@ import java.util.Scanner;
     return getUserChoiceFromCount("", options.size());
   }
 
+  /**
+   * Get a user to select a genre
+   * @return
+   */
   protected Genre selectGenre() {
     ArrayList<String> options = new ArrayList<String>();
     for (Genre cur : Genre.values()) {
@@ -235,6 +301,10 @@ import java.util.Scanner;
     return Genre.values()[userChoice-1];
   }
 
+  /**
+   * Get a user to select an advisory rating
+   * @return
+   */
   protected Advisory selectAdvisory() {
     ArrayList<String> options = new ArrayList<String>();
     for (Advisory cur : Advisory.values()) {
@@ -244,6 +314,10 @@ import java.util.Scanner;
     return Advisory.values()[userChoice-1];
   }
 
+  /**
+   * Get a user to select a show status
+   * @return
+   */
   protected ShowStatus selectShowStatus() {
     ArrayList<String> options = new ArrayList<String>();
     for (ShowStatus cur : ShowStatus.values()) {
@@ -253,6 +327,10 @@ import java.util.Scanner;
     return ShowStatus.values()[userChoice-1];
   }
 
+  /**
+   * Get a user to select a movie type (e.g. Blockbuster, 3D)
+   * @return
+   */
   protected MovieType selectMovieType() {
     ArrayList<String> options = new ArrayList<String>();
     for (MovieType cur : MovieType.values()) {
@@ -262,6 +340,10 @@ import java.util.Scanner;
     return MovieType.values()[userChoice-1];
   }
 
+  /**
+   * Get a user to select a cinema type
+   * @return
+   */
   protected CinemaType selectCinemaType() {
     ArrayList<String> options = new ArrayList<String>();
     for (CinemaType cur : CinemaType.values()) {
@@ -271,6 +353,10 @@ import java.util.Scanner;
     return CinemaType.values()[userChoice-1];
   }
 
+  /**
+   * Get a user to select a seat type
+   * @return
+   */
   protected SeatType selectSeatType() {
     ArrayList<String> options = new ArrayList<String>();
     for (SeatType cur : SeatType.values()) {
@@ -280,6 +366,10 @@ import java.util.Scanner;
     return SeatType.values()[userChoice-1];
   }
 
+  /**
+   * Get a user to select a ticket type (e.g. Student, Cards)
+   * @return
+   */
   protected TicketType selectTicketType() {
     ArrayList<String> options = new ArrayList<String>();
     for (TicketType cur : TicketType.values()) {
@@ -289,6 +379,10 @@ import java.util.Scanner;
     return TicketType.values()[userChoice-1];
   }
 
+  /**
+   * Get the cast members of a movie
+   * @return
+   */
   protected ArrayList<String> getCastMembers() {
     ArrayList<String> castArr = new ArrayList<String>();
     Integer castCount = this.getUserIntegerInput("Enter the number of cast members"); 
@@ -300,6 +394,11 @@ import java.util.Scanner;
     return castArr;
   }
   
+  /**
+   * Get an user input and ensure it is a float type
+   * @param message
+   * @return
+   */
   protected Float getUserFloatInput(String message) {
     while (true) {
       try { 
@@ -323,10 +422,17 @@ import java.util.Scanner;
     System.exit(0);
   }
 
+  /**
+   * Get booking manager
+   * @return booking manager object
+   */
   protected BookingManager getBookingManager() {
     return this.bookingManager;
   }
 
+  /**
+   * logout of account
+   */
   protected void logout() {
     this.loginManager.logout();
   }
@@ -334,6 +440,7 @@ import java.util.Scanner;
   /**
    * Displays the content for each console.
    * This is basically the 'main' method for each console
+   * @param account
    */
   public abstract void display(Account account);
 }

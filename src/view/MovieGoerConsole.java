@@ -9,18 +9,11 @@ import controller.MovieManager;
 import controller.ReviewManager;
 import controller.ScreeningManager;
 import controller.SystemManager;
-import enums.Advisory;
-import enums.CinemaType;
-import enums.Genre;
-import enums.MovieType;
 import enums.ShowStatus;
 import enums.SortCriteria;
 import enums.TicketType;
 import model.Booking;
-import model.Cinema;
-import model.Cineplex;
 import model.Movie;
-import model.Review;
 import model.Screening;
 import model.Seat;
 import model.SeatingPlan;
@@ -38,6 +31,16 @@ import utils.Utils;
  @since 2022-10-30
 */
 public class MovieGoerConsole extends ParentConsole {
+  /**
+   * Constructor for MovieGoerConsole
+   * @param lm
+   * @param bm
+   * @param cm
+   * @param mm
+   * @param rm
+   * @param sm
+   * @param sysm
+   */
   public MovieGoerConsole(LoginManager lm, BookingManager bm, CineplexManager cm, MovieManager mm, ReviewManager rm, ScreeningManager sm, SystemManager sysm) {
     super(lm, bm, cm, mm, rm, sm, sysm);
   }
@@ -145,12 +148,18 @@ public class MovieGoerConsole extends ParentConsole {
     return seats;
   }
 
+  /**
+   * Display all movies
+   */
   private void displayAllMovies() {
     ArrayList<Movie> movies = super.getMovieManager().getMovies(this.allowedShowStatus);
     super.displayMovies(movies);
   }
 
-    private String getCharForNumber(int i) {
+  /**
+   * Get a corresponding character for an integer between 0 and 27 (exclusive)
+   */
+  private String getCharForNumber(int i) {
     return i > 0 && i < 27 ? String.valueOf((char)(i + 64)) : null;
   }
 
@@ -179,12 +188,19 @@ public class MovieGoerConsole extends ParentConsole {
     }
   }
 
+  /**
+   * Display top movies
+   */
   private void displayTopMovies() {
     ArrayList<Movie> movies = super.getMovieManager().getMovies(super.getSystemManager().getSortingCriteria(), this.allowedShowStatus);
     movies = movies.size() < 5 ? movies : new ArrayList<Movie>(movies.subList(0, 4));
     super.displayMovies(movies);
   }
 
+  /**
+   * Logic for movie goer user interface
+   * @param account
+   */
   @Override
   public void display(Account account) {
     // should never trigger as it can only reach MovieGoerConsole if the logged in user is a MovieGoerAccount

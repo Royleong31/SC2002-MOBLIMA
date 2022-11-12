@@ -11,13 +11,24 @@ import utils.Utils;
  @since 2022-10-30
 */
 public class LoginConsole extends ParentConsole {
+  /**
+   * LoginManager for login console to interact with
+   */
   private final LoginManager loginManager;
   
+  /**
+   * Constructor for LoginConsole
+   * @param loginManager
+   */
   public LoginConsole(LoginManager loginManager) {
     super();
     this.loginManager = loginManager;
   }
   
+  /**
+   * Logic for login user interface
+   * @param account
+   */
   @Override
   public void display(Account account) { // account is unused as it's null
     System.out.println("Inside login console");
