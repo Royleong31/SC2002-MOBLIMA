@@ -4,9 +4,6 @@ import java.util.ArrayList;
 
 import enums.TicketType;
 
-
-import java.io.Serializable;
-import java.lang.Math;
 import model.Booking;
 import model.Screening;
 import model.Seat;
@@ -21,16 +18,22 @@ import utils.DateTimeUtils;
  @version 1.1
  @since 2022-10-30
 */
-public class BookingManager implements Serializable {
+public class BookingManager {
+
+  /**
+   * The ArrayList containing all existing bookings that have been made.
+   */
   private ArrayList<Booking> bookingsArr = new ArrayList<Booking>();
   
   /**
    * Creates a booking from the user's choice of screening and seats.
    * Multiple tickets of the same type and screening can be created in a single booking.
-   * @param movieGoer
-   * @param screening
-   * @param seatsArr
-   * @param ticketType
+   * Selected seats will be checked for one-seat gap and if seats is/are taken, if found booking will not be made successfully
+   * @param movieGoer the moviegoer account making the booking
+   * @param screening the screening that the moviegoer wishes to make the booking of
+   * @param seatsArr the seats the moviegoer wishes to book
+   * @param ticketType the type of ticket the moviegoer wishes to book
+   * @param systemManager the systemmanager
    */
   public void makeBooking(MovieGoerAccount movieGoer, Screening screening, ArrayList<Seat> seatsArr, TicketType ticketType, SystemManager systemManager) throws Exception {
     if (seatsArr.size() == 0) {
@@ -101,8 +104,8 @@ public class BookingManager implements Serializable {
   /**
    * Returns all available seats for a given screening.
    * Used to get the seats that the user can choose from, which is then shown to the user in the console.
-   * @param movieGoer
-   * @return
+   * @param screening the specific screening to check for available seats
+   * @return availableSeats the ArrayList of available seats
    */
   public ArrayList<Seat> getAvailableSeats(Screening screening) {
     ArrayList<Seat> allSeats = screening.getSeats();
@@ -119,36 +122,30 @@ public class BookingManager implements Serializable {
 
   /**
    * Returns all bookings that have been made
-   * @return
+   * @return bookingsArr the ArrayList of bookings that have been made
    */
   public ArrayList<Booking> getBookings() {
     return this.bookingsArr;
   }
 
-  public void setBookingsArr(ArrayList<Booking> bookingsArr) {
-    this.bookingsArr = new ArrayList<Booking>(bookingsArr);
-  }
-
   /**
-   * Returns all bookings that have been made by a movie goer
-   * @param movieGoer
-   * @return
+   * Returns all bookings that have been made specifically by a movie goer
+   * @param movieGoer the moviegoer account that wants to get the bookings it has made
+   * @return checkArr the ArrayList of bookings made by the moviegoer
    */
   public ArrayList<Booking> getBookingsByUser(MovieGoerAccount movieGoer){
     ArrayList<Booking> checkArr = new ArrayList<Booking>();
 	
     for(Booking findBooking: bookingsArr){
-      // if(findBooking.getMovieGoer().equals(movieGoer))
-      // System.out.println("User: " + findBooking.getMovieGoer().getUsername() + " -> " + movieGoer.getUsername());
-      if(findBooking.getMovieGoer().getUsername().equals(movieGoer.getUsername()))
+      if(findBooking.getMovieGoer().equals(movieGoer))
         checkArr.add(findBooking);
     }
     return checkArr;
   }
 
   /**
-   * 
-   * @param bookingId
+   * Get the booking based on a given booking id
+   * @param bookingId the id of the wanted booking
    * @return the booking that matches this booking id
    */
   public Booking getBookingById(String bookingId){
@@ -160,7 +157,10 @@ public class BookingManager implements Serializable {
     return null;
   }
 
-  // cascade delete
+  /**
+   * Cascade deletes bookings specific to a screening
+   * @param screening is the target screening of which bookings belong to a screening
+   */
   public void deleteBooking(Screening screening) {
     this.bookingsArr.removeIf(
       findBooking -> {
