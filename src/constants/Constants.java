@@ -36,7 +36,7 @@ public final class Constants {
       put(SeatType.PLATINUM, 2.5f);
     }};
 
-    /*
+    /**
      * Default sorting criteria that the movie goers use
      */
     public static final SortCriteria DEFAULT_SORT_CRITERIA = SortCriteria.SALES;
