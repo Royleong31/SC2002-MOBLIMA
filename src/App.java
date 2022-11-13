@@ -56,7 +56,7 @@ public class App {
 
     /**
      * Contains the main method that runs the program
-     * @param args
+     * @param args arguments received
      */
     public static void main(String[] args) {
         System.out.println("\nWelcome to the MOBLIMA app!");

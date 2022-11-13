@@ -57,8 +57,7 @@ public class Account implements Serializable{
    * User authentication method for login process.
    * @param username This entry of username during login.
    * @param password This entry of password during login.
-   * @return this The Account object of the logged in user if authentication successful.
-   * @return null value If the login authentication unsuccessful.
+   * @return (this) The Account object of the logged in user if authentication successful. Returns null value If the login authentication unsuccessful.
    *		 	  		Can be due to non-existent Account or wrong password.
    */
   public Account login(String username, String password) {

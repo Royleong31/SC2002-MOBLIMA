@@ -16,7 +16,7 @@ import java.io.Serializable;
 public class Booking implements Serializable {
  
   /**
-   * Booking ID following this format : <cinemaCode>YYYYMMDDhhmm
+   * Booking ID following this format : [cinemaCode]YYYYMMDDhhmm
    */
   private final String id;
 

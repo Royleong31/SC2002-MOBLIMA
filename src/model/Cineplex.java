@@ -86,7 +86,6 @@ public class Cineplex implements Serializable{
 
   /**
    * Remove a cinema from this cineplex
-   * @param cineplex
    * @param cinema
    * @throws Exception if cinema does not exist in cineplex
    */
