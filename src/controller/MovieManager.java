@@ -166,8 +166,8 @@ public class MovieManager implements Serializable {
 
     else if (sortingCriteria.equals(SortCriteria.SALES)) {
       // Sorts movies by overall sales in descending order
-      movieLst.sort((m1, m2) -> ((Float) SalesUtils.getSalesByMovie(bManager.getBookings(), m1.getTitle())).compareTo(
-                                (Float) SalesUtils.getSalesByMovie(bManager.getBookings(), m2.getTitle())));
+      movieLst.sort((m1, m2) -> ((Float) SalesUtils.getSalesByMovie(bManager.getBookings(), m2.getTitle())).compareTo(
+                                (Float) SalesUtils.getSalesByMovie(bManager.getBookings(), m1.getTitle())));
     }
 
     return movieLst;
