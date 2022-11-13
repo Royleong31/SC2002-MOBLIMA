@@ -192,7 +192,7 @@ public class MovieGoerConsole extends ParentConsole {
    */
   private void displayTopMovies() {
     ArrayList<Movie> movies = super.getMovieManager().getMovies(super.getSystemManager().getSortingCriteria(), this.allowedShowStatus);
-    movies = movies.size() < 5 ? movies : new ArrayList<Movie>(movies.subList(0, 4));
+    movies = movies.size() < 5 ? movies : new ArrayList<Movie>(movies.subList(0, 5));
     super.displayMovies(movies);
   }
 

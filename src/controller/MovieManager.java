@@ -139,33 +139,35 @@ public class MovieManager implements Serializable {
     if (sortingCriteria.equals(SortCriteria.TITLE)) {
       movieLst.sort((m1, m2) -> m1.getTitle().compareTo(m2.getTitle()));
     }
-    // Sorts movies by overall rating in descending order
+
+    // Sorts movies by overall rating in descending order, movies with less than 2 reviews are moved to the end of the list
     else if (sortingCriteria.equals(SortCriteria.RATING)) {
       movieLst.sort((m1, m2) -> ((Float) m2.getOverallRating()).compareTo((Float) m1.getOverallRating()));
+      
+      // list of movies with less than 2 reviews
+      ArrayList<Movie> delList = new ArrayList<Movie>();
+  
+      // add movies with less than 2 reviews to delList
+      for (Movie movie : movieLst) {
+        if (movie.getReviews().size() < 2) {
+          delList.add(movie);
+        }
+      }
+      
+      // Removes movies with less than 2 reviews from the list
+      movieLst.removeIf((Movie movie) -> delList.contains(movie));
+  
+      // Adds movies with less than 2 reviews to the end of the list
+      for (Movie movie : delList) {
+        movieLst.add(movie);
+      }
     }
+
     else if (sortingCriteria.equals(SortCriteria.SALES)) {
       // Sorts movies by overall sales in descending order
       BookingManager bManager = new BookingManager();
       movieLst.sort((m1, m2) -> ((Float) SalesUtils.getSalesByMovie(bManager.getBookings(), m1.getTitle())).compareTo(
                                 (Float) SalesUtils.getSalesByMovie(bManager.getBookings(), m2.getTitle())));
-    }
-
-    // Move movies with less than 2 reviews to the end of the list
-    ArrayList<Movie> delList = new ArrayList<Movie>();
-
-    // Add movies with less than 2 reviews to the delList
-    for (Movie movie : movieLst) {
-      if (movie.getReviews().size() < 2) {
-        delList.add(movie);
-      }
-    }
-    
-    // Removes movies with less than 2 reviews from the list
-    movieLst.removeIf((Movie movie) -> delList.contains(movie));
-
-    // Adds movies with less than 2 reviews to the end of the list
-    for (Movie movie : delList) {
-      movieLst.add(movie);
     }
 
     return movieLst;
