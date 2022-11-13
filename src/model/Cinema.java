@@ -19,11 +19,6 @@ public class Cinema implements Serializable{
   private final String id;
 
   /**
-   * static counter to be passed into static generateCinemaID function to generate id for each cinema
-   */
-  private static int cinemaCounter;
-
-  /**
    * seating plan for the cinema
    */
   private SeatingPlan seatingPlan;
@@ -44,12 +39,11 @@ public class Cinema implements Serializable{
    * @param cineplex cineplex that the cinema is located at
    * @param cinemaType the type of cinema
    */
-  public Cinema(SeatingPlan seatingPlan, Cineplex cineplex, CinemaType cinemaType) {
+  public Cinema(SeatingPlan seatingPlan, Cineplex cineplex, CinemaType cinemaType, int cinemaCounter) {
     this.id = IdUtils.generateCinemaID(cinemaCounter); /* generate ID for the cinema */
     this.seatingPlan = seatingPlan;
     this.cineplex = cineplex;
     this.cinemaType = cinemaType;
-    Cinema.cinemaCounter++; /* increment cinemaCounter by 1 to denote an increase in cinemas */
   }
 
   /**

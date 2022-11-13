@@ -143,6 +143,11 @@ public class App {
             cineplexManager.setCinemas(temp);
         };
 
+        if(DataUtils.checkFile("CineplexManager-CinemaCounter")) {
+            int temp = (int)DataUtils.loadData("CineplexManager-CinemaCounter");    
+            cineplexManager.setCinemaCounter(temp);
+        };
+
         //MovieManager
         if(DataUtils.checkFile("MovieManager-Movies")) {
             ArrayList<Movie> temp = (ArrayList<Movie>)DataUtils.loadData("MovieManager-Movies");       
@@ -191,42 +196,45 @@ public class App {
         
         //LoginManager
         ArrayList<Account> usersArr = loginManager.getUsers();
-        int usersArrErr = DataUtils.saveData(usersArr, "LoginManager-Accounts");
+        DataUtils.saveData(usersArr, "LoginManager-Accounts");
 
         ArrayList<String> usedStaffIds = loginManager.getUsedStaffIds();
-        int usedStaffIdsErr = DataUtils.saveData(usedStaffIds, "LoginManager-StaffIds");
+        DataUtils.saveData(usedStaffIds, "LoginManager-StaffIds");
         
         //BookingManager
         ArrayList<Booking> bookingsArr = bookingManager.getBookings();
-        int bookingsArrErr = DataUtils.saveData(bookingsArr, "BookingManager-Bookings");
+        DataUtils.saveData(bookingsArr, "BookingManager-Bookings");
         
         //BookingManager
         ArrayList<Cineplex> cineplexesArr = cineplexManager.getCineplexes();
-        int cineplexesArrErr = DataUtils.saveData(cineplexesArr, "CineplexManager-Cineplexes");
+        DataUtils.saveData(cineplexesArr, "CineplexManager-Cineplexes");
         
         ArrayList<Cinema> cinemasArr = cineplexManager.getCinemasList();
-        int cinemasArrErr = DataUtils.saveData(cinemasArr, "CineplexManager-Cinemas");
+        DataUtils.saveData(cinemasArr, "CineplexManager-Cinemas");
+
+        int cinemaCounter = cineplexManager.getCinemaCounter();
+        DataUtils.saveData(cinemaCounter, "CineplexManager-CinemaCounter");
 
         //MovieManager
         ArrayList<Movie> moviesArr = movieManager.getMovies();
-        int moviesArrErr = DataUtils.saveData(moviesArr, "MovieManager-Movies");
+        DataUtils.saveData(moviesArr, "MovieManager-Movies");
 
         //ScreeningManager
         ArrayList<Screening> screeningsArr = screeningManager.getScreenings(null, null, null);
-        int screeningsArrErr = DataUtils.saveData(screeningsArr, "ScreeningManager-Screenings");
+        DataUtils.saveData(screeningsArr, "ScreeningManager-Screenings");
         
         //SystemManager
         ArrayList<DateTime> holidaysArr = systemManager.getHolidays();
-        int holidaysArrErr = DataUtils.saveData(holidaysArr, "SystemManager-Holidays");
+        DataUtils.saveData(holidaysArr, "SystemManager-Holidays");
 
         HashMap<CinemaType, Float> cinemaMultMap = systemManager.getCinemaMultiplierHashmap();
-        int cinemaMultMapErr = DataUtils.saveData(cinemaMultMap, "SystemManager-CinemaPrice");
+        DataUtils.saveData(cinemaMultMap, "SystemManager-CinemaPrice");
 
         HashMap<SeatType, Float> seatMultMap = systemManager.getSeatMultiplierHashmap();
-        int seatMultMapErr = DataUtils.saveData(seatMultMap, "SystemManager-SeatPrice");
+        DataUtils.saveData(seatMultMap, "SystemManager-SeatPrice");
 
         SortCriteria movieSortingCriteria = systemManager.getSortingCriteria();
-        int movieSortingCriteriaErr = DataUtils.saveData(movieSortingCriteria, "SystemManager-MovieSortingCriteria");
+        DataUtils.saveData(movieSortingCriteria, "SystemManager-MovieSortingCriteria");
         
     }
 }

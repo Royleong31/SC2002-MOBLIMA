@@ -28,6 +28,11 @@ public class CineplexManager implements Serializable{
   private ArrayList<Cinema> cinemasArr = new ArrayList<Cinema>();
 
   /**
+   * Number of cinemas that have been created so far, used to create the cinema ids for each cinema
+   */
+  private int cinemaCounter = 0;
+
+  /**
    * Add new cineplex
    * @param location
    * @throws Exception if there already exists a cineplex in the same location
@@ -55,7 +60,8 @@ public class CineplexManager implements Serializable{
    */
   public Cinema addCinema(Cineplex cineplex, int rows, int columns, int aisle, CinemaType cinemaType) throws Exception {
     SeatingPlan seatingPlan = new SeatingPlan(rows, columns, aisle);
-    Cinema cinema = new Cinema(seatingPlan, cineplex, cinemaType);
+    this.cinemaCounter++;
+    Cinema cinema = new Cinema(seatingPlan, cineplex, cinemaType, this.cinemaCounter);
     this.cinemasArr.add(cinema);
     cineplex.addCinema(cinema);
     return cinema;
@@ -113,9 +119,18 @@ public class CineplexManager implements Serializable{
 
   /**
    * Sets arraylist of all cineplexes
+   * @param cineplexesArr arraylist of cineplexes
    */
   public void setCineplexes(ArrayList<Cineplex> cineplexesArr) {
     this.cineplexesArr = new ArrayList<Cineplex>(cineplexesArr);
+  }
+  
+  /**
+   * Set the last cinema count so the cinema id is unique
+   * @param lastCinemaCounter
+   */
+  public void setCinemaCounter(int lastCinemaCounter) {
+    this.cinemaCounter = lastCinemaCounter;
   }
 
   /**
@@ -135,12 +150,27 @@ public class CineplexManager implements Serializable{
     throw new Exception("Cineplex does not exists");
   }
 
+  /**
+   * 
+   * @return cinemasArr
+   */
   public ArrayList<Cinema> getCinemasList(){
     return new ArrayList<Cinema>(cinemasArr);
   }
 
+  /**
+   * 
+   * @param cinemasArr
+   */
   public void setCinemas(ArrayList<Cinema> cinemasArr) {
     this.cinemasArr = cinemasArr;
   }
 
+  /**
+   * 
+   * @return cinemaCounter
+   */
+  public int getCinemaCounter() {
+    return cinemaCounter;
+  }
 }
