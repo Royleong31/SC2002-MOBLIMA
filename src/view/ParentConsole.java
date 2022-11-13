@@ -183,7 +183,7 @@ import java.io.Serializable;
    * @return the movie that the user picked
    */
   protected Movie getMovie(SortCriteria sortCriterias, ArrayList<ShowStatus> showStatuses) throws Exception {
-    ArrayList<Movie> movies = this.movieManager.getMovies(sortCriterias, showStatuses);
+    ArrayList<Movie> movies = this.movieManager.getMovies(sortCriterias, showStatuses, this.getBookingManager());
     if (movies.size() == 0) {
       throw new Exception("No movies found");
     }

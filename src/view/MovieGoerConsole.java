@@ -151,7 +151,7 @@ public class MovieGoerConsole extends ParentConsole {
    * Display all movies that are currently showing or in preview
    */
   private void displayAllMovies() {
-    ArrayList<Movie> movies = super.getMovieManager().getMovies(this.allowedShowStatus);
+    ArrayList<Movie> movies = super.getMovieManager().getMovies(this.allowedShowStatus, super.getBookingManager());
     super.displayMovies(movies);
   }
 
@@ -191,7 +191,7 @@ public class MovieGoerConsole extends ParentConsole {
    * Display all the movies that are sorted by the sorting criteria set by the admin
    */
   private void displayTopMovies() {
-    ArrayList<Movie> movies = super.getMovieManager().getMovies(super.getSystemManager().getSortingCriteria(), this.allowedShowStatus);
+    ArrayList<Movie> movies = super.getMovieManager().getMovies(super.getSystemManager().getSortingCriteria(), this.allowedShowStatus, super.getBookingManager());
     movies = movies.size() < 5 ? movies : new ArrayList<Movie>(movies.subList(0, 5));
     super.displayMovies(movies);
   }

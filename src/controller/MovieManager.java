@@ -112,9 +112,10 @@ public class MovieManager implements Serializable {
    * 
    * @param sortingCriteria sort criteria (enum)
    * @param showStatuses arraylist of showing statuses (enum) to filter movies by
+   * @param bManager booking manager object
    * @return the filtered and sorted movie arraylist
    */
-  public ArrayList<Movie> getMovies(SortCriteria sortingCriteria, ArrayList<ShowStatus> showStatuses) {
+  public ArrayList<Movie> getMovies(SortCriteria sortingCriteria, ArrayList<ShowStatus> showStatuses, BookingManager bManager) {
     ArrayList<Movie> movieLst = new ArrayList<Movie>();
 
     // First attempt to filter movies by show statuses if applicable else copies the full exsisting movie list
@@ -165,7 +166,6 @@ public class MovieManager implements Serializable {
 
     else if (sortingCriteria.equals(SortCriteria.SALES)) {
       // Sorts movies by overall sales in descending order
-      BookingManager bManager = new BookingManager();
       movieLst.sort((m1, m2) -> ((Float) SalesUtils.getSalesByMovie(bManager.getBookings(), m1.getTitle())).compareTo(
                                 (Float) SalesUtils.getSalesByMovie(bManager.getBookings(), m2.getTitle())));
     }
@@ -197,11 +197,12 @@ public class MovieManager implements Serializable {
    * is used if no sort criteria is provided
    * 
    * @param showStatus arraylist of showing statuses (enum) to filter movies by
+   * @param bManager booking manager object
    * @return filtered movie arraylist sorted by the default sort criteria (title)
    * @see MovieManager#getMovies(SortCriteria, ArrayList<ShowStatus>)
    */
-  public ArrayList<Movie> getMovies(ArrayList<ShowStatus> showStatus){
-    return getMovies(SortCriteria.TITLE, showStatus);
+  public ArrayList<Movie> getMovies(ArrayList<ShowStatus> showStatus, BookingManager bManager) {
+    return getMovies(SortCriteria.TITLE, showStatus, bManager);
   }
 
   /**
@@ -209,11 +210,12 @@ public class MovieManager implements Serializable {
    * as a filter condition i.e list is only sorted by specified sort criteria not filtered
    * 
    * @param sortCriteria sort criteria (enum)
+   * @param bManager booking manager object
    * @return sorted movie arraylist
    * @see MovieManager#getMovies(SortCriteria, ArrayList<ShowStatus>)
    */
-  public ArrayList<Movie> getMovies(SortCriteria sortCriteria){
-    return getMovies(sortCriteria, Utils.asArrayList(ShowStatus.values()));
+  public ArrayList<Movie> getMovies(SortCriteria sortCriteria, BookingManager bManager){
+    return getMovies(sortCriteria, Utils.asArrayList(ShowStatus.values()), bManager);
   }
 
   /**
