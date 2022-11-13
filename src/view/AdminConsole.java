@@ -95,7 +95,6 @@ public class AdminConsole extends ParentConsole {
           int minute = super.getUserIntegerInput("Enter the minute");
           
           systemManager.addHoliday(year, month, day, hour, minute);
-          System.out.println("Holidays: " + systemManager.getHolidays().toString());
           break;
         } catch (Exception e) {
           System.out.println("Something went wrong while adding the holiday");
