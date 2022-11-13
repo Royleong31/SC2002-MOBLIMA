@@ -1,11 +1,11 @@
 # MOBLIMA SC2002 GROUP PROJECT
 
 ## CONTRIBUTORS
-Roy Leong Yew Hwee
-Kish Choy Wai Kit
-Ng Ding Hei Ryan
-Pang Song Chen
-Lee Xuan Wei, Augustine
+- Roy Leong Yew Hwee
+- Kish Choy Wai Kit
+- Ng Ding Hei Ryan
+- Pang Song Chen
+- Lee Xuan Wei, Augustine
 
 ## ABOUT
 This Movie Booking and Listing management Application is a console-based application, for movie-goers and cinema staff, that computerises the booking, listing and sales management of movie screenings.
