@@ -193,8 +193,8 @@ public class AdminConsole extends ParentConsole {
   public void getMoviesByRank() { //display top 5 movie by sales and top 5 by rating, admin can choose which of these or both to display to user
     Integer userInput = super.getSelectInput(Utils.asArrayList("for Top 5 by sales", "for Top 5 by rating"), "Enter the type of filter");
     SortCriteria sortCriteria = userInput == 1 ? SortCriteria.SALES : SortCriteria.RATING;
-    ArrayList<Movie> movies = super.getMovieManager().getMovies(sortCriteria); // get top 5 movies
-    movies = movies.size() < 5 ? movies : new ArrayList<Movie>(movies.subList(0, 4));
+    ArrayList<Movie> movies = super.getMovieManager().getMovies(sortCriteria, super.getBookingManager()); // get top 5 movies
+    movies = movies.size() < 5 ? movies : new ArrayList<Movie>(movies.subList(0, 5));
 
     super.displayMovies(movies);
   }
