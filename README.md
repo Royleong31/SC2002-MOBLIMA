@@ -1,18 +1,17 @@
-## Getting Started
+# MOBLIMA SC2002 GROUP PROJECT
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## CONTRIBUTORS
+Roy Leong Yew Hwee
+Kish Choy Wai Kit
+Ng Ding Hei Ryan
+Pang Song Chen
+Lee Xuan Wei, Augustine
 
-## Folder Structure
+## ABOUT
+This Movie Booking and Listing management Application is a console-based application, for movie-goers and cinema staff, that computerises the booking, listing and sales management of movie screenings.
 
-The workspace contains two folders by default, where:
+This code implementation follows the Model-View-Controller (MVC) architecture pattern and harnesses the benefits of Object-Oriented Design by following the SOLID principles.
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+## DOCUMENTATION
+The documentation for this project is available at: https://sc-2002-moblima.vercel.app/
