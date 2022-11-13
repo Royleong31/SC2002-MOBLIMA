@@ -28,6 +28,16 @@ import utils.Utils;
  @since 2022-10-30
 */
 public class AdminConsole extends ParentConsole {
+	/**
+	 * 
+	 * @param lm Login Manager
+	 * @param bm Booking Manager
+	 * @param cm Cineplex Manager
+	 * @param mm Movie Manager
+	 * @param rm Review Manager
+	 * @param sm Screening Manager
+	 * @param sysm System Manager
+	 */
   public AdminConsole(LoginManager lm, BookingManager bm, CineplexManager cm, MovieManager mm, ReviewManager rm, ScreeningManager sm, SystemManager sysm) {
     super(lm, bm, cm, mm, rm, sm, sysm);
   }
@@ -127,7 +137,6 @@ public class AdminConsole extends ParentConsole {
    * call the removeMovie method in the MovieManager class to remove it
    * Catches and displays exceptions
    * 
-   * @param movie
    */
   public void removeMovie() {
     try {
@@ -364,7 +373,7 @@ public class AdminConsole extends ParentConsole {
    * Allows the user to choose which option they want to do
    * Takes in the account object and ensures that it's an admin account as only 
    * admin accounts can access this menu
-   * @param account
+   * @param account: Current account object
    */
   @Override
   public void display(Account account) {

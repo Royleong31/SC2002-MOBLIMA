@@ -210,7 +210,6 @@ public class DateTime implements Serializable {
    * Get the eve of the date time of this object
    * 
    * @return DateTime object of the eve of the date time of this object
-   * @throws ParseException if date time string recieved is of an invalid format
    */
   public DateTime getEveOfDate() {
     LocalDateTime date = LocalDateTime.of(this.year, this.month, this.day, this.hour, this.minute);

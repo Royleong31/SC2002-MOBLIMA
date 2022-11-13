@@ -445,7 +445,7 @@ import java.io.Serializable;
   /**
    * Displays the content for each console.
    * This is basically the 'main' method for each console
-   * @param account
+   * @param account: The current user account
    */
   public abstract void display(Account account);
 }

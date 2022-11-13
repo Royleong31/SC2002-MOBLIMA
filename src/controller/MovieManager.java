@@ -111,7 +111,7 @@ public class MovieManager implements Serializable {
    * Movies with less than 2 reviews are moved to the end of the sorted list
    * 
    * @param sortingCriteria sort criteria (enum)
-   * @param showStatus arraylist of showing statuses (enum) to filter movies by
+   * @param showStatuses arraylist of showing statuses (enum) to filter movies by
    * @return the filtered and sorted movie arraylist
    */
   public ArrayList<Movie> getMovies(SortCriteria sortingCriteria, ArrayList<ShowStatus> showStatuses) {
@@ -206,7 +206,7 @@ public class MovieManager implements Serializable {
    * Works just like {@link MovieManager#getMovies(SortCriteria, ArrayList<ShowStatus>)} except that all show statuses will be used
    * as a filter condition i.e list is only sorted by specified sort criteria not filtered
    * 
-   * @param sortingCriteria sort criteria (enum)
+   * @param sortCriteria sort criteria (enum)
    * @return sorted movie arraylist
    * @see MovieManager#getMovies(SortCriteria, ArrayList<ShowStatus>)
    */

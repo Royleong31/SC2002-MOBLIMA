@@ -37,7 +37,7 @@ public class LoginManager {
    * Registers new staff/admin account, logged in after registering.
    * @param username This new account's username.
    * @param password This new account's password.
-   * @param id This new account's id, used to create staffId. 
+   * @param staffId This new account's id, used to create staffId. 
    * @return currentAccount The new staff account.
    */
   public Account registerAdmin(String username, String password, String staffId, String code) throws Exception {

@@ -9,10 +9,10 @@ package utils;
 
 public class IdUtils {
     /**
-     * Int to String conversion function
+     * integer to String conversion function
      * Divides integer ID by 25 (we will save Z as a filler alphabet)
      * The remainder will be the offset from A
-     * Assumption made for string ID's length = 3: total cinemas <= 15624 (25^3 - 1)
+     * Assumption made for string ID's length = 3: total cinemas less than or equal to 15624 (25^3 - 1)
      * @param intID the integer ID of the cinema
      * @return the three-letter string ID of the cinema
      */
