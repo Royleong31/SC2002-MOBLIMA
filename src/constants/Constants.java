@@ -11,9 +11,14 @@ import utils.Utils;
 public final class Constants {
     private Constants() {}
 
+    /**
+     * Default price for a seat
+     */
     public static final float DEFAULT_PRICE = 10.0f;
 
-    // Default cinema price multipliers
+    /**
+     * Default prices for each cinema type
+     */
     public static final HashMap<CinemaType, Float> DEFAULT_CINEMA_PRICE_MAP = new HashMap<CinemaType, Float>() {{
       put(CinemaType.NORMAL, 1f);
       put(CinemaType.GOLD_CLASS, 1.5f);
@@ -21,7 +26,9 @@ public final class Constants {
       put(CinemaType.PREMIUM, 2.5f);
     }};
 
-    // Default seat price multipliers
+    /**
+     * Default seat price for each seat type
+     */
     public static final HashMap<SeatType, Float> DEFAULT_SEAT_PRICE_MAP = new HashMap<SeatType, Float>() {{
       put(SeatType.NORMAL, 1f);
       put(SeatType.GOLD, 1.5f);
@@ -29,14 +36,21 @@ public final class Constants {
       put(SeatType.PLATINUM, 2.5f);
     }};
 
-    // Default sorting criteria that the movie goers use
+    /*
+     * Default sorting criteria that the movie goers use
+     */
     public static final SortCriteria DEFAULT_SORT_CRITERIA = SortCriteria.SALES;
 
-    // All the possible staff ids that can be used to create an account
-    // Each id can only be used once
+    /**
+     * All the possible staff ids that can be used to create an account
+     * Each id can only be used once
+     */
     public static final ArrayList<String> APPROVED_STAFF_IDS = Utils.asArrayList("abcde","1234", "zxcv");
 
-    // This is to ensure that only staff members who have the correct code can create an account
-    // You need to have both the correct code and an approved staff id to create a staff account
+
+    /**
+     * This is to ensure that only staff members who have the correct code can create an account
+     * You need to have both the correct code and an approved staff id to create a staff account
+     */
     public static final String STAFF_ID_CODE = "super_secret_code";
 }
