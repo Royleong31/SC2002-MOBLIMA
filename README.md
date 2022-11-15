@@ -15,3 +15,6 @@ This code implementation follows the Model-View-Controller (MVC) architecture pa
 
 ## DOCUMENTATION
 The documentation for this project is available at: https://sc-2002-moblima.vercel.app/
+
+## Unified Modelling Language Diagram
+![Our UML Diagram](https://media.discordapp.net/attachments/896630396903624714/1041976003884503100/SS9-Grp5-UML_Diagram.jpg?width=2112&height=1226)
